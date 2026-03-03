@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ventas Group — Аренда Премиум Автомобилей</title>
 
+  <!-- Favicon (put your wide logo here) -->
+  <link rel="icon" href="images/logo.jpg" type="image/jpeg" />
+
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
@@ -47,6 +50,35 @@ img { display: block; max-width: 100%; }
   padding: 0 24px;
 }
 
+/* Anchor offset for fixed navbar */
+#catalog, #about, #home { scroll-margin-top: 90px; }
+
+/* ===========================
+   HERO (VIDEO BACKGROUND) — NO TEXT
+=========================== */
+.hero {
+  position: relative;
+  height: min(88vh, 860px);
+  min-height: 520px;
+  background: #000;
+  overflow: hidden;
+}
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: contrast(1.05) brightness(0.9);
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(80% 60% at 50% 40%, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.75) 80%),
+    linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.85) 100%);
+}
+
 /* ===========================
    NAVBAR
 =========================== */
@@ -55,12 +87,18 @@ img { display: block; max-width: 100%; }
   top: 0; left: 0; right: 0;
   z-index: 1000;
   padding: 16px 0;
-  transition: background var(--transition), padding var(--transition), box-shadow var(--transition);
-  background: rgba(10,10,10,0.97);
-  box-shadow: 0 2px 30px rgba(0,0,0,0.5);
-  backdrop-filter: blur(12px);
+  transition: background var(--transition), padding var(--transition), box-shadow var(--transition), border-color var(--transition);
+  background: rgba(10,10,10,0.25);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
 }
-.navbar.scrolled { padding: 10px 0; }
+.navbar.scrolled {
+  padding: 10px 0;
+  background: rgba(10,10,10,0.97);
+  border-color: rgba(255,255,255,0.06);
+  box-shadow: 0 2px 30px rgba(0,0,0,0.5);
+}
+
 .nav-container {
   max-width: 1280px;
   margin: 0 auto;
@@ -70,13 +108,15 @@ img { display: block; max-width: 100%; }
   justify-content: space-between;
   gap: 24px;
 }
+
 .nav-logo { display: flex; align-items: center; }
 .logo-img {
   height: 48px;
   width: auto;
   object-fit: contain;
-  filter: brightness(1.1);
+  /* wide logo, no borders */
 }
+
 .nav-links {
   display: flex;
   list-style: none;
@@ -272,7 +312,7 @@ img { display: block; max-width: 100%; }
 .section-desc {
   color: var(--gray);
   font-size: 16px;
-  max-width: 500px;
+  max-width: 560px;
   margin: 0 auto;
 }
 
@@ -280,17 +320,49 @@ img { display: block; max-width: 100%; }
    CATALOG
 =========================== */
 .catalog {
-  padding: 100px 0 80px;
+  padding: 96px 0 80px;
   background: var(--bg2);
   min-height: 100vh;
 }
 
-/* BRAND TABS */
+/* CATEGORY TABS */
+.category-tabs {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin: 22px 0 32px;
+  flex-wrap: wrap;
+}
+.category-tab {
+  padding: 12px 26px;
+  background: var(--bg3);
+  border: 2px solid var(--border);
+  color: var(--gray);
+  font-size: 14px;
+  font-weight: 800;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all var(--transition);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.category-tab:hover { color: var(--white); border-color: var(--gold); }
+.category-tab.active {
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  color: #000;
+  border-color: transparent;
+  box-shadow: 0 6px 24px rgba(201,168,76,0.28);
+}
+
+.category-section { display: none; }
+.category-section.active { display: block; animation: fadeUp 0.35s ease both; }
+
+/* BRAND TABS (inside category) */
 .brand-tabs {
   display: flex;
   gap: 12px;
   justify-content: center;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   flex-wrap: wrap;
 }
 .brand-tab {
@@ -302,7 +374,7 @@ img { display: block; max-width: 100%; }
   border: 2px solid var(--border);
   color: var(--gray);
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 800;
   border-radius: 50px;
   cursor: pointer;
   transition: all var(--transition);
@@ -315,6 +387,18 @@ img { display: block; max-width: 100%; }
   border-color: transparent;
   box-shadow: 0 6px 24px rgba(201,168,76,0.3);
 }
+.brand-tab.disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  filter: grayscale(1);
+}
+.brand-tab.disabled:hover {
+  color: var(--gray);
+  border-color: var(--border);
+  background: var(--bg3);
+  box-shadow: none;
+}
+
 /* Brand tab logos */
 .brand-tab-logo {
   width: 32px;
@@ -328,7 +412,7 @@ img { display: block; max-width: 100%; }
 
 /* BRAND SECTIONS */
 .brand-section { display: none; }
-.brand-section.active { display: block; animation: fadeUp 0.4s ease both; }
+.brand-section.active { display: block; animation: fadeUp 0.35s ease both; }
 
 /* MODEL TABS */
 .car-tabs {
@@ -344,7 +428,7 @@ img { display: block; max-width: 100%; }
   border: 1.5px solid var(--border);
   color: var(--gray);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   border-radius: 50px;
   cursor: pointer;
   transition: all var(--transition);
@@ -435,7 +519,40 @@ img { display: block; max-width: 100%; }
   color: var(--gray2);
   font-size: 14px;
   line-height: 1.7;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
+}
+
+/* PRICES */
+.car-prices {
+  display: grid;
+  gap: 10px;
+  margin: 14px 0 18px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+  border-radius: 12px;
+}
+.price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: var(--bg3);
+  border-radius: 10px;
+}
+.price-row span {
+  font-size: 12px;
+  color: var(--gray2);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.price-row strong {
+  font-size: 14px;
+  color: var(--gold2);
+  letter-spacing: 0.02em;
 }
 
 /* SPECS TOGGLE BUTTON — only visible on mobile */
@@ -474,7 +591,7 @@ img { display: block; max-width: 100%; }
   padding: 14px 32px;
   background: linear-gradient(135deg, var(--gold), var(--gold2));
   color: #000;
-  font-weight: 700;
+  font-weight: 800;
   font-size: 14px;
   letter-spacing: 0.05em;
   border-radius: 50px;
@@ -494,35 +611,100 @@ img { display: block; max-width: 100%; }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 80px;
-  align-items: center;
+  align-items: start;
 }
-.about-text .section-title { text-align: left; margin-bottom: 20px; }
-.about-text p {
+.about-text .section-title { text-align: left; margin-bottom: 16px; }
+
+.about-block-title {
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 22px 0 12px;
+}
+.about-list {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+.about-list li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
   color: var(--gray2);
-  font-size: 15px;
-  line-height: 1.8;
-  margin-bottom: 16px;
+  font-size: 14px;
+  line-height: 1.7;
+  padding: 10px 12px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.about-list li i {
+  color: var(--gold);
+  margin-top: 3px;
+  width: 16px;
+  text-align: center;
+  flex-shrink: 0;
 }
 
-/* BRAND LOGOS — no border, no text */
+.about-services {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+.service-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+}
+.service-card h4 {
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+  color: var(--white);
+}
+.service-card p {
+  color: var(--gray2);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.certs {
+  margin-top: 18px;
+}
+.certs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 14px;
+}
+.cert-card {
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  aspect-ratio: 4/3;
+}
+.cert-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .about-brands {
   display: flex;
-  gap: 32px;
-  margin-top: 36px;
+  gap: 22px;
+  margin-top: 22px;
   align-items: center;
   flex-wrap: wrap;
 }
-.about-brand-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  border: none;
-  padding: 0;
-}
+.about-brand-item { display: flex; align-items: center; justify-content: center; background: none; border: none; padding: 0; }
 .about-brand-logo {
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
   object-fit: contain;
   filter: brightness(0) invert(1);
   opacity: 0.75;
@@ -537,6 +719,7 @@ img { display: block; max-width: 100%; }
   border-radius: var(--radius);
   overflow: hidden;
   aspect-ratio: 4/3;
+  border: 1px solid rgba(255,255,255,0.06);
 }
 .about-img img {
   width: 100%; height: 100%;
@@ -563,7 +746,6 @@ img { display: block; max-width: 100%; }
 }
 .footer-brand { display: flex; flex-direction: column; gap: 12px; }
 .footer-logo { height: 44px; width: auto; object-fit: contain; }
-/* Hide footer tagline */
 .footer-brand p { display: none; }
 
 .footer-links {
@@ -577,6 +759,7 @@ img { display: block; max-width: 100%; }
   transition: color var(--transition);
 }
 .footer-links a:hover { color: var(--gold); }
+
 .footer-social {
   display: flex;
   gap: 12px;
@@ -591,6 +774,7 @@ img { display: block; max-width: 100%; }
   transition: all var(--transition);
 }
 .footer-social a:hover { color: var(--gold); border-color: var(--gold); }
+
 .footer-bottom {
   border-top: 1px solid var(--border);
   padding-top: 24px;
@@ -700,7 +884,7 @@ img { display: block; max-width: 100%; }
   background: rgba(0,0,0,0.6);
   color: var(--gray2);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   padding: 6px 16px;
   border-radius: 50px;
   z-index: 2;
@@ -718,20 +902,20 @@ img { display: block; max-width: 100%; }
    DESKTOP RESPONSIVE (1024px)
 =========================== */
 @media (max-width: 1024px) {
-  .car-panel.active {
-    grid-template-columns: 1fr;
-  }
-  .about-grid {
-    grid-template-columns: 1fr;
-    gap: 48px;
-  }
-  .about-img { max-width: 600px; }
+  .car-panel.active { grid-template-columns: 1fr; }
+  .about-grid { grid-template-columns: 1fr; gap: 48px; }
+  .about-img { max-width: 720px; }
+  .about-services { grid-template-columns: 1fr; }
+  .certs-grid { grid-template-columns: 1fr; }
 }
 
 /* ===========================
-   MOBILE (≤768px) — Full redesign
+   MOBILE (≤768px)
 =========================== */
 @media (max-width: 768px) {
+  /* Hero */
+  .hero { min-height: 420px; height: 70vh; }
+
   /* Navbar */
   .nav-links { display: none; }
   .hamburger { display: flex; }
@@ -739,7 +923,7 @@ img { display: block; max-width: 100%; }
   .btn-icon { width: 36px; height: 36px; font-size: 14px; }
   .logo-img { height: 38px; }
 
-  /* Catalog section */
+  /* Catalog */
   .catalog { padding: 76px 0 48px; }
   .container { padding: 0 16px; }
 
@@ -747,7 +931,25 @@ img { display: block; max-width: 100%; }
   .section-title { font-size: 22px; margin-bottom: 8px; }
   .section-desc { font-size: 13px; }
 
-  /* Brand tabs — full width pills, scrollable */
+  /* Category tabs — scrollable */
+  .category-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 0 4px 8px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .category-tabs::-webkit-scrollbar { display: none; }
+  .category-tab {
+    flex-shrink: 0;
+    padding: 10px 18px;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+
+  /* Brand tabs — scrollable */
   .brand-tabs {
     gap: 8px;
     margin-bottom: 20px;
@@ -765,10 +967,7 @@ img { display: block; max-width: 100%; }
     flex-shrink: 0;
     gap: 8px;
   }
-  .brand-tab-logo {
-    width: 26px;
-    height: 26px;
-  }
+  .brand-tab-logo { width: 26px; height: 26px; }
 
   /* Model tabs — scrollable row */
   .car-tabs {
@@ -782,23 +981,13 @@ img { display: block; max-width: 100%; }
     -ms-overflow-style: none;
   }
   .car-tabs::-webkit-scrollbar { display: none; }
-  .car-tab {
-    flex-shrink: 0;
-    padding: 8px 16px;
-    font-size: 12px;
-  }
+  .car-tab { flex-shrink: 0; padding: 8px 16px; font-size: 12px; }
 
-  /* Car panel — single column, stacked */
-  .car-panel.active {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
+  /* Car panel — stacked */
+  .car-panel.active { display: flex; flex-direction: column; gap: 0; }
 
-  /* Gallery — full width, proper aspect ratio on mobile */
-  .car-gallery {
-    width: 100%;
-  }
+  /* Gallery */
+  .car-gallery { width: 100%; }
   .gallery-main {
     border-radius: 10px;
     aspect-ratio: 16/10;
@@ -809,15 +998,10 @@ img { display: block; max-width: 100%; }
     background: var(--bg3);
     position: relative;
   }
-  .gallery-main img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  .gallery-zoom-hint { opacity: 1; } /* always show hint on mobile */
+  .gallery-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .gallery-zoom-hint { opacity: 1; }
 
-  /* Thumbnails — horizontal scroll strip */
+  /* Thumbnails — horizontal strip */
   .gallery-thumbs {
     display: flex;
     flex-direction: row;
@@ -845,26 +1029,17 @@ img { display: block; max-width: 100%; }
   }
   .thumb.active { opacity: 1; border-color: var(--gold); }
 
-  /* Car info — compact */
-  .car-info {
-    padding: 16px 0 0;
-  }
-  .car-name {
-    font-size: 20px;
-    margin-bottom: 4px;
-  }
-  .car-class {
-    font-size: 10px;
-    margin-bottom: 10px;
-  }
-  .car-desc {
-    font-size: 13px;
-    line-height: 1.6;
-    margin-bottom: 14px;
-    color: var(--gray2);
-  }
+  /* Car info */
+  .car-info { padding: 16px 0 0; }
+  .car-name { font-size: 20px; margin-bottom: 4px; }
+  .car-class { font-size: 10px; margin-bottom: 10px; }
+  .car-desc { font-size: 13px; line-height: 1.6; margin-bottom: 10px; }
 
-  /* SPECS TOGGLE BUTTON — visible on mobile */
+  .car-prices { padding: 12px; }
+  .price-row span { font-size: 11px; }
+  .price-row strong { font-size: 13px; }
+
+  /* SPECS TOGGLE — visible on mobile */
   .specs-toggle-btn {
     display: flex;
     align-items: center;
@@ -876,17 +1051,15 @@ img { display: block; max-width: 100%; }
     border-radius: 10px;
     color: var(--gold);
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 800;
     cursor: pointer;
+    margin-top: 10px;
     margin-bottom: 0;
     transition: all var(--transition);
     letter-spacing: 0.05em;
     text-transform: uppercase;
   }
-  .specs-toggle-btn i {
-    transition: transform 0.3s ease;
-    font-size: 12px;
-  }
+  .specs-toggle-btn i { transition: transform 0.3s ease; font-size: 12px; }
   .specs-toggle-btn.open i { transform: rotate(180deg); }
   .specs-toggle-btn.open {
     border-color: var(--gold);
@@ -920,23 +1093,21 @@ img { display: block; max-width: 100%; }
   }
   .car-specs li:last-child { border-bottom: none; }
 
-  /* Book button — full width on mobile */
+  /* Book button */
   .btn-book {
     width: 100%;
     justify-content: center;
     padding: 14px 20px;
     font-size: 14px;
-    margin-top: 16px;
+    margin-top: 10px;
     border-radius: 10px;
   }
 
-  /* About section */
+  /* About */
   .about { padding: 56px 0; }
   .about-grid { gap: 32px; }
   .about-text .section-title { font-size: 24px; }
-  .about-text p { font-size: 14px; }
-  .about-brands { gap: 24px; margin-top: 24px; }
-  .about-brand-logo { width: 60px; height: 60px; }
+  .about-brand-logo { width: 58px; height: 58px; }
   .about-img { border-radius: 10px; }
 
   /* Footer */
@@ -955,11 +1126,11 @@ img { display: block; max-width: 100%; }
   }
   .footer-social { justify-content: center; }
 
-  /* Floating buttons — smaller on mobile */
+  /* Floating buttons */
   .float-btns { bottom: 20px; right: 16px; gap: 10px; }
   .float-btn { width: 46px; height: 46px; font-size: 18px; }
 
-  /* Lightbox on mobile */
+  /* Lightbox */
   .lightbox-prev { left: 6px; width: 40px; height: 40px; font-size: 15px; }
   .lightbox-next { right: 6px; width: 40px; height: 40px; font-size: 15px; }
   .lightbox-close { top: 12px; right: 12px; width: 38px; height: 38px; font-size: 16px; }
@@ -986,6 +1157,7 @@ img { display: block; max-width: 100%; }
    SMALL PHONES (≤400px)
 =========================== */
 @media (max-width: 400px) {
+  .category-tab { padding: 9px 14px; font-size: 11px; }
   .brand-tab { padding: 9px 14px; font-size: 12px; }
   .car-name { font-size: 18px; }
   .about-brand-logo { width: 50px; height: 50px; }
@@ -997,15 +1169,18 @@ img { display: block; max-width: 100%; }
 <body>
 
   <!-- NAVBAR -->
-  <nav class="navbar scrolled" id="navbar">
+  <nav class="navbar" id="navbar">
     <div class="nav-container">
-      <a href="#catalog" class="nav-logo">
-        <img src="images/logo.png" alt="Ventas Group" class="logo-img" />
+      <a href="#home" class="nav-logo" aria-label="Ventas Group">
+        <!-- Wide logo: images/logo.jpg -->
+        <img src="images/logo.jpg" alt="Ventas Group" class="logo-img" />
       </a>
+
       <ul class="nav-links" id="navLinks">
         <li><a href="#catalog" data-i18n="nav_cars">Автомобили</a></li>
         <li><a href="#about" data-i18n="nav_about">О нас</a></li>
       </ul>
+
       <div class="nav-actions">
         <!-- Language Switcher -->
         <div class="lang-switcher" id="langSwitcher">
@@ -1013,12 +1188,14 @@ img { display: block; max-width: 100%; }
           <button class="lang-btn" data-lang="kz">KZ</button>
           <button class="lang-btn" data-lang="en">EN</button>
         </div>
-        <a href="https://www.instagram.com/" target="_blank" class="btn-icon btn-instagram" title="Instagram">
+
+        <a href="https://www.instagram.com/" target="_blank" class="btn-icon btn-instagram" title="Instagram" rel="noopener">
           <i class="fab fa-instagram"></i>
         </a>
         <a href="tel:+79991234567" class="btn-icon btn-call" title="Позвонить">
           <i class="fas fa-phone"></i>
         </a>
+
         <button class="hamburger" id="hamburger" aria-label="Меню">
           <span></span><span></span><span></span>
         </button>
@@ -1029,7 +1206,7 @@ img { display: block; max-width: 100%; }
   <!-- MOBILE MENU OVERLAY -->
   <div class="mobile-overlay" id="mobileOverlay"></div>
   <div class="mobile-menu" id="mobileMenu">
-    <button class="mobile-close" id="mobileClose"><i class="fas fa-times"></i></button>
+    <button class="mobile-close" id="mobileClose" aria-label="Закрыть"><i class="fas fa-times"></i></button>
     <ul>
       <li><a href="#catalog" class="mobile-link" data-i18n="nav_cars">Автомобили</a></li>
       <li><a href="#about" class="mobile-link" data-i18n="nav_about">О нас</a></li>
@@ -1040,7 +1217,7 @@ img { display: block; max-width: 100%; }
       <button class="lang-btn" data-lang="en">EN</button>
     </div>
     <div class="mobile-actions">
-      <a href="https://www.instagram.com/" target="_blank" class="mobile-social">
+      <a href="https://www.instagram.com/" target="_blank" class="mobile-social" rel="noopener">
         <i class="fab fa-instagram"></i> Instagram
       </a>
       <a href="tel:+79991234567" class="mobile-social">
@@ -1048,6 +1225,15 @@ img { display: block; max-width: 100%; }
       </a>
     </div>
   </div>
+
+  <!-- HERO (VIDEO) — no text -->
+  <header class="hero" id="home" aria-label="Hero Video">
+    <!-- Put your background video here: images/hero.mp4 -->
+    <video class="hero-video" autoplay muted loop playsinline preload="metadata">
+      <source src="images/hero.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-overlay"></div>
+  </header>
 
   <!-- CATALOG -->
   <section class="catalog" id="catalog">
@@ -1058,479 +1244,653 @@ img { display: block; max-width: 100%; }
         <p class="section-desc" data-i18n="catalog_desc">10 моделей премиум-класса для любых задач</p>
       </div>
 
-      <!-- BRAND TABS -->
-      <div class="brand-tabs" id="brandTabs">
-        <button class="brand-tab active" data-brand="mercedes">
-          <img src="images/logo-mersedes.jpg" alt="Mercedes-Benz" class="brand-tab-logo" />
-          Mercedes-Benz
-        </button>
-        <button class="brand-tab" data-brand="lexus">
-          <img src="images/logo-lexus.jpg" alt="Lexus" class="brand-tab-logo" />
-          Lexus
-        </button>
-        <button class="brand-tab" data-brand="toyota">
-          <img src="images/logo-toyota.jpg" alt="Toyota" class="brand-tab-logo" />
-          Toyota
-        </button>
+      <!-- CATEGORY TABS -->
+      <div class="category-tabs" id="categoryTabs">
+        <button class="category-tab active" data-category="sedans" data-i18n="cat_sedans">Бизнес седаны</button>
+        <button class="category-tab" data-category="suv" data-i18n="cat_suv">Внедорожники</button>
+        <button class="category-tab" data-category="vans" data-i18n="cat_vans">Минивэны и микроавтобусы</button>
       </div>
 
-      <!-- ===== MERCEDES BRAND SECTION ===== -->
-      <div class="brand-section active" data-brand="mercedes">
-        <div class="car-tabs">
-          <button class="car-tab active" data-car="0">S-Class W223</button>
-          <button class="car-tab" data-car="1">S-Class W222</button>
-          <button class="car-tab" data-car="2">V-Class</button>
-          <button class="car-tab" data-car="3">Sprinter</button>
+      <!-- =======================
+           CATEGORY: SEDANS
+      ======================== -->
+      <div class="category-section active" data-category="sedans">
+
+        <!-- BRAND TABS (per category) -->
+        <div class="brand-tabs">
+          <button class="brand-tab active" data-brand="mercedes">
+            <img src="images/logo-mersedes.jpg" alt="Mercedes-Benz" class="brand-tab-logo" />
+            Mercedes
+          </button>
+          <button class="brand-tab disabled" data-brand="lexus" aria-disabled="true" tabindex="-1">
+            <img src="images/logo-lexus.jpg" alt="Lexus" class="brand-tab-logo" />
+            Lexus
+          </button>
+          <button class="brand-tab" data-brand="toyota">
+            <img src="images/logo-toyota.jpg" alt="Toyota" class="brand-tab-logo" />
+            Toyota
+          </button>
         </div>
 
-        <!-- CAR 0: Mercedes S-Class W223 -->
-        <div class="car-panel active" data-car="0">
-          <div class="car-gallery">
-            <div class="gallery-main" onclick="openLightbox(0,0)">
-              <img id="main-img-0" src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/fbc3048c-06b5-4272-bf10-88558836c1a9.png" alt="Mercedes S-Class W223" />
-              <div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div>
-            </div>
-            <div class="gallery-thumbs">
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/fbc3048c-06b5-4272-bf10-88558836c1a9.png" class="thumb active" onclick="setMain(0,this,0)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/26f9b6de-e41a-4d60-b704-2128b806d539.png" class="thumb" onclick="setMain(0,this,1)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/bb0fa102-b2d0-4fcd-97fc-f2270cc9ac9b.png" class="thumb" onclick="setMain(0,this,2)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/841a9326-54f1-42d2-ac94-28307a4aa578.png" class="thumb" onclick="setMain(0,this,3)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/01015f08-2efb-4042-a841-a279be78fbdf.png" class="thumb" onclick="setMain(0,this,4)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/ea678959-1577-4a6d-8fa6-c04687f4222d.png" class="thumb" onclick="setMain(0,this,5)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/b5434152-5683-4f7f-833b-cabbdca6b549.png" class="thumb" onclick="setMain(0,this,6)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/7fac374d-d5a7-42a8-8b99-d371f0f0c268.png" class="thumb" onclick="setMain(0,this,7)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/d81291fa-388b-4efc-bd3f-9b50bda372f1.png" class="thumb" onclick="setMain(0,this,8)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/dd9e9395-4140-46c5-9698-7f29252fd325.png" class="thumb" onclick="setMain(0,this,9)" alt="" />
-            </div>
+        <!-- ===== SEDANS / MERCEDES ===== -->
+        <div class="brand-section active" data-brand="mercedes">
+          <!-- Mercedes photos (10 pcs): images/mercedes-01.jpg ... images/mercedes-10.jpg -->
+          <div class="car-tabs">
+            <button class="car-tab active" data-car="0">S-Class W223</button>
+            <button class="car-tab" data-car="1">S-Class W222</button>
           </div>
-          <div class="car-info">
-            <h3 class="car-name">Mercedes-Benz S-Class W223</h3>
-            <p class="car-class" data-i18n="class_business_lux">Бизнес-класс · Люкс</p>
-            <p class="car-desc" data-i18n="desc_w223">Флагманский седан Mercedes-Benz нового поколения. Воплощение роскоши, технологий и комфорта. Идеален для деловых поездок и особых случаев.</p>
-            <button class="specs-toggle-btn" onclick="toggleSpecs(this)">
-              <span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i>
-            </button>
-            <ul class="car-specs">
-              <li><i class="fas fa-users"></i> <span data-i18n="spec_4pass">4 пассажира</span></li>
-              <li><i class="fas fa-suitcase"></i> <span data-i18n="spec_3bag">3 чемодана</span></li>
-              <li><i class="fas fa-snowflake"></i> <span data-i18n="spec_climate">Климат-контроль</span></li>
-              <li><i class="fas fa-wifi"></i> <span data-i18n="spec_wifi">Wi-Fi на борту</span></li>
-              <li><i class="fas fa-couch"></i> <span data-i18n="spec_leather">Кожаный салон</span></li>
-              <li><i class="fas fa-volume-up"></i> <span data-i18n="spec_audio">Премиум аудиосистема</span></li>
-              <li><i class="fas fa-parking"></i> <span data-i18n="spec_park">Система парковки</span></li>
-              <li><i class="fas fa-tachometer-alt"></i> <span data-i18n="spec_engine_v6">Двигатель 3.0 V6</span></li>
-              <li><i class="fas fa-road"></i> <span data-i18n="spec_auto">Автоматическая КПП</span></li>
-              <li><i class="fas fa-shield-alt"></i> <span data-i18n="spec_safe">Система безопасности</span></li>
-            </ul>
-            <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
-          </div>
-        </div>
 
-        <!-- CAR 1: Mercedes S-Class W222 -->
-        <div class="car-panel" data-car="1">
-          <div class="car-gallery">
-            <div class="gallery-main" onclick="openLightbox(1,0)">
-              <img id="main-img-1" src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/af5ce1f1-5e74-4ce1-83d4-46c3edc7d600.png" alt="Mercedes S-Class W222" />
-              <div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div>
+          <!-- CAR 0 -->
+          <div class="car-panel active" data-car="0">
+            <div class="car-gallery">
+              <div class="gallery-main" onclick="openLightbox(0,0)">
+                <img id="main-img-0" src="images/mercedes-01.jpg" alt="Mercedes S-Class W223" />
+                <div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div>
+              </div>
+              <div class="gallery-thumbs">
+                <img src="images/mercedes-01.jpg" class="thumb active" onclick="setMain(0,this,0)" alt="" />
+                <img src="images/mercedes-02.jpg" class="thumb" onclick="setMain(0,this,1)" alt="" />
+                <img src="images/mercedes-03.jpg" class="thumb" onclick="setMain(0,this,2)" alt="" />
+                <img src="images/mercedes-04.jpg" class="thumb" onclick="setMain(0,this,3)" alt="" />
+                <img src="images/mercedes-05.jpg" class="thumb" onclick="setMain(0,this,4)" alt="" />
+                <img src="images/mercedes-06.jpg" class="thumb" onclick="setMain(0,this,5)" alt="" />
+                <img src="images/mercedes-07.jpg" class="thumb" onclick="setMain(0,this,6)" alt="" />
+                <img src="images/mercedes-08.jpg" class="thumb" onclick="setMain(0,this,7)" alt="" />
+                <img src="images/mercedes-09.jpg" class="thumb" onclick="setMain(0,this,8)" alt="" />
+                <img src="images/mercedes-10.jpg" class="thumb" onclick="setMain(0,this,9)" alt="" />
+              </div>
             </div>
-            <div class="gallery-thumbs">
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/af5ce1f1-5e74-4ce1-83d4-46c3edc7d600.png" class="thumb active" onclick="setMain(1,this,0)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/93c92e81-5d56-480e-b695-efead14d39d3.png" class="thumb" onclick="setMain(1,this,1)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/1a13a42c-bc48-4fc0-99cf-875a83ef1ef6.png" class="thumb" onclick="setMain(1,this,2)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/280cbaa0-8b1b-443a-a8dc-2e681117a2e2.png" class="thumb" onclick="setMain(1,this,3)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/f6ed032e-de9f-4aaf-bf22-28be8bf6001c.png" class="thumb" onclick="setMain(1,this,4)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/6b14219b-bf50-40d3-a0c5-a7a42d9ef1dd.png" class="thumb" onclick="setMain(1,this,5)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/48d973c2-f65a-41df-a66e-7f45d92ee1f4.png" class="thumb" onclick="setMain(1,this,6)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/8d7e0746-cd0d-4428-990a-700d0ad74501.png" class="thumb" onclick="setMain(1,this,7)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/51c20bd7-7411-4509-b8f2-63e10b87ac1d.png" class="thumb" onclick="setMain(1,this,8)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/d385f11b-2dcb-461d-b234-74483280c793.png" class="thumb" onclick="setMain(1,this,9)" alt="" />
-            </div>
-          </div>
-          <div class="car-info">
-            <h3 class="car-name">Mercedes-Benz S-Class W222</h3>
-            <p class="car-class" data-i18n="class_business_lux">Бизнес-класс · Люкс</p>
-            <p class="car-desc" data-i18n="desc_w222">Легендарный S-Class предыдущего поколения. Безупречный комфорт, представительный стиль и надёжность для самых требовательных клиентов.</p>
-            <button class="specs-toggle-btn" onclick="toggleSpecs(this)">
-              <span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i>
-            </button>
-            <ul class="car-specs">
-              <li><i class="fas fa-users"></i> <span data-i18n="spec_4pass">4 пассажира</span></li>
-              <li><i class="fas fa-suitcase"></i> <span data-i18n="spec_3bag">3 чемодана</span></li>
-              <li><i class="fas fa-snowflake"></i> <span data-i18n="spec_climate">Климат-контроль</span></li>
-              <li><i class="fas fa-wifi"></i> <span data-i18n="spec_wifi">Wi-Fi на борту</span></li>
-              <li><i class="fas fa-couch"></i> <span data-i18n="spec_leather">Кожаный салон</span></li>
-              <li><i class="fas fa-volume-up"></i> <span data-i18n="spec_audio">Премиум аудиосистема</span></li>
-              <li><i class="fas fa-parking"></i> <span data-i18n="spec_park">Система парковки</span></li>
-              <li><i class="fas fa-tachometer-alt"></i> <span data-i18n="spec_engine_v8">Двигатель 4.7 V8</span></li>
-              <li><i class="fas fa-road"></i> <span data-i18n="spec_auto">Автоматическая КПП</span></li>
-              <li><i class="fas fa-shield-alt"></i> <span data-i18n="spec_safe">Система безопасности</span></li>
-            </ul>
-            <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
-          </div>
-        </div>
+            <div class="car-info">
+              <h3 class="car-name">Mercedes-Benz S-Class W223</h3>
+              <p class="car-class" data-i18n="class_business_lux">Бизнес-класс · Люкс</p>
+              <p class="car-desc" data-i18n="desc_w223">Флагманский седан Mercedes-Benz нового поколения. Воплощение роскоши, технологий и комфорта. Идеален для деловых поездок и особых случаев.</p>
 
-        <!-- CAR 2: Mercedes V-Class -->
-        <div class="car-panel" data-car="2">
-          <div class="car-gallery">
-            <div class="gallery-main" onclick="openLightbox(2,0)">
-              <img id="main-img-2" src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/078c7991-f19e-4467-bc2b-8a7d90edcb1a.png" alt="Mercedes V-Class" />
-              <div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div>
-            </div>
-            <div class="gallery-thumbs">
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/078c7991-f19e-4467-bc2b-8a7d90edcb1a.png" class="thumb active" onclick="setMain(2,this,0)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/fa0a5fa7-0583-4e3c-8f6b-cc4704675c56.png" class="thumb" onclick="setMain(2,this,1)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/4ffa2ec9-ea20-49ad-a32d-7d717e664706.png" class="thumb" onclick="setMain(2,this,2)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/39cb81d5-2415-4bfd-9d58-4e80135254f9.png" class="thumb" onclick="setMain(2,this,3)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/91b69976-f385-44fb-a0ed-b5458e6d063f.png" class="thumb" onclick="setMain(2,this,4)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/e93f5a34-aa50-4d4f-9fb2-169d3d460e05.png" class="thumb" onclick="setMain(2,this,5)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/efbd2dc8-758c-43dc-adfd-fb8f9c1a49b5.png" class="thumb" onclick="setMain(2,this,6)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/0cfc133f-c2e5-4df8-b8f9-2fc580999121.png" class="thumb" onclick="setMain(2,this,7)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/a1f44c67-2266-4e9c-8cde-7ec17ea3d023.png" class="thumb" onclick="setMain(2,this,8)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/15edf784-3c28-4994-8485-2f3c3177ba57.png" class="thumb" onclick="setMain(2,this,9)" alt="" />
+              <!-- PRICES -->
+              <div class="car-prices" aria-label="Цены аренды">
+                <div class="price-row"><span data-i18n="price_hour">Час</span><strong>35 000 ₸</strong></div>
+                <div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>90 000 ₸</strong></div>
+                <div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>240 000 ₸</strong></div>
+              </div>
+
+              <button class="specs-toggle-btn" onclick="toggleSpecs(this)">
+                <span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i>
+              </button>
+
+              <ul class="car-specs">
+                <li><i class="fas fa-users"></i> <span data-i18n="spec_4pass">4 пассажира</span></li>
+                <li><i class="fas fa-suitcase"></i> <span data-i18n="spec_3bag">3 чемодана</span></li>
+                <li><i class="fas fa-snowflake"></i> <span data-i18n="spec_climate">Климат-контроль</span></li>
+                <li><i class="fas fa-wifi"></i> <span data-i18n="spec_wifi">Wi-Fi на борту</span></li>
+                <li><i class="fas fa-couch"></i> <span data-i18n="spec_leather">Кожаный салон</span></li>
+                <li><i class="fas fa-volume-up"></i> <span data-i18n="spec_audio">Премиум аудиосистема</span></li>
+                <li><i class="fas fa-parking"></i> <span data-i18n="spec_park">Система парковки</span></li>
+                <li><i class="fas fa-tachometer-alt"></i> <span data-i18n="spec_engine_v6">Двигатель 3.0 V6</span></li>
+                <li><i class="fas fa-road"></i> <span data-i18n="spec_auto">Автоматическая КПП</span></li>
+                <li><i class="fas fa-shield-alt"></i> <span data-i18n="spec_safe">Система безопасности</span></li>
+              </ul>
+
+              <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
             </div>
           </div>
-          <div class="car-info">
-            <h3 class="car-name">Mercedes-Benz V-Class</h3>
-            <p class="car-class" data-i18n="class_minivan">Минивэн · Бизнес</p>
-            <p class="car-desc" data-i18n="desc_vclass">Просторный премиум-минивэн для групповых поездок. Роскошный салон с капитанскими креслами, идеален для трансферов и деловых поездок компанией.</p>
-            <button class="specs-toggle-btn" onclick="toggleSpecs(this)">
-              <span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i>
-            </button>
-            <ul class="car-specs">
-              <li><i class="fas fa-users"></i> <span data-i18n="spec_6pass">6 пассажиров</span></li>
-              <li><i class="fas fa-suitcase"></i> <span data-i18n="spec_6bag">6 чемоданов</span></li>
-              <li><i class="fas fa-snowflake"></i> <span data-i18n="spec_climate">Климат-контроль</span></li>
-              <li><i class="fas fa-tv"></i> <span data-i18n="spec_media">Мультимедиа</span></li>
-              <li><i class="fas fa-couch"></i> <span data-i18n="spec_captain">Капитанские кресла</span></li>
-              <li><i class="fas fa-volume-up"></i> <span data-i18n="spec_audio">Премиум аудиосистема</span></li>
-              <li><i class="fas fa-door-open"></i> <span data-i18n="spec_slide">Раздвижные двери</span></li>
-              <li><i class="fas fa-tachometer-alt"></i> <span data-i18n="spec_engine_v4">Двигатель 2.0 V4</span></li>
-              <li><i class="fas fa-road"></i> <span data-i18n="spec_auto">Автоматическая КПП</span></li>
-              <li><i class="fas fa-wifi"></i> <span data-i18n="spec_wifi">Wi-Fi на борту</span></li>
-            </ul>
-            <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
+
+          <!-- CAR 1 -->
+          <div class="car-panel" data-car="1">
+            <div class="car-gallery">
+              <div class="gallery-main" onclick="openLightbox(1,0)">
+                <img id="main-img-1" src="images/mercedes-01.jpg" alt="Mercedes S-Class W222" />
+                <div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div>
+              </div>
+              <div class="gallery-thumbs">
+                <img src="images/mercedes-01.jpg" class="thumb active" onclick="setMain(1,this,0)" alt="" />
+                <img src="images/mercedes-02.jpg" class="thumb" onclick="setMain(1,this,1)" alt="" />
+                <img src="images/mercedes-03.jpg" class="thumb" onclick="setMain(1,this,2)" alt="" />
+                <img src="images/mercedes-04.jpg" class="thumb" onclick="setMain(1,this,3)" alt="" />
+                <img src="images/mercedes-05.jpg" class="thumb" onclick="setMain(1,this,4)" alt="" />
+                <img src="images/mercedes-06.jpg" class="thumb" onclick="setMain(1,this,5)" alt="" />
+                <img src="images/mercedes-07.jpg" class="thumb" onclick="setMain(1,this,6)" alt="" />
+                <img src="images/mercedes-08.jpg" class="thumb" onclick="setMain(1,this,7)" alt="" />
+                <img src="images/mercedes-09.jpg" class="thumb" onclick="setMain(1,this,8)" alt="" />
+                <img src="images/mercedes-10.jpg" class="thumb" onclick="setMain(1,this,9)" alt="" />
+              </div>
+            </div>
+            <div class="car-info">
+              <h3 class="car-name">Mercedes-Benz S-Class W222</h3>
+              <p class="car-class" data-i18n="class_business_lux">Бизнес-класс · Люкс</p>
+              <p class="car-desc" data-i18n="desc_w222">Легендарный S-Class предыдущего поколения. Безупречный комфорт, представительный стиль и надёжность для самых требовательных клиентов.</p>
+
+              <div class="car-prices" aria-label="Цены аренды">
+                <div class="price-row"><span data-i18n="price_hour">Час</span><strong>30 000 ₸</strong></div>
+                <div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>80 000 ₸</strong></div>
+                <div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>210 000 ₸</strong></div>
+              </div>
+
+              <button class="specs-toggle-btn" onclick="toggleSpecs(this)">
+                <span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i>
+              </button>
+
+              <ul class="car-specs">
+                <li><i class="fas fa-users"></i> <span data-i18n="spec_4pass">4 пассажира</span></li>
+                <li><i class="fas fa-suitcase"></i> <span data-i18n="spec_3bag">3 чемодана</span></li>
+                <li><i class="fas fa-snowflake"></i> <span data-i18n="spec_climate">Климат-контроль</span></li>
+                <li><i class="fas fa-wifi"></i> <span data-i18n="spec_wifi">Wi-Fi на борту</span></li>
+                <li><i class="fas fa-couch"></i> <span data-i18n="spec_leather">Кожаный салон</span></li>
+                <li><i class="fas fa-volume-up"></i> <span data-i18n="spec_audio">Премиум аудиосистема</span></li>
+                <li><i class="fas fa-parking"></i> <span data-i18n="spec_park">Система парковки</span></li>
+                <li><i class="fas fa-tachometer-alt"></i> <span data-i18n="spec_engine_v8">Двигатель 4.7 V8</span></li>
+                <li><i class="fas fa-road"></i> <span data-i18n="spec_auto">Автоматическая КПП</span></li>
+                <li><i class="fas fa-shield-alt"></i> <span data-i18n="spec_safe">Система безопасности</span></li>
+              </ul>
+
+              <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
+            </div>
           </div>
         </div>
 
-        <!-- CAR 3: Mercedes Sprinter -->
-        <div class="car-panel" data-car="3">
-          <div class="car-gallery">
-            <div class="gallery-main" onclick="openLightbox(3,0)">
-              <img id="main-img-3" src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/c2cf920c-fed6-45e3-8cf9-a12b78cfefbc.png" alt="Mercedes Sprinter" />
-              <div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div>
-            </div>
-            <div class="gallery-thumbs">
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/c2cf920c-fed6-45e3-8cf9-a12b78cfefbc.png" class="thumb active" onclick="setMain(3,this,0)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/1d7648c1-00bd-4824-a897-0db59b9c9153.png" class="thumb" onclick="setMain(3,this,1)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/e2041191-6898-43b1-96c6-f6705a5ffc79.png" class="thumb" onclick="setMain(3,this,2)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/5270fc4a-33fb-4cab-b6e6-ec3df06d9558.png" class="thumb" onclick="setMain(3,this,3)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/b876cf7a-ad59-44be-9166-6c67f98613ca.png" class="thumb" onclick="setMain(3,this,4)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/ae2208b4-1e07-4a82-ae71-e2e43872f23a.png" class="thumb" onclick="setMain(3,this,5)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/a9e99aee-66c5-4df0-9487-0603fbccbd84.png" class="thumb" onclick="setMain(3,this,6)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/0ae74ad0-9408-4094-8042-b4bd444fe6e0.png" class="thumb" onclick="setMain(3,this,7)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/6f74897f-8685-4193-b8ec-7595c637796d.png" class="thumb" onclick="setMain(3,this,8)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/1fe62658-75e3-4c06-bcb0-a2345c81da3e.png" class="thumb" onclick="setMain(3,this,9)" alt="" />
-            </div>
+        <!-- ===== SEDANS / TOYOTA ===== -->
+        <div class="brand-section" data-brand="toyota">
+          <!-- Toyota photos (10 pcs): images/toyota-01.jpg ... images/toyota-10.jpg -->
+          <div class="car-tabs">
+            <button class="car-tab active" data-car="8">Camry 80</button>
+            <button class="car-tab" data-car="9">Camry 70</button>
           </div>
-          <div class="car-info">
-            <h3 class="car-name">Mercedes-Benz Sprinter</h3>
-            <p class="car-class" data-i18n="class_bus">Микроавтобус · 16 мест</p>
-            <p class="car-desc" data-i18n="desc_sprinter">Вместительный премиум-микроавтобус для групповых трансферов. Комфортные кресла бизнес-класса, кондиционер и современное оборудование.</p>
-            <button class="specs-toggle-btn" onclick="toggleSpecs(this)">
-              <span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i>
-            </button>
-            <ul class="car-specs">
-              <li><i class="fas fa-users"></i> <span data-i18n="spec_16pass">16 пассажиров</span></li>
-              <li><i class="fas fa-suitcase"></i> <span data-i18n="spec_16bag">16 чемоданов</span></li>
-              <li><i class="fas fa-snowflake"></i> <span data-i18n="spec_climate">Климат-контроль</span></li>
-              <li><i class="fas fa-music"></i> <span data-i18n="spec_audio2">Аудиосистема</span></li>
-              <li><i class="fas fa-chair"></i> <span data-i18n="spec_recline">Откидные кресла</span></li>
-              <li><i class="fas fa-lightbulb"></i> <span data-i18n="spec_led">LED-освещение</span></li>
-              <li><i class="fas fa-plug"></i> <span data-i18n="spec_usb">USB-зарядки</span></li>
-              <li><i class="fas fa-tachometer-alt"></i> <span data-i18n="spec_engine_d">Дизель 2.2</span></li>
-              <li><i class="fas fa-road"></i> <span data-i18n="spec_auto">Автоматическая КПП</span></li>
-              <li><i class="fas fa-shield-alt"></i> <span data-i18n="spec_safe">Система безопасности</span></li>
-            </ul>
-            <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
-          </div>
-        </div>
-      </div><!-- end mercedes -->
 
-      <!-- ===== LEXUS BRAND SECTION ===== -->
-      <div class="brand-section" data-brand="lexus">
-        <div class="car-tabs">
-          <button class="car-tab active" data-car="4">LX 600</button>
-          <button class="car-tab" data-car="5">LX 570</button>
-        </div>
+          <!-- CAR 8 -->
+          <div class="car-panel active" data-car="8">
+            <div class="car-gallery">
+              <div class="gallery-main" onclick="openLightbox(8,0)">
+                <img id="main-img-8" src="images/toyota-01.jpg" alt="Toyota Camry 80" />
+                <div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div>
+              </div>
+              <div class="gallery-thumbs">
+                <img src="images/toyota-01.jpg" class="thumb active" onclick="setMain(8,this,0)" alt="" />
+                <img src="images/toyota-02.jpg" class="thumb" onclick="setMain(8,this,1)" alt="" />
+                <img src="images/toyota-03.jpg" class="thumb" onclick="setMain(8,this,2)" alt="" />
+                <img src="images/toyota-04.jpg" class="thumb" onclick="setMain(8,this,3)" alt="" />
+                <img src="images/toyota-05.jpg" class="thumb" onclick="setMain(8,this,4)" alt="" />
+                <img src="images/toyota-06.jpg" class="thumb" onclick="setMain(8,this,5)" alt="" />
+                <img src="images/toyota-07.jpg" class="thumb" onclick="setMain(8,this,6)" alt="" />
+                <img src="images/toyota-08.jpg" class="thumb" onclick="setMain(8,this,7)" alt="" />
+                <img src="images/toyota-09.jpg" class="thumb" onclick="setMain(8,this,8)" alt="" />
+                <img src="images/toyota-10.jpg" class="thumb" onclick="setMain(8,this,9)" alt="" />
+              </div>
+            </div>
 
-        <!-- CAR 4: Lexus LX 600 -->
-        <div class="car-panel active" data-car="4">
-          <div class="car-gallery">
-            <div class="gallery-main" onclick="openLightbox(4,0)">
-              <img id="main-img-4" src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/cda428e1-6782-4f90-be0a-5242c21714be.png" alt="Lexus LX 600" />
-              <div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div>
-            </div>
-            <div class="gallery-thumbs">
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/cda428e1-6782-4f90-be0a-5242c21714be.png" class="thumb active" onclick="setMain(4,this,0)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/d1effbc3-13dd-4311-92c5-3fe250332b91.png" class="thumb" onclick="setMain(4,this,1)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/e8a1d0dc-d4ad-4b9a-8944-07804333fb4d.png" class="thumb" onclick="setMain(4,this,2)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/e1abb74a-ae21-4d12-8955-ceb1f0b92f7f.png" class="thumb" onclick="setMain(4,this,3)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/4687125e-d3ab-4cf4-8b76-8894221194a2.png" class="thumb" onclick="setMain(4,this,4)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/fd8eb6a4-d1cc-4cbb-8d2a-81d14d31035d.png" class="thumb" onclick="setMain(4,this,5)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/edc466e1-4b23-4c8e-a83b-be8109926dbe.png" class="thumb" onclick="setMain(4,this,6)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/0f9eb0e8-f5cb-4ace-8cc8-7b71af011548.png" class="thumb" onclick="setMain(4,this,7)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/ca06a7f1-5172-4199-856e-d8aab1d43212.png" class="thumb" onclick="setMain(4,this,8)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/5fc983eb-d68a-432b-baac-eba62c97665d.png" class="thumb" onclick="setMain(4,this,9)" alt="" />
-            </div>
-          </div>
-          <div class="car-info">
-            <h3 class="car-name">Lexus LX 600</h3>
-            <p class="car-class" data-i18n="class_suv_lux">Внедорожник · Люкс</p>
-            <p class="car-desc" data-i18n="desc_lx600">Флагманский внедорожник Lexus нового поколения. Сочетает в себе японское качество, роскошный интерьер и выдающиеся внедорожные возможности.</p>
-            <button class="specs-toggle-btn" onclick="toggleSpecs(this)">
-              <span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i>
-            </button>
-            <ul class="car-specs">
-              <li><i class="fas fa-users"></i> <span data-i18n="spec_7pass">7 пассажиров</span></li>
-              <li><i class="fas fa-suitcase"></i> <span data-i18n="spec_4bag">4 чемодана</span></li>
-              <li><i class="fas fa-snowflake"></i> <span data-i18n="spec_climate">Климат-контроль</span></li>
-              <li><i class="fas fa-shield-alt"></i> <span data-i18n="spec_4wd">Полный привод</span></li>
-              <li><i class="fas fa-couch"></i> <span data-i18n="spec_leather">Кожаный салон</span></li>
-              <li><i class="fas fa-volume-up"></i> <span data-i18n="spec_audio_mark">Mark Levinson аудио</span></li>
-              <li><i class="fas fa-tv"></i> <span data-i18n="spec_screen">Задние экраны</span></li>
-              <li><i class="fas fa-tachometer-alt"></i> <span data-i18n="spec_engine_v6t">Двигатель 3.5 V6 Twin Turbo</span></li>
-              <li><i class="fas fa-road"></i> <span data-i18n="spec_auto">Автоматическая КПП</span></li>
-              <li><i class="fas fa-mountain"></i> <span data-i18n="spec_offroad">Внедорожный режим</span></li>
-            </ul>
-            <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
-          </div>
-        </div>
+            <div class="car-info">
+              <h3 class="car-name">Toyota Camry 80</h3>
+              <p class="car-class" data-i18n="class_sedan">Бизнес-седан · Комфорт</p>
+              <p class="car-desc" data-i18n="desc_camry80">Новейшее поколение легендарного Camry. Динамичный дизайн, просторный салон и высокий уровень оснащения для комфортных деловых поездок.</p>
 
-        <!-- CAR 5: Lexus LX 570 -->
-        <div class="car-panel" data-car="5">
-          <div class="car-gallery">
-            <div class="gallery-main" onclick="openLightbox(5,0)">
-              <img id="main-img-5" src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/f8af36fc-c192-497b-a37e-3105a5e0d59b.png" alt="Lexus LX 570" />
-              <div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div>
-            </div>
-            <div class="gallery-thumbs">
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/f8af36fc-c192-497b-a37e-3105a5e0d59b.png" class="thumb active" onclick="setMain(5,this,0)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/2f4684cc-a9eb-4ec1-b8bb-8f1dcc9c74c0.png" class="thumb" onclick="setMain(5,this,1)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/9b2fbbfa-96f3-4fc1-af7a-a1b49d4f0c92.png" class="thumb" onclick="setMain(5,this,2)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/8433cfb4-edce-47a4-a767-cadb6e652b5e.png" class="thumb" onclick="setMain(5,this,3)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/d3470d42-de41-4620-9142-c3638101f00d.png" class="thumb" onclick="setMain(5,this,4)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/6ffe486f-59a4-4d0c-9a38-1103d5ea7e95.png" class="thumb" onclick="setMain(5,this,5)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/8c43a7fd-590b-4b96-9bc4-1a91a1a80571.png" class="thumb" onclick="setMain(5,this,6)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/6d3e941e-2aff-45df-a948-bc14b3d66910.png" class="thumb" onclick="setMain(5,this,7)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/082d6be5-9736-485c-a12f-1baa6f0a0ceb.png" class="thumb" onclick="setMain(5,this,8)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/c0faf772-0ab5-44fc-b540-e30e1433f858.png" class="thumb" onclick="setMain(5,this,9)" alt="" />
-            </div>
-          </div>
-          <div class="car-info">
-            <h3 class="car-name">Lexus LX 570</h3>
-            <p class="car-class" data-i18n="class_suv_lux">Внедорожник · Люкс</p>
-            <p class="car-desc" data-i18n="desc_lx570">Классический премиум-внедорожник Lexus. Мощный V8, роскошный салон и непревзойдённая надёжность — выбор тех, кто ценит качество.</p>
-            <button class="specs-toggle-btn" onclick="toggleSpecs(this)">
-              <span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i>
-            </button>
-            <ul class="car-specs">
-              <li><i class="fas fa-users"></i> <span data-i18n="spec_7pass">7 пассажиров</span></li>
-              <li><i class="fas fa-suitcase"></i> <span data-i18n="spec_4bag">4 чемодана</span></li>
-              <li><i class="fas fa-snowflake"></i> <span data-i18n="spec_climate">Климат-контроль</span></li>
-              <li><i class="fas fa-shield-alt"></i> <span data-i18n="spec_4wd">Полный привод</span></li>
-              <li><i class="fas fa-couch"></i> <span data-i18n="spec_leather">Кожаный салон</span></li>
-              <li><i class="fas fa-volume-up"></i> <span data-i18n="spec_audio_mark">Mark Levinson аудио</span></li>
-              <li><i class="fas fa-tv"></i> <span data-i18n="spec_screen">Задние экраны</span></li>
-              <li><i class="fas fa-tachometer-alt"></i> <span data-i18n="spec_engine_v8_5">Двигатель 5.7 V8</span></li>
-              <li><i class="fas fa-road"></i> <span data-i18n="spec_auto">Автоматическая КПП</span></li>
-              <li><i class="fas fa-mountain"></i> <span data-i18n="spec_offroad">Внедорожный режим</span></li>
-            </ul>
-            <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
-          </div>
-        </div>
-      </div><!-- end lexus -->
+              <div class="car-prices" aria-label="Цены аренды">
+                <div class="price-row"><span data-i18n="price_hour">Час</span><strong>22 000 ₸</strong></div>
+                <div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>60 000 ₸</strong></div>
+                <div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>150 000 ₸</strong></div>
+              </div>
 
-      <!-- ===== TOYOTA BRAND SECTION ===== -->
-      <div class="brand-section" data-brand="toyota">
-        <div class="car-tabs">
-          <button class="car-tab active" data-car="6">Land Cruiser 300</button>
-          <button class="car-tab" data-car="7">Land Cruiser 200</button>
-          <button class="car-tab" data-car="8">Camry 80</button>
-          <button class="car-tab" data-car="9">Camry 70</button>
-        </div>
+              <button class="specs-toggle-btn" onclick="toggleSpecs(this)">
+                <span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i>
+              </button>
 
-        <!-- CAR 6: Land Cruiser 300 -->
-        <div class="car-panel active" data-car="6">
-          <div class="car-gallery">
-            <div class="gallery-main" onclick="openLightbox(6,0)">
-              <img id="main-img-6" src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/3b0cdb4f-6baf-4330-80d6-a447f96c3e7d.png" alt="Land Cruiser 300" />
-              <div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div>
-            </div>
-            <div class="gallery-thumbs">
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/3b0cdb4f-6baf-4330-80d6-a447f96c3e7d.png" class="thumb active" onclick="setMain(6,this,0)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/03933849-a17c-456a-8ec0-9346bdf5de40.png" class="thumb" onclick="setMain(6,this,1)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/a5c93364-2ee3-4f4c-a389-fb8de95892cd.png" class="thumb" onclick="setMain(6,this,2)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/97b3f53c-35b6-44cd-bb8b-75a717b3db33.png" class="thumb" onclick="setMain(6,this,3)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/928b4a98-23bb-41e5-9be3-bf69183f4f02.png" class="thumb" onclick="setMain(6,this,4)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/9976b6cc-4a92-45d1-8c13-3ab446b47adc.png" class="thumb" onclick="setMain(6,this,5)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/40e26c28-f776-4a3d-8161-1135c9f02481.png" class="thumb" onclick="setMain(6,this,6)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/84c2316f-06c5-437f-b5a7-6b13dca5086d.png" class="thumb" onclick="setMain(6,this,7)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/8fd33b37-227a-494c-b78c-d774a41d8374.png" class="thumb" onclick="setMain(6,this,8)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/8837566c-87e2-4671-bf56-6acfeb47f9de.png" class="thumb" onclick="setMain(6,this,9)" alt="" />
+              <ul class="car-specs">
+                <li><i class="fas fa-users"></i> <span data-i18n="spec_4pass">4 пассажира</span></li>
+                <li><i class="fas fa-suitcase"></i> <span data-i18n="spec_3bag">3 чемодана</span></li>
+                <li><i class="fas fa-snowflake"></i> <span data-i18n="spec_climate">Климат-контроль</span></li>
+                <li><i class="fas fa-leaf"></i> <span data-i18n="spec_hybrid">Гибрид доступен</span></li>
+                <li><i class="fas fa-couch"></i> <span data-i18n="spec_leather">Кожаный салон</span></li>
+                <li><i class="fas fa-volume-up"></i> <span data-i18n="spec_audio_jbl">JBL аудиосистема</span></li>
+                <li><i class="fas fa-parking"></i> <span data-i18n="spec_park">Система парковки</span></li>
+                <li><i class="fas fa-tachometer-alt"></i> <span data-i18n="spec_engine_v6_25">Двигатель 2.5 V6</span></li>
+                <li><i class="fas fa-road"></i> <span data-i18n="spec_auto">Автоматическая КПП</span></li>
+                <li><i class="fas fa-shield-alt"></i> <span data-i18n="spec_safe">Система безопасности</span></li>
+              </ul>
+
+              <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
             </div>
           </div>
-          <div class="car-info">
-            <h3 class="car-name">Toyota Land Cruiser 300</h3>
-            <p class="car-class" data-i18n="class_suv_prem">Внедорожник · Премиум</p>
-            <p class="car-desc" data-i18n="desc_lc300">Новейший Land Cruiser серии 300. Революционный дизайн, передовые технологии и легендарная надёжность Toyota в самом престижном исполнении.</p>
-            <button class="specs-toggle-btn" onclick="toggleSpecs(this)">
-              <span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i>
-            </button>
-            <ul class="car-specs">
-              <li><i class="fas fa-users"></i> <span data-i18n="spec_7pass">7 пассажиров</span></li>
-              <li><i class="fas fa-suitcase"></i> <span data-i18n="spec_4bag">4 чемодана</span></li>
-              <li><i class="fas fa-snowflake"></i> <span data-i18n="spec_climate">Климат-контроль</span></li>
-              <li><i class="fas fa-shield-alt"></i> <span data-i18n="spec_4wd">Полный привод</span></li>
-              <li><i class="fas fa-couch"></i> <span data-i18n="spec_leather">Кожаный салон</span></li>
-              <li><i class="fas fa-volume-up"></i> <span data-i18n="spec_audio_jbl">JBL аудиосистема</span></li>
-              <li><i class="fas fa-tv"></i> <span data-i18n="spec_screen">Задние экраны</span></li>
-              <li><i class="fas fa-tachometer-alt"></i> <span data-i18n="spec_engine_v6t">Двигатель 3.5 V6 Twin Turbo</span></li>
-              <li><i class="fas fa-road"></i> <span data-i18n="spec_auto">Автоматическая КПП</span></li>
-              <li><i class="fas fa-mountain"></i> <span data-i18n="spec_offroad">Внедорожный режим</span></li>
-            </ul>
-            <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
+
+          <!-- CAR 9 -->
+          <div class="car-panel" data-car="9">
+            <div class="car-gallery">
+              <div class="gallery-main" onclick="openLightbox(9,0)">
+                <img id="main-img-9" src="images/toyota-01.jpg" alt="Toyota Camry 70" />
+                <div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div>
+              </div>
+              <div class="gallery-thumbs">
+                <img src="images/toyota-01.jpg" class="thumb active" onclick="setMain(9,this,0)" alt="" />
+                <img src="images/toyota-02.jpg" class="thumb" onclick="setMain(9,this,1)" alt="" />
+                <img src="images/toyota-03.jpg" class="thumb" onclick="setMain(9,this,2)" alt="" />
+                <img src="images/toyota-04.jpg" class="thumb" onclick="setMain(9,this,3)" alt="" />
+                <img src="images/toyota-05.jpg" class="thumb" onclick="setMain(9,this,4)" alt="" />
+                <img src="images/toyota-06.jpg" class="thumb" onclick="setMain(9,this,5)" alt="" />
+                <img src="images/toyota-07.jpg" class="thumb" onclick="setMain(9,this,6)" alt="" />
+                <img src="images/toyota-08.jpg" class="thumb" onclick="setMain(9,this,7)" alt="" />
+                <img src="images/toyota-09.jpg" class="thumb" onclick="setMain(9,this,8)" alt="" />
+                <img src="images/toyota-10.jpg" class="thumb" onclick="setMain(9,this,9)" alt="" />
+              </div>
+            </div>
+
+            <div class="car-info">
+              <h3 class="car-name">Toyota Camry 70</h3>
+              <p class="car-class" data-i18n="class_sedan">Бизнес-седан · Комфорт</p>
+              <p class="car-desc" data-i18n="desc_camry70">Проверенный временем Camry 7-го поколения. Надёжность, комфорт и элегантность — идеальный выбор для деловых поездок и трансферов.</p>
+
+              <div class="car-prices" aria-label="Цены аренды">
+                <div class="price-row"><span data-i18n="price_hour">Час</span><strong>20 000 ₸</strong></div>
+                <div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>55 000 ₸</strong></div>
+                <div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>140 000 ₸</strong></div>
+              </div>
+
+              <button class="specs-toggle-btn" onclick="toggleSpecs(this)">
+                <span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i>
+              </button>
+
+              <ul class="car-specs">
+                <li><i class="fas fa-users"></i> <span data-i18n="spec_4pass">4 пассажира</span></li>
+                <li><i class="fas fa-suitcase"></i> <span data-i18n="spec_3bag">3 чемодана</span></li>
+                <li><i class="fas fa-snowflake"></i> <span data-i18n="spec_climate">Климат-контроль</span></li>
+                <li><i class="fas fa-star"></i> <span data-i18n="spec_popular">Популярный выбор</span></li>
+                <li><i class="fas fa-couch"></i> <span data-i18n="spec_leather">Кожаный салон</span></li>
+                <li><i class="fas fa-volume-up"></i> <span data-i18n="spec_audio2">Аудиосистема</span></li>
+                <li><i class="fas fa-parking"></i> <span data-i18n="spec_park">Система парковки</span></li>
+                <li><i class="fas fa-tachometer-alt"></i> <span data-i18n="spec_engine_v6_25">Двигатель 2.5 V6</span></li>
+                <li><i class="fas fa-road"></i> <span data-i18n="spec_auto">Автоматическая КПП</span></li>
+                <li><i class="fas fa-shield-alt"></i> <span data-i18n="spec_safe">Система безопасности</span></li>
+              </ul>
+
+              <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
+            </div>
           </div>
         </div>
 
-        <!-- CAR 7: Land Cruiser 200 -->
-        <div class="car-panel" data-car="7">
-          <div class="car-gallery">
-            <div class="gallery-main" onclick="openLightbox(7,0)">
-              <img id="main-img-7" src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/5c1e4f2c-3eb0-47a2-84d1-150dc95944a5.png" alt="Land Cruiser 200" />
-              <div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div>
+      </div><!-- end category sedans -->
+
+      <!-- =======================
+           CATEGORY: SUV
+      ======================== -->
+      <div class="category-section" data-category="suv">
+
+        <div class="brand-tabs">
+          <button class="brand-tab disabled" data-brand="mercedes" aria-disabled="true" tabindex="-1">
+            <img src="images/logo-mersedes.jpg" alt="Mercedes-Benz" class="brand-tab-logo" />
+            Mercedes
+          </button>
+          <button class="brand-tab active" data-brand="lexus">
+            <img src="images/logo-lexus.jpg" alt="Lexus" class="brand-tab-logo" />
+            Lexus
+          </button>
+          <button class="brand-tab" data-brand="toyota">
+            <img src="images/logo-toyota.jpg" alt="Toyota" class="brand-tab-logo" />
+            Toyota
+          </button>
+        </div>
+
+        <!-- ===== SUV / LEXUS ===== -->
+        <div class="brand-section active" data-brand="lexus">
+          <!-- Lexus photos (10 pcs): images/lexus-01.jpg ... images/lexus-10.jpg -->
+          <div class="car-tabs">
+            <button class="car-tab active" data-car="4">LX 600</button>
+            <button class="car-tab" data-car="5">LX 570</button>
+          </div>
+
+          <!-- CAR 4 -->
+          <div class="car-panel active" data-car="4">
+            <div class="car-gallery">
+              <div class="gallery-main" onclick="openLightbox(4,0)">
+                <img id="main-img-4" src="images/lexus-01.jpg" alt="Lexus LX 600" />
+                <div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div>
+              </div>
+              <div class="gallery-thumbs">
+                <img src="images/lexus-01.jpg" class="thumb active" onclick="setMain(4,this,0)" alt="" />
+                <img src="images/lexus-02.jpg" class="thumb" onclick="setMain(4,this,1)" alt="" />
+                <img src="images/lexus-03.jpg" class="thumb" onclick="setMain(4,this,2)" alt="" />
+                <img src="images/lexus-04.jpg" class="thumb" onclick="setMain(4,this,3)" alt="" />
+                <img src="images/lexus-05.jpg" class="thumb" onclick="setMain(4,this,4)" alt="" />
+                <img src="images/lexus-06.jpg" class="thumb" onclick="setMain(4,this,5)" alt="" />
+                <img src="images/lexus-07.jpg" class="thumb" onclick="setMain(4,this,6)" alt="" />
+                <img src="images/lexus-08.jpg" class="thumb" onclick="setMain(4,this,7)" alt="" />
+                <img src="images/lexus-09.jpg" class="thumb" onclick="setMain(4,this,8)" alt="" />
+                <img src="images/lexus-10.jpg" class="thumb" onclick="setMain(4,this,9)" alt="" />
+              </div>
             </div>
-            <div class="gallery-thumbs">
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/5c1e4f2c-3eb0-47a2-84d1-150dc95944a5.png" class="thumb active" onclick="setMain(7,this,0)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/ffaf7dce-fe42-47ee-8ce7-c7300a9a1833.png" class="thumb" onclick="setMain(7,this,1)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/d1e0868c-f371-4fa2-9a54-089a10e0f86d.png" class="thumb" onclick="setMain(7,this,2)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/50322abc-e5bd-4773-8350-5dae611aaf64.png" class="thumb" onclick="setMain(7,this,3)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/897d240b-bd5c-4659-ad06-34a4e0bf002e.png" class="thumb" onclick="setMain(7,this,4)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/5b93640a-9aa0-4737-9b64-575cd2b869ca.png" class="thumb" onclick="setMain(7,this,5)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/e3aa4b40-574f-45ee-8a33-5f4ce20dad06.png" class="thumb" onclick="setMain(7,this,6)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/cbe9654e-3cc8-4378-9a9b-62c6feb2319e.png" class="thumb" onclick="setMain(7,this,7)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/8142dc10-e030-4652-be74-3017e60bcf2d.png" class="thumb" onclick="setMain(7,this,8)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/ddfd66d8-5cad-460b-8c3e-43fad01a86e5.png" class="thumb" onclick="setMain(7,this,9)" alt="" />
+
+            <div class="car-info">
+              <h3 class="car-name">Lexus LX 600</h3>
+              <p class="car-class" data-i18n="class_suv_lux">Внедорожник · Люкс</p>
+              <p class="car-desc" data-i18n="desc_lx600">Флагманский внедорожник Lexus нового поколения. Сочетает в себе японское качество, роскошный интерьер и выдающиеся внедорожные возможности.</p>
+
+              <div class="car-prices" aria-label="Цены аренды">
+                <div class="price-row"><span data-i18n="price_hour">Час</span><strong>32 000 ₸</strong></div>
+                <div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>85 000 ₸</strong></div>
+                <div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>220 000 ₸</strong></div>
+              </div>
+
+              <button class="specs-toggle-btn" onclick="toggleSpecs(this)">
+                <span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i>
+              </button>
+
+              <ul class="car-specs">
+                <li><i class="fas fa-users"></i> <span data-i18n="spec_7pass">7 пассажиров</span></li>
+                <li><i class="fas fa-suitcase"></i> <span data-i18n="spec_4bag">4 чемодана</span></li>
+                <li><i class="fas fa-snowflake"></i> <span data-i18n="spec_climate">Климат-контроль</span></li>
+                <li><i class="fas fa-shield-alt"></i> <span data-i18n="spec_4wd">Полный привод</span></li>
+                <li><i class="fas fa-couch"></i> <span data-i18n="spec_leather">Кожаный салон</span></li>
+                <li><i class="fas fa-volume-up"></i> <span data-i18n="spec_audio_mark">Mark Levinson аудио</span></li>
+                <li><i class="fas fa-tv"></i> <span data-i18n="spec_screen">Задние экраны</span></li>
+                <li><i class="fas fa-tachometer-alt"></i> <span data-i18n="spec_engine_v6t">Двигатель 3.5 V6 Twin Turbo</span></li>
+                <li><i class="fas fa-road"></i> <span data-i18n="spec_auto">Автоматическая КПП</span></li>
+                <li><i class="fas fa-mountain"></i> <span data-i18n="spec_offroad">Внедорожный режим</span></li>
+              </ul>
+
+              <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
             </div>
           </div>
-          <div class="car-info">
-            <h3 class="car-name">Toyota Land Cruiser 200</h3>
-            <p class="car-class" data-i18n="class_suv_prem">Внедорожник · Премиум</p>
-            <p class="car-desc" data-i18n="desc_lc200">Легендарный Land Cruiser 200 — символ надёжности и комфорта. Проверенный временем флагман Toyota с роскошным салоном и непревзойдёнными возможностями.</p>
-            <button class="specs-toggle-btn" onclick="toggleSpecs(this)">
-              <span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i>
-            </button>
-            <ul class="car-specs">
-              <li><i class="fas fa-users"></i> <span data-i18n="spec_7pass">7 пассажиров</span></li>
-              <li><i class="fas fa-suitcase"></i> <span data-i18n="spec_4bag">4 чемодана</span></li>
-              <li><i class="fas fa-snowflake"></i> <span data-i18n="spec_climate">Климат-контроль</span></li>
-              <li><i class="fas fa-shield-alt"></i> <span data-i18n="spec_4wd">Полный привод</span></li>
-              <li><i class="fas fa-couch"></i> <span data-i18n="spec_leather">Кожаный салон</span></li>
-              <li><i class="fas fa-volume-up"></i> <span data-i18n="spec_audio_jbl">JBL аудиосистема</span></li>
-              <li><i class="fas fa-tv"></i> <span data-i18n="spec_screen">Задние экраны</span></li>
-              <li><i class="fas fa-tachometer-alt"></i> <span data-i18n="spec_engine_v8_4">Двигатель 4.6 V8</span></li>
-              <li><i class="fas fa-road"></i> <span data-i18n="spec_auto">Автоматическая КПП</span></li>
-              <li><i class="fas fa-mountain"></i> <span data-i18n="spec_offroad">Внедорожный режим</span></li>
-            </ul>
-            <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
+
+          <!-- CAR 5 -->
+          <div class="car-panel" data-car="5">
+            <div class="car-gallery">
+              <div class="gallery-main" onclick="openLightbox(5,0)">
+                <img id="main-img-5" src="images/lexus-01.jpg" alt="Lexus LX 570" />
+                <div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div>
+              </div>
+              <div class="gallery-thumbs">
+                <img src="images/lexus-01.jpg" class="thumb active" onclick="setMain(5,this,0)" alt="" />
+                <img src="images/lexus-02.jpg" class="thumb" onclick="setMain(5,this,1)" alt="" />
+                <img src="images/lexus-03.jpg" class="thumb" onclick="setMain(5,this,2)" alt="" />
+                <img src="images/lexus-04.jpg" class="thumb" onclick="setMain(5,this,3)" alt="" />
+                <img src="images/lexus-05.jpg" class="thumb" onclick="setMain(5,this,4)" alt="" />
+                <img src="images/lexus-06.jpg" class="thumb" onclick="setMain(5,this,5)" alt="" />
+                <img src="images/lexus-07.jpg" class="thumb" onclick="setMain(5,this,6)" alt="" />
+                <img src="images/lexus-08.jpg" class="thumb" onclick="setMain(5,this,7)" alt="" />
+                <img src="images/lexus-09.jpg" class="thumb" onclick="setMain(5,this,8)" alt="" />
+                <img src="images/lexus-10.jpg" class="thumb" onclick="setMain(5,this,9)" alt="" />
+              </div>
+            </div>
+
+            <div class="car-info">
+              <h3 class="car-name">Lexus LX 570</h3>
+              <p class="car-class" data-i18n="class_suv_lux">Внедорожник · Люкс</p>
+              <p class="car-desc" data-i18n="desc_lx570">Классический премиум-внедорожник Lexus. Мощный V8, роскошный салон и непревзойдённая надёжность — выбор тех, кто ценит качество.</p>
+
+              <div class="car-prices" aria-label="Цены аренды">
+                <div class="price-row"><span data-i18n="price_hour">Час</span><strong>30 000 ₸</strong></div>
+                <div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>80 000 ₸</strong></div>
+                <div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>210 000 ₸</strong></div>
+              </div>
+
+              <button class="specs-toggle-btn" onclick="toggleSpecs(this)">
+                <span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i>
+              </button>
+
+              <ul class="car-specs">
+                <li><i class="fas fa-users"></i> <span data-i18n="spec_7pass">7 пассажиров</span></li>
+                <li><i class="fas fa-suitcase"></i> <span data-i18n="spec_4bag">4 чемодана</span></li>
+                <li><i class="fas fa-snowflake"></i> <span data-i18n="spec_climate">Климат-контроль</span></li>
+                <li><i class="fas fa-shield-alt"></i> <span data-i18n="spec_4wd">Полный привод</span></li>
+                <li><i class="fas fa-couch"></i> <span data-i18n="spec_leather">Кожаный салон</span></li>
+                <li><i class="fas fa-volume-up"></i> <span data-i18n="spec_audio_mark">Mark Levinson аудио</span></li>
+                <li><i class="fas fa-tv"></i> <span data-i18n="spec_screen">Задние экраны</span></li>
+                <li><i class="fas fa-tachometer-alt"></i> <span data-i18n="spec_engine_v8_5">Двигатель 5.7 V8</span></li>
+                <li><i class="fas fa-road"></i> <span data-i18n="spec_auto">Автоматическая КПП</span></li>
+                <li><i class="fas fa-mountain"></i> <span data-i18n="spec_offroad">Внедорожный режим</span></li>
+              </ul>
+
+              <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
+            </div>
           </div>
         </div>
 
-        <!-- CAR 8: Camry 80 -->
-        <div class="car-panel" data-car="8">
-          <div class="car-gallery">
-            <div class="gallery-main" onclick="openLightbox(8,0)">
-              <img id="main-img-8" src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/83cc34df-3e19-4363-89b2-fec5c5f8a110.png" alt="Toyota Camry 80" />
-              <div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div>
+        <!-- ===== SUV / TOYOTA ===== -->
+        <div class="brand-section" data-brand="toyota">
+          <!-- Toyota photos (10 pcs): images/toyota-01.jpg ... images/toyota-10.jpg -->
+          <div class="car-tabs">
+            <button class="car-tab active" data-car="6">Land Cruiser 300</button>
+            <button class="car-tab" data-car="7">Land Cruiser 200</button>
+          </div>
+
+          <!-- CAR 6 -->
+          <div class="car-panel active" data-car="6">
+            <div class="car-gallery">
+              <div class="gallery-main" onclick="openLightbox(6,0)">
+                <img id="main-img-6" src="images/toyota-01.jpg" alt="Toyota Land Cruiser 300" />
+                <div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div>
+              </div>
+              <div class="gallery-thumbs">
+                <img src="images/toyota-01.jpg" class="thumb active" onclick="setMain(6,this,0)" alt="" />
+                <img src="images/toyota-02.jpg" class="thumb" onclick="setMain(6,this,1)" alt="" />
+                <img src="images/toyota-03.jpg" class="thumb" onclick="setMain(6,this,2)" alt="" />
+                <img src="images/toyota-04.jpg" class="thumb" onclick="setMain(6,this,3)" alt="" />
+                <img src="images/toyota-05.jpg" class="thumb" onclick="setMain(6,this,4)" alt="" />
+                <img src="images/toyota-06.jpg" class="thumb" onclick="setMain(6,this,5)" alt="" />
+                <img src="images/toyota-07.jpg" class="thumb" onclick="setMain(6,this,6)" alt="" />
+                <img src="images/toyota-08.jpg" class="thumb" onclick="setMain(6,this,7)" alt="" />
+                <img src="images/toyota-09.jpg" class="thumb" onclick="setMain(6,this,8)" alt="" />
+                <img src="images/toyota-10.jpg" class="thumb" onclick="setMain(6,this,9)" alt="" />
+              </div>
             </div>
-            <div class="gallery-thumbs">
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/83cc34df-3e19-4363-89b2-fec5c5f8a110.png" class="thumb active" onclick="setMain(8,this,0)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/2ba71de9-dc98-4c2e-acf0-fca5caa0d988.png" class="thumb" onclick="setMain(8,this,1)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/09843b16-a18e-4eba-844e-943228551885.png" class="thumb" onclick="setMain(8,this,2)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/00908d3b-d343-4d84-922c-619b1f0747f6.png" class="thumb" onclick="setMain(8,this,3)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/434eab1f-e008-4716-b2d6-e9a517a783d2.png" class="thumb" onclick="setMain(8,this,4)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/d6ee3df2-3c86-478a-a3eb-62649e2903de.png" class="thumb" onclick="setMain(8,this,5)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/d6d40a73-86f7-452f-9b44-f3d1a2663b03.png" class="thumb" onclick="setMain(8,this,6)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/1c4ee56e-8844-42d0-86e8-0ed86733e624.png" class="thumb" onclick="setMain(8,this,7)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/2a5a3177-7ce5-4b8b-ace2-8992c82e752c.png" class="thumb" onclick="setMain(8,this,8)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/e4ce0386-a760-4ab9-ad49-a5a32b908577.png" class="thumb" onclick="setMain(8,this,9)" alt="" />
+
+            <div class="car-info">
+              <h3 class="car-name">Toyota Land Cruiser 300</h3>
+              <p class="car-class" data-i18n="class_suv_prem">Внедорожник · Премиум</p>
+              <p class="car-desc" data-i18n="desc_lc300">Новейший Land Cruiser серии 300. Революционный дизайн, передовые технологии и легендарная надёжность Toyota в самом престижном исполнении.</p>
+
+              <div class="car-prices" aria-label="Цены аренды">
+                <div class="price-row"><span data-i18n="price_hour">Час</span><strong>28 000 ₸</strong></div>
+                <div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>75 000 ₸</strong></div>
+                <div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>200 000 ₸</strong></div>
+              </div>
+
+              <button class="specs-toggle-btn" onclick="toggleSpecs(this)">
+                <span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i>
+              </button>
+
+              <ul class="car-specs">
+                <li><i class="fas fa-users"></i> <span data-i18n="spec_7pass">7 пассажиров</span></li>
+                <li><i class="fas fa-suitcase"></i> <span data-i18n="spec_4bag">4 чемодана</span></li>
+                <li><i class="fas fa-snowflake"></i> <span data-i18n="spec_climate">Климат-контроль</span></li>
+                <li><i class="fas fa-shield-alt"></i> <span data-i18n="spec_4wd">Полный привод</span></li>
+                <li><i class="fas fa-couch"></i> <span data-i18n="spec_leather">Кожаный салон</span></li>
+                <li><i class="fas fa-volume-up"></i> <span data-i18n="spec_audio_jbl">JBL аудиосистема</span></li>
+                <li><i class="fas fa-tv"></i> <span data-i18n="spec_screen">Задние экраны</span></li>
+                <li><i class="fas fa-tachometer-alt"></i> <span data-i18n="spec_engine_v6t">Двигатель 3.5 V6 Twin Turbo</span></li>
+                <li><i class="fas fa-road"></i> <span data-i18n="spec_auto">Автоматическая КПП</span></li>
+                <li><i class="fas fa-mountain"></i> <span data-i18n="spec_offroad">Внедорожный режим</span></li>
+              </ul>
+
+              <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
             </div>
           </div>
-          <div class="car-info">
-            <h3 class="car-name">Toyota Camry 80</h3>
-            <p class="car-class" data-i18n="class_sedan">Бизнес-седан · Комфорт</p>
-            <p class="car-desc" data-i18n="desc_camry80">Новейшее поколение легендарного Camry. Динамичный дизайн, просторный салон и высокий уровень оснащения для комфортных деловых поездок.</p>
-            <button class="specs-toggle-btn" onclick="toggleSpecs(this)">
-              <span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i>
-            </button>
-            <ul class="car-specs">
-              <li><i class="fas fa-users"></i> <span data-i18n="spec_4pass">4 пассажира</span></li>
-              <li><i class="fas fa-suitcase"></i> <span data-i18n="spec_3bag">3 чемодана</span></li>
-              <li><i class="fas fa-snowflake"></i> <span data-i18n="spec_climate">Климат-контроль</span></li>
-              <li><i class="fas fa-leaf"></i> <span data-i18n="spec_hybrid">Гибрид доступен</span></li>
-              <li><i class="fas fa-couch"></i> <span data-i18n="spec_leather">Кожаный салон</span></li>
-              <li><i class="fas fa-volume-up"></i> <span data-i18n="spec_audio_jbl">JBL аудиосистема</span></li>
-              <li><i class="fas fa-parking"></i> <span data-i18n="spec_park">Система парковки</span></li>
-              <li><i class="fas fa-tachometer-alt"></i> <span data-i18n="spec_engine_v6_25">Двигатель 2.5 V6</span></li>
-              <li><i class="fas fa-road"></i> <span data-i18n="spec_auto">Автоматическая КПП</span></li>
-              <li><i class="fas fa-shield-alt"></i> <span data-i18n="spec_safe">Система безопасности</span></li>
-            </ul>
-            <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
+
+          <!-- CAR 7 -->
+          <div class="car-panel" data-car="7">
+            <div class="car-gallery">
+              <div class="gallery-main" onclick="openLightbox(7,0)">
+                <img id="main-img-7" src="images/toyota-01.jpg" alt="Toyota Land Cruiser 200" />
+                <div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div>
+              </div>
+              <div class="gallery-thumbs">
+                <img src="images/toyota-01.jpg" class="thumb active" onclick="setMain(7,this,0)" alt="" />
+                <img src="images/toyota-02.jpg" class="thumb" onclick="setMain(7,this,1)" alt="" />
+                <img src="images/toyota-03.jpg" class="thumb" onclick="setMain(7,this,2)" alt="" />
+                <img src="images/toyota-04.jpg" class="thumb" onclick="setMain(7,this,3)" alt="" />
+                <img src="images/toyota-05.jpg" class="thumb" onclick="setMain(7,this,4)" alt="" />
+                <img src="images/toyota-06.jpg" class="thumb" onclick="setMain(7,this,5)" alt="" />
+                <img src="images/toyota-07.jpg" class="thumb" onclick="setMain(7,this,6)" alt="" />
+                <img src="images/toyota-08.jpg" class="thumb" onclick="setMain(7,this,7)" alt="" />
+                <img src="images/toyota-09.jpg" class="thumb" onclick="setMain(7,this,8)" alt="" />
+                <img src="images/toyota-10.jpg" class="thumb" onclick="setMain(7,this,9)" alt="" />
+              </div>
+            </div>
+
+            <div class="car-info">
+              <h3 class="car-name">Toyota Land Cruiser 200</h3>
+              <p class="car-class" data-i18n="class_suv_prem">Внедорожник · Премиум</p>
+              <p class="car-desc" data-i18n="desc_lc200">Легендарный Land Cruiser 200 — символ надёжности и комфорта. Проверенный временем флагман Toyota с роскошным салоном и непревзойдёнными возможностями.</p>
+
+              <div class="car-prices" aria-label="Цены аренды">
+                <div class="price-row"><span data-i18n="price_hour">Час</span><strong>26 000 ₸</strong></div>
+                <div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>70 000 ₸</strong></div>
+                <div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>180 000 ₸</strong></div>
+              </div>
+
+              <button class="specs-toggle-btn" onclick="toggleSpecs(this)">
+                <span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i>
+              </button>
+
+              <ul class="car-specs">
+                <li><i class="fas fa-users"></i> <span data-i18n="spec_7pass">7 пассажиров</span></li>
+                <li><i class="fas fa-suitcase"></i> <span data-i18n="spec_4bag">4 чемодана</span></li>
+                <li><i class="fas fa-snowflake"></i> <span data-i18n="spec_climate">Климат-контроль</span></li>
+                <li><i class="fas fa-shield-alt"></i> <span data-i18n="spec_4wd">Полный привод</span></li>
+                <li><i class="fas fa-couch"></i> <span data-i18n="spec_leather">Кожаный салон</span></li>
+                <li><i class="fas fa-volume-up"></i> <span data-i18n="spec_audio_jbl">JBL аудиосистема</span></li>
+                <li><i class="fas fa-tv"></i> <span data-i18n="spec_screen">Задние экраны</span></li>
+                <li><i class="fas fa-tachometer-alt"></i> <span data-i18n="spec_engine_v8_4">Двигатель 4.6 V8</span></li>
+                <li><i class="fas fa-road"></i> <span data-i18n="spec_auto">Автоматическая КПП</span></li>
+                <li><i class="fas fa-mountain"></i> <span data-i18n="spec_offroad">Внедорожный режим</span></li>
+              </ul>
+
+              <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
+            </div>
           </div>
         </div>
 
-        <!-- CAR 9: Camry 70 -->
-        <div class="car-panel" data-car="9">
-          <div class="car-gallery">
-            <div class="gallery-main" onclick="openLightbox(9,0)">
-              <img id="main-img-9" src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/285a1e2a-3856-421a-a6d2-b4bb00039603.png" alt="Toyota Camry 70" />
-              <div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div>
+      </div><!-- end category suv -->
+
+      <!-- =======================
+           CATEGORY: VANS / MINIBUSES
+      ======================== -->
+      <div class="category-section" data-category="vans">
+
+        <div class="brand-tabs">
+          <button class="brand-tab active" data-brand="mercedes">
+            <img src="images/logo-mersedes.jpg" alt="Mercedes-Benz" class="brand-tab-logo" />
+            Mercedes
+          </button>
+          <button class="brand-tab disabled" data-brand="lexus" aria-disabled="true" tabindex="-1">
+            <img src="images/logo-lexus.jpg" alt="Lexus" class="brand-tab-logo" />
+            Lexus
+          </button>
+          <button class="brand-tab disabled" data-brand="toyota" aria-disabled="true" tabindex="-1">
+            <img src="images/logo-toyota.jpg" alt="Toyota" class="brand-tab-logo" />
+            Toyota
+          </button>
+        </div>
+
+        <!-- ===== VANS / MERCEDES ===== -->
+        <div class="brand-section active" data-brand="mercedes">
+          <!-- Mercedes photos (10 pcs): images/mercedes-01.jpg ... images/mercedes-10.jpg -->
+          <div class="car-tabs">
+            <button class="car-tab active" data-car="2">V-Class</button>
+            <button class="car-tab" data-car="3">Sprinter</button>
+          </div>
+
+          <!-- CAR 2 -->
+          <div class="car-panel active" data-car="2">
+            <div class="car-gallery">
+              <div class="gallery-main" onclick="openLightbox(2,0)">
+                <img id="main-img-2" src="images/mercedes-01.jpg" alt="Mercedes V-Class" />
+                <div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div>
+              </div>
+              <div class="gallery-thumbs">
+                <img src="images/mercedes-01.jpg" class="thumb active" onclick="setMain(2,this,0)" alt="" />
+                <img src="images/mercedes-02.jpg" class="thumb" onclick="setMain(2,this,1)" alt="" />
+                <img src="images/mercedes-03.jpg" class="thumb" onclick="setMain(2,this,2)" alt="" />
+                <img src="images/mercedes-04.jpg" class="thumb" onclick="setMain(2,this,3)" alt="" />
+                <img src="images/mercedes-05.jpg" class="thumb" onclick="setMain(2,this,4)" alt="" />
+                <img src="images/mercedes-06.jpg" class="thumb" onclick="setMain(2,this,5)" alt="" />
+                <img src="images/mercedes-07.jpg" class="thumb" onclick="setMain(2,this,6)" alt="" />
+                <img src="images/mercedes-08.jpg" class="thumb" onclick="setMain(2,this,7)" alt="" />
+                <img src="images/mercedes-09.jpg" class="thumb" onclick="setMain(2,this,8)" alt="" />
+                <img src="images/mercedes-10.jpg" class="thumb" onclick="setMain(2,this,9)" alt="" />
+              </div>
             </div>
-            <div class="gallery-thumbs">
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/285a1e2a-3856-421a-a6d2-b4bb00039603.png" class="thumb active" onclick="setMain(9,this,0)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/9290af00-7840-4b25-be35-2e372f70ffa2.png" class="thumb" onclick="setMain(9,this,1)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/9f1eb1b4-6374-4d45-88cd-08f6812887ce.png" class="thumb" onclick="setMain(9,this,2)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/f62a83fe-3bfe-4079-b35d-b680c283a6b8.png" class="thumb" onclick="setMain(9,this,3)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/621f7080-72f3-4aa2-9c27-36be66741193.png" class="thumb" onclick="setMain(9,this,4)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/5091bff3-a493-4929-b5e3-967d00df8c77.png" class="thumb" onclick="setMain(9,this,5)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/317e4e87-3602-44c7-bb50-0807b1e0846a.png" class="thumb" onclick="setMain(9,this,6)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/3931ea24-5bf2-4cb7-8616-ed26041d2e0f.png" class="thumb" onclick="setMain(9,this,7)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/7f807350-d6e3-4244-be53-2032a905407d.png" class="thumb" onclick="setMain(9,this,8)" alt="" />
-              <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/009d93ae-c200-4c99-9cb6-141de1dab98e.png" class="thumb" onclick="setMain(9,this,9)" alt="" />
+
+            <div class="car-info">
+              <h3 class="car-name">Mercedes-Benz V-Class</h3>
+              <p class="car-class" data-i18n="class_minivan">Минивэн · Бизнес</p>
+              <p class="car-desc" data-i18n="desc_vclass">Просторный премиум-минивэн для групповых поездок. Роскошный салон с капитанскими креслами, идеален для трансферов и деловых поездок компанией.</p>
+
+              <div class="car-prices" aria-label="Цены аренды">
+                <div class="price-row"><span data-i18n="price_hour">Час</span><strong>28 000 ₸</strong></div>
+                <div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>75 000 ₸</strong></div>
+                <div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>200 000 ₸</strong></div>
+              </div>
+
+              <button class="specs-toggle-btn" onclick="toggleSpecs(this)">
+                <span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i>
+              </button>
+
+              <ul class="car-specs">
+                <li><i class="fas fa-users"></i> <span data-i18n="spec_6pass">6 пассажиров</span></li>
+                <li><i class="fas fa-suitcase"></i> <span data-i18n="spec_6bag">6 чемоданов</span></li>
+                <li><i class="fas fa-snowflake"></i> <span data-i18n="spec_climate">Климат-контроль</span></li>
+                <li><i class="fas fa-tv"></i> <span data-i18n="spec_media">Мультимедиа</span></li>
+                <li><i class="fas fa-couch"></i> <span data-i18n="spec_captain">Капитанские кресла</span></li>
+                <li><i class="fas fa-volume-up"></i> <span data-i18n="spec_audio">Премиум аудиосистема</span></li>
+                <li><i class="fas fa-door-open"></i> <span data-i18n="spec_slide">Раздвижные двери</span></li>
+                <li><i class="fas fa-tachometer-alt"></i> <span data-i18n="spec_engine_v4">Двигатель 2.0 V4</span></li>
+                <li><i class="fas fa-road"></i> <span data-i18n="spec_auto">Автоматическая КПП</span></li>
+                <li><i class="fas fa-wifi"></i> <span data-i18n="spec_wifi">Wi-Fi на борту</span></li>
+              </ul>
+
+              <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
             </div>
           </div>
-          <div class="car-info">
-            <h3 class="car-name">Toyota Camry 70</h3>
-            <p class="car-class" data-i18n="class_sedan">Бизнес-седан · Комфорт</p>
-            <p class="car-desc" data-i18n="desc_camry70">Проверенный временем Camry 7-го поколения. Надёжность, комфорт и элегантность — идеальный выбор для деловых поездок и трансферов.</p>
-            <button class="specs-toggle-btn" onclick="toggleSpecs(this)">
-              <span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i>
-            </button>
-            <ul class="car-specs">
-              <li><i class="fas fa-users"></i> <span data-i18n="spec_4pass">4 пассажира</span></li>
-              <li><i class="fas fa-suitcase"></i> <span data-i18n="spec_3bag">3 чемодана</span></li>
-              <li><i class="fas fa-snowflake"></i> <span data-i18n="spec_climate">Климат-контроль</span></li>
-              <li><i class="fas fa-star"></i> <span data-i18n="spec_popular">Популярный выбор</span></li>
-              <li><i class="fas fa-couch"></i> <span data-i18n="spec_leather">Кожаный салон</span></li>
-              <li><i class="fas fa-volume-up"></i> <span data-i18n="spec_audio2">Аудиосистема</span></li>
-              <li><i class="fas fa-parking"></i> <span data-i18n="spec_park">Система парковки</span></li>
-              <li><i class="fas fa-tachometer-alt"></i> <span data-i18n="spec_engine_v6_25">Двигатель 2.5 V6</span></li>
-              <li><i class="fas fa-road"></i> <span data-i18n="spec_auto">Автоматическая КПП</span></li>
-              <li><i class="fas fa-shield-alt"></i> <span data-i18n="spec_safe">Система безопасности</span></li>
-            </ul>
-            <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
+
+          <!-- CAR 3 -->
+          <div class="car-panel" data-car="3">
+            <div class="car-gallery">
+              <div class="gallery-main" onclick="openLightbox(3,0)">
+                <img id="main-img-3" src="images/mercedes-01.jpg" alt="Mercedes Sprinter" />
+                <div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div>
+              </div>
+              <div class="gallery-thumbs">
+                <img src="images/mercedes-01.jpg" class="thumb active" onclick="setMain(3,this,0)" alt="" />
+                <img src="images/mercedes-02.jpg" class="thumb" onclick="setMain(3,this,1)" alt="" />
+                <img src="images/mercedes-03.jpg" class="thumb" onclick="setMain(3,this,2)" alt="" />
+                <img src="images/mercedes-04.jpg" class="thumb" onclick="setMain(3,this,3)" alt="" />
+                <img src="images/mercedes-05.jpg" class="thumb" onclick="setMain(3,this,4)" alt="" />
+                <img src="images/mercedes-06.jpg" class="thumb" onclick="setMain(3,this,5)" alt="" />
+                <img src="images/mercedes-07.jpg" class="thumb" onclick="setMain(3,this,6)" alt="" />
+                <img src="images/mercedes-08.jpg" class="thumb" onclick="setMain(3,this,7)" alt="" />
+                <img src="images/mercedes-09.jpg" class="thumb" onclick="setMain(3,this,8)" alt="" />
+                <img src="images/mercedes-10.jpg" class="thumb" onclick="setMain(3,this,9)" alt="" />
+              </div>
+            </div>
+
+            <div class="car-info">
+              <h3 class="car-name">Mercedes-Benz Sprinter</h3>
+              <p class="car-class" data-i18n="class_bus">Микроавтобус · 16 мест</p>
+              <p class="car-desc" data-i18n="desc_sprinter">Вместительный премиум-микроавтобус для групповых трансферов. Комфортные кресла бизнес-класса, кондиционер и современное оборудование.</p>
+
+              <div class="car-prices" aria-label="Цены аренды">
+                <div class="price-row"><span data-i18n="price_hour">Час</span><strong>40 000 ₸</strong></div>
+                <div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>120 000 ₸</strong></div>
+                <div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>300 000 ₸</strong></div>
+              </div>
+
+              <button class="specs-toggle-btn" onclick="toggleSpecs(this)">
+                <span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i>
+              </button>
+
+              <ul class="car-specs">
+                <li><i class="fas fa-users"></i> <span data-i18n="spec_16pass">16 пассажиров</span></li>
+                <li><i class="fas fa-suitcase"></i> <span data-i18n="spec_16bag">16 чемоданов</span></li>
+                <li><i class="fas fa-snowflake"></i> <span data-i18n="spec_climate">Климат-контроль</span></li>
+                <li><i class="fas fa-music"></i> <span data-i18n="spec_audio2">Аудиосистема</span></li>
+                <li><i class="fas fa-chair"></i> <span data-i18n="spec_recline">Откидные кресла</span></li>
+                <li><i class="fas fa-lightbulb"></i> <span data-i18n="spec_led">LED-освещение</span></li>
+                <li><i class="fas fa-plug"></i> <span data-i18n="spec_usb">USB-зарядки</span></li>
+                <li><i class="fas fa-tachometer-alt"></i> <span data-i18n="spec_engine_d">Дизель 2.2</span></li>
+                <li><i class="fas fa-road"></i> <span data-i18n="spec_auto">Автоматическая КПП</span></li>
+                <li><i class="fas fa-shield-alt"></i> <span data-i18n="spec_safe">Система безопасности</span></li>
+              </ul>
+
+              <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
+            </div>
           </div>
         </div>
-      </div><!-- end toyota -->
+
+      </div><!-- end category vans -->
 
     </div>
   </section>
@@ -1539,13 +1899,58 @@ img { display: block; max-width: 100%; }
   <section class="about" id="about">
     <div class="container">
       <div class="about-grid">
+
         <div class="about-text">
           <p class="section-label" data-i18n="about_label">О КОМПАНИИ</p>
           <h2 class="section-title">Ventas Group</h2>
-          <p data-i18n="about_p1">Мы предоставляем услуги аренды премиум-автомобилей для деловых поездок, трансферов и особых мероприятий. Наш автопарк включает лучшие модели Mercedes-Benz, Lexus и Toyota.</p>
-          <p data-i18n="about_p2">Каждый автомобиль регулярно обслуживается и оснащён всем необходимым для комфортной поездки. Профессиональные водители с опытом работы.</p>
-          <!-- Brand logos — no borders, no text -->
-          <div class="about-brands">
+
+          <div class="about-block-title">Ключевые факты</div>
+          <ul class="about-list">
+            <li><i class="fas fa-check"></i> На рынке 10 лет</li>
+            <li><i class="fas fa-check"></i> Автопарк — более 50 автомобилей</li>
+            <li><i class="fas fa-check"></i> Бизнес и представительский класс авто</li>
+            <li><i class="fas fa-check"></i> Профессиональные водители</li>
+            <li><i class="fas fa-check"></i> Работаем по договору и безналичному расчету</li>
+          </ul>
+
+          <div class="about-block-title">Опыт и мероприятия</div>
+          <ul class="about-list">
+            <li><i class="fas fa-star"></i> Astana International Forum — 2025 (AIF)</li>
+            <li><i class="fas fa-star"></i> BI GROUP — 30 лет</li>
+            <li><i class="fas fa-star"></i> Гастрофестиваль “BaiQymyz”</li>
+            <li><i class="fas fa-star"></i> Участие в China - Central Asia Summit 2025, Digital Bridge 2025</li>
+            <li><i class="fas fa-star"></i> Работали с делегациями: Россия, Китай, Иран, Вьетнам, Турция, Южная Корея, страны Ближнего Востока и др.</li>
+            <li><i class="fas fa-star"></i> Получили благодарственное письмо от Зам. Премьер-Министра РК</li>
+          </ul>
+
+          <div class="about-block-title">Услуги</div>
+          <div class="about-services">
+            <div class="service-card">
+              <h4>Индивидуальные и групповые трансферы</h4>
+              <p>(аэропорт, вокзал, деловые встречи)</p>
+            </div>
+            <div class="service-card">
+              <h4>Обслуживание делегации и VIP-гостей</h4>
+              <p>(экскурсии, бизнес встречи, сопровождение)</p>
+            </div>
+            <div class="service-card">
+              <h4>Транспортное обеспечение деловых и светских мероприятий</h4>
+              <p>(Форумы, конференции, саммиты, корпоративы и пр.)</p>
+            </div>
+          </div>
+
+          <div class="about-block-title">Сертификаты</div>
+          <div class="certs">
+            <!-- Certificates: images/serf1.jpg ... images/serf3.jpg -->
+            <div class="certs-grid">
+              <div class="cert-card"><img src="images/serf1.jpg" alt="Certificate 1" /></div>
+              <div class="cert-card"><img src="images/serf2.jpg" alt="Certificate 2" /></div>
+              <div class="cert-card"><img src="images/serf3.jpg" alt="Certificate 3" /></div>
+            </div>
+          </div>
+
+          <!-- Brand logos (optional, as before) -->
+          <div class="about-brands" aria-label="Brands">
             <div class="about-brand-item">
               <img src="images/logo-mersedes.jpg" alt="Mercedes-Benz" class="about-brand-logo" />
             </div>
@@ -1557,9 +1962,11 @@ img { display: block; max-width: 100%; }
             </div>
           </div>
         </div>
+
         <div class="about-img">
-          <img src="https://mgx-backend-cdn.metadl.com/generate/images/808086/2026-02-28/7fac374d-d5a7-42a8-8b99-d371f0f0c268.png" alt="Ventas Group Fleet" />
+          <img src="images/mercedes-01.jpg" alt="Ventas Group Fleet" />
         </div>
+
       </div>
     </div>
   </section>
@@ -1569,8 +1976,8 @@ img { display: block; max-width: 100%; }
     <div class="container">
       <div class="footer-top">
         <div class="footer-brand">
-          <img src="images/logo.png" alt="Ventas Group" class="footer-logo" />
-          <!-- tagline hidden via CSS -->
+          <!-- Duplicate logo at the bottom: images/logo.jpg -->
+          <img src="images/logo.jpg" alt="Ventas Group" class="footer-logo" />
           <p data-i18n="footer_tagline">Премиум аренда автомобилей</p>
         </div>
         <div class="footer-links">
@@ -1578,9 +1985,9 @@ img { display: block; max-width: 100%; }
           <a href="#about" data-i18n="nav_about">О нас</a>
         </div>
         <div class="footer-social">
-          <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
-          <a href="https://wa.me/79991234567" target="_blank"><i class="fab fa-whatsapp"></i></a>
-          <a href="https://t.me/ventas_group" target="_blank"><i class="fab fa-telegram"></i></a>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/79991234567" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://t.me/ventas_group" target="_blank" rel="noopener"><i class="fab fa-telegram"></i></a>
           <a href="tel:+79991234567"><i class="fas fa-phone"></i></a>
         </div>
       </div>
@@ -1592,7 +1999,7 @@ img { display: block; max-width: 100%; }
 
   <!-- FLOATING BUTTONS -->
   <div class="float-btns">
-    <a href="https://www.instagram.com/" target="_blank" class="float-btn float-instagram" title="Instagram">
+    <a href="https://www.instagram.com/" target="_blank" class="float-btn float-instagram" title="Instagram" rel="noopener">
       <i class="fab fa-instagram"></i>
     </a>
     <a href="tel:+79991234567" class="float-btn float-call" title="Позвонить">
@@ -1604,9 +2011,9 @@ img { display: block; max-width: 100%; }
   <div class="lightbox" id="lightbox">
     <div class="lightbox-overlay" onclick="closeLightbox()"></div>
     <div class="lightbox-content">
-      <button class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
-      <button class="lightbox-prev" onclick="lightboxNav(-1)"><i class="fas fa-chevron-left"></i></button>
-      <button class="lightbox-next" onclick="lightboxNav(1)"><i class="fas fa-chevron-right"></i></button>
+      <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close"><i class="fas fa-times"></i></button>
+      <button class="lightbox-prev" onclick="lightboxNav(-1)" aria-label="Prev"><i class="fas fa-chevron-left"></i></button>
+      <button class="lightbox-next" onclick="lightboxNav(1)" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
       <img id="lightbox-img" src="" alt="" />
       <div class="lightbox-counter" id="lightbox-counter">1 / 10</div>
     </div>
@@ -1677,7 +2084,7 @@ function _updateLightboxImage() {
 }
 
 /* ===========================
-   TRANSLATIONS
+   TRANSLATIONS (extended minimal for new labels)
 =========================== */
 const i18n = {
   ru: {
@@ -1685,25 +2092,27 @@ const i18n = {
     catalog_label: 'НАШ АВТОПАРК',
     catalog_title: 'Премиум автомобили на любой вкус',
     catalog_desc: '10 моделей премиум-класса для любых задач',
+    cat_sedans: 'Бизнес седаны',
+    cat_suv: 'Внедорожники',
+    cat_vans: 'Минивэны и микроавтобусы',
     about_label: 'О КОМПАНИИ',
-    about_p1: 'Мы предоставляем услуги аренды премиум-автомобилей для деловых поездок, трансферов и особых мероприятий. Наш автопарк включает лучшие модели Mercedes-Benz, Lexus и Toyota.',
-    about_p2: 'Каждый автомобиль регулярно обслуживается и оснащён всем необходимым для комфортной поездки. Профессиональные водители с опытом работы.',
     footer_tagline: 'Премиум аренда автомобилей',
     footer_copy: '© 2026 Ventas Group. Все права защищены.',
     book: 'Забронировать', specs_show: 'Характеристики', specs_hide: 'Скрыть',
+    price_hour: 'Час', price_transfer: 'Трансфер', price_day12: 'День (12 часов)',
     class_business_lux: 'Бизнес-класс · Люкс', class_minivan: 'Минивэн · Бизнес',
     class_bus: 'Микроавтобус · 16 мест', class_suv_lux: 'Внедорожник · Люкс',
     class_suv_prem: 'Внедорожник · Премиум', class_sedan: 'Бизнес-седан · Комфорт',
-    desc_w223: 'Флагманский седан Mercedes-Benz нового поколения. Воплощение роскоши, технологий и комфорта.',
-    desc_w222: 'Легендарный S-Class предыдущего поколения. Безупречный комфорт, представительный стиль и надёжность.',
-    desc_vclass: 'Просторный премиум-минивэн для групповых поездок. Роскошный салон с капитанскими креслами.',
-    desc_sprinter: 'Вместительный премиум-микроавтобус для групповых трансферов. Комфортные кресла бизнес-класса.',
-    desc_lx600: 'Флагманский внедорожник Lexus нового поколения. Японское качество, роскошный интерьер.',
-    desc_lx570: 'Классический премиум-внедорожник Lexus. Мощный V8, роскошный салон и непревзойдённая надёжность.',
-    desc_lc300: 'Новейший Land Cruiser серии 300. Революционный дизайн и легендарная надёжность Toyota.',
-    desc_lc200: 'Легендарный Land Cruiser 200 — символ надёжности и комфорта.',
-    desc_camry80: 'Новейшее поколение легендарного Camry. Динамичный дизайн и высокий уровень оснащения.',
-    desc_camry70: 'Проверенный временем Camry 7-го поколения. Надёжность, комфорт и элегантность.',
+    desc_w223: 'Флагманский седан Mercedes-Benz нового поколения. Воплощение роскоши, технологий и комфорта. Идеален для деловых поездок и особых случаев.',
+    desc_w222: 'Легендарный S-Class предыдущего поколения. Безупречный комфорт, представительный стиль и надёжность для самых требовательных клиентов.',
+    desc_vclass: 'Просторный премиум-минивэн для групповых поездок. Роскошный салон с капитанскими креслами, идеален для трансферов и деловых поездок компанией.',
+    desc_sprinter: 'Вместительный премиум-микроавтобус для групповых трансферов. Комфортные кресла бизнес-класса, кондиционер и современное оборудование.',
+    desc_lx600: 'Флагманский внедорожник Lexus нового поколения. Сочетает в себе японское качество, роскошный интерьер и выдающиеся внедорожные возможности.',
+    desc_lx570: 'Классический премиум-внедорожник Lexus. Мощный V8, роскошный салон и непревзойдённая надёжность — выбор тех, кто ценит качество.',
+    desc_lc300: 'Новейший Land Cruiser серии 300. Революционный дизайн, передовые технологии и легендарная надёжность Toyota в самом престижном исполнении.',
+    desc_lc200: 'Легендарный Land Cruiser 200 — символ надёжности и комфорта. Проверенный временем флагман Toyota с роскошным салоном и непревзойдёнными возможностями.',
+    desc_camry80: 'Новейшее поколение легендарного Camry. Динамичный дизайн, просторный салон и высокий уровень оснащения для комфортных деловых поездок.',
+    desc_camry70: 'Проверенный временем Camry 7-го поколения. Надёжность, комфорт и элегантность — идеальный выбор для деловых поездок и трансферов.',
     spec_4pass: '4 пассажира', spec_7pass: '7 пассажиров', spec_6pass: '6 пассажиров', spec_16pass: '16 пассажиров',
     spec_3bag: '3 чемодана', spec_4bag: '4 чемодана', spec_6bag: '6 чемоданов', spec_16bag: '16 чемоданов',
     spec_climate: 'Климат-контроль', spec_wifi: 'Wi-Fi на борту', spec_leather: 'Кожаный салон',
@@ -1724,12 +2133,14 @@ const i18n = {
     catalog_label: 'БІЗДІҢ АВТОПАРК',
     catalog_title: 'Кез келген талғамға арналған премиум автомобильдер',
     catalog_desc: 'Кез келген міндет үшін 10 премиум-класс модель',
+    cat_sedans: 'Бизнес седандар',
+    cat_suv: 'Жол талғамайтындар',
+    cat_vans: 'Минивэндер және микроавтобустар',
     about_label: 'КОМПАНИЯ ТУРАЛЫ',
-    about_p1: 'Біз іссапарлар, трансферлер және арнайы іс-шаралар үшін премиум автомобильдерді жалға беру қызметтерін ұсынамыз.',
-    about_p2: 'Әрбір автомобиль үнемі техникалық қызмет көреді. Тәжірибелі кәсіби жүргізушілер.',
     footer_tagline: 'Премиум автомобиль жалдау',
     footer_copy: '© 2026 Ventas Group. Барлық құқықтар қорғалған.',
     book: 'Брондау', specs_show: 'Сипаттамалар', specs_hide: 'Жасыру',
+    price_hour: 'Сағат', price_transfer: 'Трансфер', price_day12: 'Күн (12 сағат)',
     class_business_lux: 'Бизнес-класс · Люкс', class_minivan: 'Минивэн · Бизнес',
     class_bus: 'Микроавтобус · 16 орын', class_suv_lux: 'Жол талғамайтын · Люкс',
     class_suv_prem: 'Жол талғамайтын · Премиум', class_sedan: 'Бизнес-седан · Комфорт',
@@ -1741,8 +2152,8 @@ const i18n = {
     desc_lx570: 'Lexus-тың классикалық премиум-жол талғамайтыны. Қуатты V8 және сенімділік.',
     desc_lc300: 'Ең жаңа Land Cruiser 300 сериясы. Революциялық дизайн және Toyota сенімділігі.',
     desc_lc200: 'Аңызға айналған Land Cruiser 200 — сенімділік пен жайлылықтың символы.',
-    desc_camry80: 'Аңызға айналған Camry-дің ең жаңа буыны. Динамикалық дизайн.',
-    desc_camry70: 'Уақыт сынынан өткен Camry 7-буыны. Сенімділік, жайлылық және элегантность.',
+    desc_camry80: 'Camry-дің ең жаңа буыны. Динамикалық дизайн және жоғары жабдықталу деңгейі.',
+    desc_camry70: 'Уақыт сынынан өткен Camry 7-буыны. Сенімділік, жайлылық және элеганттылық.',
     spec_4pass: '4 жолаушы', spec_7pass: '7 жолаушы', spec_6pass: '6 жолаушы', spec_16pass: '16 жолаушы',
     spec_3bag: '3 чемодан', spec_4bag: '4 чемодан', spec_6bag: '6 чемодан', spec_16bag: '16 чемодан',
     spec_climate: 'Климат-бақылау', spec_wifi: 'Бортта Wi-Fi', spec_leather: 'Былғары салон',
@@ -1763,12 +2174,14 @@ const i18n = {
     catalog_label: 'OUR FLEET',
     catalog_title: 'Premium Cars for Every Taste',
     catalog_desc: '10 premium-class models for any occasion',
+    cat_sedans: 'Business Sedans',
+    cat_suv: 'SUVs',
+    cat_vans: 'Minivans & Minibuses',
     about_label: 'ABOUT US',
-    about_p1: 'We provide premium car rental services for business trips, transfers, and special events. Our fleet includes the finest models from Mercedes-Benz, Lexus, and Toyota.',
-    about_p2: 'Every vehicle is regularly serviced and fully equipped for a comfortable ride. Professional drivers with extensive experience.',
     footer_tagline: 'Premium Car Rental',
     footer_copy: '© 2026 Ventas Group. All rights reserved.',
     book: 'Book Now', specs_show: 'Specifications', specs_hide: 'Hide',
+    price_hour: 'Hour', price_transfer: 'Transfer', price_day12: 'Day (12 hours)',
     class_business_lux: 'Business Class · Luxury', class_minivan: 'Minivan · Business',
     class_bus: 'Minibus · 16 Seats', class_suv_lux: 'SUV · Luxury',
     class_suv_prem: 'SUV · Premium', class_sedan: 'Business Sedan · Comfort',
@@ -1824,6 +2237,8 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
 window.toggleSpecs = function(btn) {
   const specsList = btn.nextElementSibling;
   const isOpen = btn.classList.contains('open');
+  if (!specsList) return;
+
   if (isOpen) {
     btn.classList.remove('open');
     specsList.classList.remove('open');
@@ -1838,7 +2253,7 @@ window.toggleSpecs = function(btn) {
 };
 
 /* ===========================
-   NAVBAR SCROLL
+   NAVBAR SCROLL (sticky + change style)
 =========================== */
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
@@ -1872,30 +2287,58 @@ mobileOverlay.addEventListener('click', closeMenu);
 document.querySelectorAll('.mobile-link').forEach(link => link.addEventListener('click', closeMenu));
 
 /* ===========================
-   BRAND TABS
+   CATEGORY TABS
 =========================== */
-document.querySelectorAll('.brand-tab').forEach(tab => {
+document.querySelectorAll('.category-tab').forEach(tab => {
   tab.addEventListener('click', () => {
-    const brand = tab.dataset.brand;
-    document.querySelectorAll('.brand-tab').forEach(t => t.classList.remove('active'));
+    const cat = tab.dataset.category;
+    document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
-    document.querySelectorAll('.brand-section').forEach(s => s.classList.remove('active'));
-    const target = document.querySelector(`.brand-section[data-brand="${brand}"]`);
+
+    document.querySelectorAll('.category-section').forEach(s => s.classList.remove('active'));
+    const target = document.querySelector('.category-section[data-category="' + cat + '"]');
     if (target) target.classList.add('active');
   });
 });
 
 /* ===========================
-   MODEL TABS (per brand section)
+   BRAND TABS (scoped per category)
 =========================== */
-document.querySelectorAll('.brand-section').forEach(section => {
-  section.querySelectorAll('.car-tab').forEach(tab => {
+document.querySelectorAll('.category-section').forEach(categorySection => {
+  const brandTabs = categorySection.querySelectorAll('.brand-tab');
+  const brandSections = categorySection.querySelectorAll('.brand-section');
+
+  brandTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      if (tab.classList.contains('disabled')) return;
+      const brand = tab.dataset.brand;
+
+      brandTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      brandSections.forEach(s => s.classList.remove('active'));
+      const target = categorySection.querySelector('.brand-section[data-brand="' + brand + '"]');
+      if (target) target.classList.add('active');
+    });
+  });
+});
+
+/* ===========================
+   MODEL TABS (scoped per brand section)
+=========================== */
+document.querySelectorAll('.brand-section').forEach(brandSection => {
+  const tabs = brandSection.querySelectorAll('.car-tab');
+  const panels = brandSection.querySelectorAll('.car-panel');
+
+  tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       const carIndex = tab.dataset.car;
-      section.querySelectorAll('.car-tab').forEach(t => t.classList.remove('active'));
+
+      tabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
-      section.querySelectorAll('.car-panel').forEach(p => p.classList.remove('active'));
-      const target = section.querySelector(`.car-panel[data-car="${carIndex}"]`);
+
+      panels.forEach(p => p.classList.remove('active'));
+      const target = brandSection.querySelector('.car-panel[data-car="' + carIndex + '"]');
       if (target) target.classList.add('active');
     });
   });
@@ -1906,7 +2349,7 @@ document.querySelectorAll('.brand-section').forEach(section => {
 =========================== */
 function buildCarImages() {
   document.querySelectorAll('.car-panel').forEach(function(panel) {
-    var idx = parseInt(panel.dataset.car);
+    var idx = parseInt(panel.dataset.car, 10);
     carImages[idx] = Array.from(panel.querySelectorAll('.thumb')).map(function(t) { return t.src; });
   });
 }
@@ -1952,6 +2395,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 });
+
+/* Init language */
+applyLang('ru');
   </script>
 </body>
 </html>
