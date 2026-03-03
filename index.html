@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ventas Group — Аренда Премиум Автомобилей</title>
 
-  <!-- Favicon (put your wide logo here) -->
   <link rel="icon" href="images/logo.jpg" type="image/jpeg" />
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -50,11 +49,10 @@ img { display: block; max-width: 100%; }
   padding: 0 24px;
 }
 
-/* Anchor offset for fixed navbar */
 #catalog, #about, #home { scroll-margin-top: 90px; }
 
 /* ===========================
-   HERO (VIDEO BACKGROUND) — NO TEXT
+   HERO (VIDEO BACKGROUND)
 =========================== */
 .hero {
   position: relative;
@@ -114,7 +112,6 @@ img { display: block; max-width: 100%; }
   height: 48px;
   width: auto;
   object-fit: contain;
-  /* wide logo, no borders */
 }
 
 .nav-links {
@@ -217,14 +214,13 @@ img { display: block; max-width: 100%; }
 
 .mobile-menu {
   position: fixed;
-  top: 0; right: -320px;
-  width: 300px; height: 100vh;
+  top: 0; right: -340px;
+  width: 320px; height: 100vh;
   background: var(--bg3);
   z-index: 1200;
-  padding: 80px 32px 40px;
+  padding: 70px 0 40px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
   transition: right 0.35s cubic-bezier(.4,0,.2,1);
   border-left: 1px solid var(--border);
   overflow-y: auto;
@@ -239,21 +235,87 @@ img { display: block; max-width: 100%; }
   transition: color var(--transition);
 }
 .mobile-close:hover { color: var(--white); }
-.mobile-menu ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+/* Mobile nav tree */
+.mobile-nav-list {
+  list-style: none;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.mobile-nav-item {}
+
 .mobile-link {
-  display: block;
-  padding: 12px 0;
-  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--gray2);
   border-bottom: 1px solid var(--border);
   transition: color var(--transition);
+  cursor: pointer;
 }
 .mobile-link:hover { color: var(--gold); }
+.mobile-link i.arrow { font-size: 11px; transition: transform 0.3s ease; }
+.mobile-link.open i.arrow { transform: rotate(180deg); }
+.mobile-link.plain { justify-content: flex-start; }
+
+/* Category sub-menu */
+.mobile-submenu {
+  display: none;
+  background: rgba(0,0,0,0.3);
+}
+.mobile-submenu.open { display: block; }
+
+.mobile-cat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 28px 11px 36px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+.mobile-cat-header i.arrow { font-size: 10px; transition: transform 0.3s ease; }
+.mobile-cat-header.open i.arrow { transform: rotate(180deg); }
+
+.mobile-models-list {
+  display: none;
+  background: rgba(0,0,0,0.2);
+}
+.mobile-models-list.open { display: block; }
+
+.mobile-model-link {
+  display: block;
+  padding: 10px 28px 10px 52px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray2);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: color var(--transition), background var(--transition);
+}
+.mobile-model-link:hover {
+  color: var(--white);
+  background: rgba(201,168,76,0.08);
+}
+
+/* Mobile bottom actions */
+.mobile-bottom {
+  padding: 20px 28px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 .mobile-lang {
   display: flex;
   gap: 6px;
-  padding: 8px 0;
 }
 .mobile-lang .lang-btn {
   flex: 1;
@@ -268,12 +330,6 @@ img { display: block; max-width: 100%; }
   color: #000;
   border-color: transparent;
 }
-.mobile-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: auto;
-}
 .mobile-social {
   display: flex;
   align-items: center;
@@ -284,8 +340,7 @@ img { display: block; max-width: 100%; }
   font-weight: 600;
   transition: all var(--transition);
 }
-.mobile-social:first-child { background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); color: #fff; }
-.mobile-social:last-child { background: var(--gold); color: #000; }
+.mobile-social.whatsapp { background: #25D366; color: #fff; }
 .mobile-social:hover { opacity: 0.9; transform: translateY(-1px); }
 
 /* ===========================
@@ -397,17 +452,6 @@ img { display: block; max-width: 100%; }
   border-color: var(--border);
   background: var(--bg3);
   box-shadow: none;
-}
-
-/* Brand tab logos */
-.brand-tab-logo {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-  border-radius: 50%;
-  background: #fff;
-  padding: 3px;
-  flex-shrink: 0;
 }
 
 /* BRAND SECTIONS */
@@ -694,27 +738,6 @@ img { display: block; max-width: 100%; }
   object-fit: cover;
 }
 
-.about-brands {
-  display: flex;
-  gap: 22px;
-  margin-top: 22px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-.about-brand-item { display: flex; align-items: center; justify-content: center; background: none; border: none; padding: 0; }
-.about-brand-logo {
-  width: 70px;
-  height: 70px;
-  object-fit: contain;
-  filter: brightness(0) invert(1);
-  opacity: 0.75;
-  transition: opacity var(--transition), transform var(--transition);
-}
-.about-brand-item:hover .about-brand-logo {
-  opacity: 1;
-  transform: scale(1.08);
-}
-
 .about-img {
   border-radius: var(--radius);
   overflow: hidden;
@@ -803,8 +826,20 @@ img { display: block; max-width: 100%; }
   transition: all var(--transition);
 }
 .float-btn:hover { transform: scale(1.1) translateY(-2px); }
-.float-instagram { background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); }
-.float-call { background: linear-gradient(135deg, var(--gold), var(--gold2)); color: #000; }
+.float-whatsapp { background: #25D366; }
+.float-scroll-top {
+  background: rgba(30,30,30,0.92);
+  border: 1.5px solid var(--border);
+  color: var(--gold);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition), transform var(--transition);
+}
+.float-scroll-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.float-scroll-top:hover { background: var(--gold); color: #000; border-color: var(--gold); }
 
 /* ===========================
    LIGHTBOX
@@ -967,7 +1002,6 @@ img { display: block; max-width: 100%; }
     flex-shrink: 0;
     gap: 8px;
   }
-  .brand-tab-logo { width: 26px; height: 26px; }
 
   /* Model tabs — scrollable row */
   .car-tabs {
@@ -1107,7 +1141,6 @@ img { display: block; max-width: 100%; }
   .about { padding: 56px 0; }
   .about-grid { gap: 32px; }
   .about-text .section-title { font-size: 24px; }
-  .about-brand-logo { width: 58px; height: 58px; }
   .about-img { border-radius: 10px; }
 
   /* Footer */
@@ -1160,8 +1193,6 @@ img { display: block; max-width: 100%; }
   .category-tab { padding: 9px 14px; font-size: 11px; }
   .brand-tab { padding: 9px 14px; font-size: 12px; }
   .car-name { font-size: 18px; }
-  .about-brand-logo { width: 50px; height: 50px; }
-  .about-brands { gap: 16px; }
 }
   </style>
 </head>
@@ -1172,7 +1203,6 @@ img { display: block; max-width: 100%; }
   <nav class="navbar" id="navbar">
     <div class="nav-container">
       <a href="#home" class="nav-logo" aria-label="Ventas Group">
-        <!-- Wide logo: images/logo.jpg -->
         <img src="images/logo.jpg" alt="Ventas Group" class="logo-img" />
       </a>
 
@@ -1182,7 +1212,6 @@ img { display: block; max-width: 100%; }
       </ul>
 
       <div class="nav-actions">
-        <!-- Language Switcher -->
         <div class="lang-switcher" id="langSwitcher">
           <button class="lang-btn active" data-lang="ru">RU</button>
           <button class="lang-btn" data-lang="kz">KZ</button>
@@ -1192,7 +1221,7 @@ img { display: block; max-width: 100%; }
         <a href="https://www.instagram.com/" target="_blank" class="btn-icon btn-instagram" title="Instagram" rel="noopener">
           <i class="fab fa-instagram"></i>
         </a>
-        <a href="tel:+79991234567" class="btn-icon btn-call" title="Позвонить">
+        <a href="tel:+77066660010" class="btn-icon btn-call" title="Позвонить">
           <i class="fas fa-phone"></i>
         </a>
 
@@ -1207,29 +1236,86 @@ img { display: block; max-width: 100%; }
   <div class="mobile-overlay" id="mobileOverlay"></div>
   <div class="mobile-menu" id="mobileMenu">
     <button class="mobile-close" id="mobileClose" aria-label="Закрыть"><i class="fas fa-times"></i></button>
-    <ul>
-      <li><a href="#catalog" class="mobile-link" data-i18n="nav_cars">Автомобили</a></li>
-      <li><a href="#about" class="mobile-link" data-i18n="nav_about">О нас</a></li>
+
+    <ul class="mobile-nav-list">
+      <!-- О нас -->
+      <li class="mobile-nav-item">
+        <a href="#about" class="mobile-link plain" data-i18n="nav_about">О нас</a>
+      </li>
+
+      <!-- Автомобили с подменю -->
+      <li class="mobile-nav-item">
+        <div class="mobile-link" id="mobileCarToggle">
+          <span data-i18n="nav_cars">Автомобили</span>
+          <i class="fas fa-chevron-down arrow"></i>
+        </div>
+        <div class="mobile-submenu" id="mobileCarSubmenu">
+
+          <!-- Бизнес седаны -->
+          <div class="mobile-cat-header" data-cat-toggle="sedans">
+            <span data-i18n="cat_sedans">Бизнес седаны</span>
+            <i class="fas fa-chevron-down arrow"></i>
+          </div>
+          <div class="mobile-models-list" id="mobile-cat-sedans">
+            <a href="#catalog" class="mobile-model-link" data-cat="sedans" data-brand="mercedes" data-car="0">Mercedes S-Class W223</a>
+            <a href="#catalog" class="mobile-model-link" data-cat="sedans" data-brand="mercedes" data-car="1">Mercedes S-Class W222</a>
+            <a href="#catalog" class="mobile-model-link" data-cat="sedans" data-brand="toyota" data-car="8">Toyota Camry 80</a>
+            <a href="#catalog" class="mobile-model-link" data-cat="sedans" data-brand="toyota" data-car="9">Toyota Camry 70</a>
+          </div>
+
+          <!-- Внедорожники -->
+          <div class="mobile-cat-header" data-cat-toggle="suv">
+            <span data-i18n="cat_suv">Внедорожники</span>
+            <i class="fas fa-chevron-down arrow"></i>
+          </div>
+          <div class="mobile-models-list" id="mobile-cat-suv">
+            <a href="#catalog" class="mobile-model-link" data-cat="suv" data-brand="lexus" data-car="4">Lexus LX 600</a>
+            <a href="#catalog" class="mobile-model-link" data-cat="suv" data-brand="lexus" data-car="5">Lexus LX 570</a>
+            <a href="#catalog" class="mobile-model-link" data-cat="suv" data-brand="toyota" data-car="6">Toyota Land Cruiser 300</a>
+            <a href="#catalog" class="mobile-model-link" data-cat="suv" data-brand="toyota" data-car="7">Toyota Land Cruiser 200</a>
+          </div>
+
+          <!-- Минивэны -->
+          <div class="mobile-cat-header" data-cat-toggle="vans">
+            <span data-i18n="cat_vans">Минивэны и микроавтобусы</span>
+            <i class="fas fa-chevron-down arrow"></i>
+          </div>
+          <div class="mobile-models-list" id="mobile-cat-vans">
+            <a href="#catalog" class="mobile-model-link" data-cat="vans" data-brand="mercedes" data-car="2">Mercedes V-Class</a>
+            <a href="#catalog" class="mobile-model-link" data-cat="vans" data-brand="mercedes" data-car="3">Mercedes Sprinter</a>
+          </div>
+
+        </div>
+      </li>
     </ul>
-    <div class="mobile-lang">
-      <button class="lang-btn active" data-lang="ru">RU</button>
-      <button class="lang-btn" data-lang="kz">KZ</button>
-      <button class="lang-btn" data-lang="en">EN</button>
-    </div>
-    <div class="mobile-actions">
-      <a href="https://www.instagram.com/" target="_blank" class="mobile-social" rel="noopener">
-        <i class="fab fa-instagram"></i> Instagram
-      </a>
-      <a href="tel:+79991234567" class="mobile-social">
-        <i class="fas fa-phone"></i> <span data-i18n="call">Позвонить</span>
+
+    <div class="mobile-bottom">
+      <div class="mobile-lang">
+        <button class="lang-btn active" data-lang="ru">RU</button>
+        <button class="lang-btn" data-lang="kz">KZ</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <a href="https://wa.me/77066660010" target="_blank" class="mobile-social whatsapp" rel="noopener">
+        <i class="fab fa-whatsapp"></i> WhatsApp
       </a>
     </div>
   </div>
 
-  <!-- HERO (VIDEO) — no text -->
+  <!-- HERO (VIDEO) -->
   <header class="hero" id="home" aria-label="Hero Video">
-    <!-- Put your background video here: images/hero.mp4 -->
-    <video class="hero-video" autoplay muted loop playsinline preload="metadata">
+    <video
+      class="hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      webkit-playsinline
+      x5-playsinline
+      x5-video-player-type="h5"
+      x5-video-player-fullscreen="false"
+      poster="images/mercedes-w223-01.jpg"
+    >
       <source src="images/hero.mp4" type="video/mp4" />
     </video>
     <div class="hero-overlay"></div>
@@ -1256,25 +1342,20 @@ img { display: block; max-width: 100%; }
       ======================== -->
       <div class="category-section active" data-category="sedans">
 
-        <!-- BRAND TABS (per category) -->
         <div class="brand-tabs">
           <button class="brand-tab active" data-brand="mercedes">
-            <img src="images/logo-mersedes.jpg" alt="Mercedes-Benz" class="brand-tab-logo" />
             Mercedes
           </button>
           <button class="brand-tab disabled" data-brand="lexus" aria-disabled="true" tabindex="-1">
-            <img src="images/logo-lexus.jpg" alt="Lexus" class="brand-tab-logo" />
             Lexus
           </button>
           <button class="brand-tab" data-brand="toyota">
-            <img src="images/logo-toyota.jpg" alt="Toyota" class="brand-tab-logo" />
             Toyota
           </button>
         </div>
 
         <!-- ===== SEDANS / MERCEDES ===== -->
         <div class="brand-section active" data-brand="mercedes">
-          <!-- Mercedes photos (10 pcs): images/mercedes-01.jpg ... images/mercedes-10.jpg -->
           <div class="car-tabs">
             <button class="car-tab active" data-car="0">S-Class W223</button>
             <button class="car-tab" data-car="1">S-Class W222</button>
@@ -1303,7 +1384,6 @@ img { display: block; max-width: 100%; }
               <p class="car-class" data-i18n="class_business_lux">Бизнес-класс · Люкс</p>
               <p class="car-desc" data-i18n="desc_w223">Флагманский седан Mercedes-Benz нового поколения. Воплощение роскоши, технологий и комфорта. Идеален для деловых поездок и особых случаев.</p>
 
-              <!-- PRICES -->
               <div class="car-prices" aria-label="Цены аренды">
                 <div class="price-row"><span data-i18n="price_hour">Час</span><strong>35 000 ₸</strong></div>
                 <div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>90 000 ₸</strong></div>
@@ -1327,7 +1407,7 @@ img { display: block; max-width: 100%; }
                 <li><i class="fas fa-shield-alt"></i> <span data-i18n="spec_safe">Система безопасности</span></li>
               </ul>
 
-              <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
+              <a href="https://wa.me/77066660010" target="_blank" class="btn-book" rel="noopener"><i class="fab fa-whatsapp"></i> <span data-i18n="book">Забронировать</span></a>
             </div>
           </div>
 
@@ -1377,14 +1457,13 @@ img { display: block; max-width: 100%; }
                 <li><i class="fas fa-shield-alt"></i> <span data-i18n="spec_safe">Система безопасности</span></li>
               </ul>
 
-              <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
+              <a href="https://wa.me/77066660010" target="_blank" class="btn-book" rel="noopener"><i class="fab fa-whatsapp"></i> <span data-i18n="book">Забронировать</span></a>
             </div>
           </div>
         </div>
 
         <!-- ===== SEDANS / TOYOTA ===== -->
         <div class="brand-section" data-brand="toyota">
-          <!-- Toyota photos (10 pcs): images/toyota-01.jpg ... images/toyota-10.jpg -->
           <div class="car-tabs">
             <button class="car-tab active" data-car="8">Camry 80</button>
             <button class="car-tab" data-car="9">Camry 70</button>
@@ -1437,7 +1516,7 @@ img { display: block; max-width: 100%; }
                 <li><i class="fas fa-shield-alt"></i> <span data-i18n="spec_safe">Система безопасности</span></li>
               </ul>
 
-              <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
+              <a href="https://wa.me/77066660010" target="_blank" class="btn-book" rel="noopener"><i class="fab fa-whatsapp"></i> <span data-i18n="book">Забронировать</span></a>
             </div>
           </div>
 
@@ -1488,7 +1567,7 @@ img { display: block; max-width: 100%; }
                 <li><i class="fas fa-shield-alt"></i> <span data-i18n="spec_safe">Система безопасности</span></li>
               </ul>
 
-              <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
+              <a href="https://wa.me/77066660010" target="_blank" class="btn-book" rel="noopener"><i class="fab fa-whatsapp"></i> <span data-i18n="book">Забронировать</span></a>
             </div>
           </div>
         </div>
@@ -1502,22 +1581,18 @@ img { display: block; max-width: 100%; }
 
         <div class="brand-tabs">
           <button class="brand-tab disabled" data-brand="mercedes" aria-disabled="true" tabindex="-1">
-            <img src="images/logo-mersedes.jpg" alt="Mercedes-Benz" class="brand-tab-logo" />
             Mercedes
           </button>
           <button class="brand-tab active" data-brand="lexus">
-            <img src="images/logo-lexus.jpg" alt="Lexus" class="brand-tab-logo" />
             Lexus
           </button>
           <button class="brand-tab" data-brand="toyota">
-            <img src="images/logo-toyota.jpg" alt="Toyota" class="brand-tab-logo" />
             Toyota
           </button>
         </div>
 
         <!-- ===== SUV / LEXUS ===== -->
         <div class="brand-section active" data-brand="lexus">
-          <!-- Lexus photos (10 pcs): images/lexus-01.jpg ... images/lexus-10.jpg -->
           <div class="car-tabs">
             <button class="car-tab active" data-car="4">LX 600</button>
             <button class="car-tab" data-car="5">LX 570</button>
@@ -1570,7 +1645,7 @@ img { display: block; max-width: 100%; }
                 <li><i class="fas fa-mountain"></i> <span data-i18n="spec_offroad">Внедорожный режим</span></li>
               </ul>
 
-              <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
+              <a href="https://wa.me/77066660010" target="_blank" class="btn-book" rel="noopener"><i class="fab fa-whatsapp"></i> <span data-i18n="book">Забронировать</span></a>
             </div>
           </div>
 
@@ -1621,14 +1696,13 @@ img { display: block; max-width: 100%; }
                 <li><i class="fas fa-mountain"></i> <span data-i18n="spec_offroad">Внедорожный режим</span></li>
               </ul>
 
-              <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
+              <a href="https://wa.me/77066660010" target="_blank" class="btn-book" rel="noopener"><i class="fab fa-whatsapp"></i> <span data-i18n="book">Забронировать</span></a>
             </div>
           </div>
         </div>
 
         <!-- ===== SUV / TOYOTA ===== -->
         <div class="brand-section" data-brand="toyota">
-          <!-- Toyota photos (10 pcs): images/toyota-01.jpg ... images/toyota-10.jpg -->
           <div class="car-tabs">
             <button class="car-tab active" data-car="6">Land Cruiser 300</button>
             <button class="car-tab" data-car="7">Land Cruiser 200</button>
@@ -1681,7 +1755,7 @@ img { display: block; max-width: 100%; }
                 <li><i class="fas fa-mountain"></i> <span data-i18n="spec_offroad">Внедорожный режим</span></li>
               </ul>
 
-              <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
+              <a href="https://wa.me/77066660010" target="_blank" class="btn-book" rel="noopener"><i class="fab fa-whatsapp"></i> <span data-i18n="book">Забронировать</span></a>
             </div>
           </div>
 
@@ -1732,7 +1806,7 @@ img { display: block; max-width: 100%; }
                 <li><i class="fas fa-mountain"></i> <span data-i18n="spec_offroad">Внедорожный режим</span></li>
               </ul>
 
-              <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
+              <a href="https://wa.me/77066660010" target="_blank" class="btn-book" rel="noopener"><i class="fab fa-whatsapp"></i> <span data-i18n="book">Забронировать</span></a>
             </div>
           </div>
         </div>
@@ -1746,22 +1820,18 @@ img { display: block; max-width: 100%; }
 
         <div class="brand-tabs">
           <button class="brand-tab active" data-brand="mercedes">
-            <img src="images/logo-mersedes.jpg" alt="Mercedes-Benz" class="brand-tab-logo" />
             Mercedes
           </button>
           <button class="brand-tab disabled" data-brand="lexus" aria-disabled="true" tabindex="-1">
-            <img src="images/logo-lexus.jpg" alt="Lexus" class="brand-tab-logo" />
             Lexus
           </button>
           <button class="brand-tab disabled" data-brand="toyota" aria-disabled="true" tabindex="-1">
-            <img src="images/logo-toyota.jpg" alt="Toyota" class="brand-tab-logo" />
             Toyota
           </button>
         </div>
 
         <!-- ===== VANS / MERCEDES ===== -->
         <div class="brand-section active" data-brand="mercedes">
-          <!-- Mercedes photos (10 pcs): images/mercedes-01.jpg ... images/mercedes-10.jpg -->
           <div class="car-tabs">
             <button class="car-tab active" data-car="2">V-Class</button>
             <button class="car-tab" data-car="3">Sprinter</button>
@@ -1814,7 +1884,7 @@ img { display: block; max-width: 100%; }
                 <li><i class="fas fa-wifi"></i> <span data-i18n="spec_wifi">Wi-Fi на борту</span></li>
               </ul>
 
-              <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
+              <a href="https://wa.me/77066660010" target="_blank" class="btn-book" rel="noopener"><i class="fab fa-whatsapp"></i> <span data-i18n="book">Забронировать</span></a>
             </div>
           </div>
 
@@ -1865,7 +1935,7 @@ img { display: block; max-width: 100%; }
                 <li><i class="fas fa-shield-alt"></i> <span data-i18n="spec_safe">Система безопасности</span></li>
               </ul>
 
-              <a href="tel:+79991234567" class="btn-book"><i class="fas fa-phone"></i> <span data-i18n="book">Забронировать</span></a>
+              <a href="https://wa.me/77066660010" target="_blank" class="btn-book" rel="noopener"><i class="fab fa-whatsapp"></i> <span data-i18n="book">Забронировать</span></a>
             </div>
           </div>
         </div>
@@ -1897,7 +1967,7 @@ img { display: block; max-width: 100%; }
           <ul class="about-list">
             <li><i class="fas fa-star"></i> Astana International Forum — 2025 (AIF)</li>
             <li><i class="fas fa-star"></i> BI GROUP — 30 лет</li>
-            <li><i class="fas fa-star"></i> Гастрофестиваль “BaiQymyz”</li>
+            <li><i class="fas fa-star"></i> Гастрофестиваль "BaiQymyz"</li>
             <li><i class="fas fa-star"></i> Участие в China - Central Asia Summit 2025, Digital Bridge 2025</li>
             <li><i class="fas fa-star"></i> Работали с делегациями: Россия, Китай, Иран, Вьетнам, Турция, Южная Корея, страны Ближнего Востока и др.</li>
             <li><i class="fas fa-star"></i> Получили благодарственное письмо от Зам. Премьер-Министра РК</li>
@@ -1921,24 +1991,10 @@ img { display: block; max-width: 100%; }
 
           <div class="about-block-title">Сертификаты</div>
           <div class="certs">
-            <!-- Certificates: images/serf1.jpg ... images/serf3.jpg -->
             <div class="certs-grid">
               <div class="cert-card"><img src="images/serf1.jpg" alt="Certificate 1" /></div>
               <div class="cert-card"><img src="images/serf2.jpg" alt="Certificate 2" /></div>
               <div class="cert-card"><img src="images/serf3.jpg" alt="Certificate 3" /></div>
-            </div>
-          </div>
-
-          <!-- Brand logos (optional, as before) -->
-          <div class="about-brands" aria-label="Brands">
-            <div class="about-brand-item">
-              <img src="images/logo-mersedes.jpg" alt="Mercedes-Benz" class="about-brand-logo" />
-            </div>
-            <div class="about-brand-item">
-              <img src="images/logo-lexus.jpg" alt="Lexus" class="about-brand-logo" />
-            </div>
-            <div class="about-brand-item">
-              <img src="images/logo-toyota.jpg" alt="Toyota" class="about-brand-logo" />
             </div>
           </div>
         </div>
@@ -1956,7 +2012,6 @@ img { display: block; max-width: 100%; }
     <div class="container">
       <div class="footer-top">
         <div class="footer-brand">
-          <!-- Duplicate logo at the bottom: images/logo.jpg -->
           <img src="images/logo.jpg" alt="Ventas Group" class="footer-logo" />
           <p data-i18n="footer_tagline">Премиум аренда автомобилей</p>
         </div>
@@ -1966,9 +2021,9 @@ img { display: block; max-width: 100%; }
         </div>
         <div class="footer-social">
           <a href="https://www.instagram.com/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
-          <a href="https://wa.me/79991234567" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://wa.me/77066660010" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
           <a href="https://t.me/ventas_group" target="_blank" rel="noopener"><i class="fab fa-telegram"></i></a>
-          <a href="tel:+79991234567"><i class="fas fa-phone"></i></a>
+          <a href="tel:+77066660010"><i class="fas fa-phone"></i></a>
         </div>
       </div>
       <div class="footer-bottom">
@@ -1979,11 +2034,11 @@ img { display: block; max-width: 100%; }
 
   <!-- FLOATING BUTTONS -->
   <div class="float-btns">
-    <a href="https://www.instagram.com/" target="_blank" class="float-btn float-instagram" title="Instagram" rel="noopener">
-      <i class="fab fa-instagram"></i>
-    </a>
-    <a href="tel:+79991234567" class="float-btn float-call" title="Позвонить">
-      <i class="fas fa-phone"></i>
+    <button class="float-btn float-scroll-top" id="scrollTopBtn" title="Наверх" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+      <i class="fas fa-chevron-up"></i>
+    </button>
+    <a href="https://wa.me/77066660010" target="_blank" class="float-btn float-whatsapp" title="WhatsApp" rel="noopener">
+      <i class="fab fa-whatsapp"></i>
     </a>
   </div>
 
@@ -2001,7 +2056,7 @@ img { display: block; max-width: 100%; }
 
   <script>
 /* ===========================
-   GLOBAL FUNCTIONS (defined first to avoid ReferenceError from inline onclick)
+   GLOBAL FUNCTIONS
 =========================== */
 var carImages = {};
 var currentThumbIndex = {};
@@ -2064,7 +2119,7 @@ function _updateLightboxImage() {
 }
 
 /* ===========================
-   TRANSLATIONS (extended minimal for new labels)
+   TRANSLATIONS
 =========================== */
 const i18n = {
   ru: {
@@ -2233,11 +2288,19 @@ window.toggleSpecs = function(btn) {
 };
 
 /* ===========================
-   NAVBAR SCROLL (sticky + change style)
+   NAVBAR SCROLL
 =========================== */
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+/* ===========================
+   SCROLL TO TOP BUTTON
+=========================== */
+const scrollTopBtn = document.getElementById('scrollTopBtn');
+window.addEventListener('scroll', () => {
+  scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
 });
 
 /* ===========================
@@ -2264,7 +2327,98 @@ function closeMenu() {
 hamburger.addEventListener('click', () => mobileMenu.classList.contains('open') ? closeMenu() : openMenu());
 mobileClose.addEventListener('click', closeMenu);
 mobileOverlay.addEventListener('click', closeMenu);
-document.querySelectorAll('.mobile-link').forEach(link => link.addEventListener('click', closeMenu));
+
+/* ===========================
+   MOBILE MENU — Cars toggle
+=========================== */
+const mobileCarToggle = document.getElementById('mobileCarToggle');
+const mobileCarSubmenu = document.getElementById('mobileCarSubmenu');
+
+mobileCarToggle.addEventListener('click', () => {
+  const isOpen = mobileCarToggle.classList.contains('open');
+  mobileCarToggle.classList.toggle('open', !isOpen);
+  mobileCarSubmenu.classList.toggle('open', !isOpen);
+});
+
+/* ===========================
+   MOBILE MENU — Category sub-toggles
+=========================== */
+document.querySelectorAll('.mobile-cat-header').forEach(header => {
+  header.addEventListener('click', () => {
+    const catId = 'mobile-cat-' + header.dataset.catToggle;
+    const modelsList = document.getElementById(catId);
+    const isOpen = header.classList.contains('open');
+    header.classList.toggle('open', !isOpen);
+    if (modelsList) modelsList.classList.toggle('open', !isOpen);
+  });
+});
+
+/* ===========================
+   MOBILE MENU — model link navigation
+=========================== */
+document.querySelectorAll('.mobile-model-link').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    const cat = this.dataset.cat;
+    const brand = this.dataset.brand;
+    const car = this.dataset.car;
+
+    // Activate category tab
+    document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+    const catTab = document.querySelector('.category-tab[data-category="' + cat + '"]');
+    if (catTab) catTab.classList.add('active');
+
+    document.querySelectorAll('.category-section').forEach(s => s.classList.remove('active'));
+    const catSection = document.querySelector('.category-section[data-category="' + cat + '"]');
+    if (catSection) {
+      catSection.classList.add('active');
+
+      // Activate brand tab
+      catSection.querySelectorAll('.brand-tab').forEach(t => t.classList.remove('active'));
+      const brandTab = catSection.querySelector('.brand-tab[data-brand="' + brand + '"]');
+      if (brandTab && !brandTab.classList.contains('disabled')) brandTab.classList.add('active');
+
+      catSection.querySelectorAll('.brand-section').forEach(s => s.classList.remove('active'));
+      const brandSection = catSection.querySelector('.brand-section[data-brand="' + brand + '"]');
+      if (brandSection) {
+        brandSection.classList.add('active');
+
+        // Activate car tab
+        brandSection.querySelectorAll('.car-tab').forEach(t => t.classList.remove('active'));
+        const carTab = brandSection.querySelector('.car-tab[data-car="' + car + '"]');
+        if (carTab) carTab.classList.add('active');
+
+        brandSection.querySelectorAll('.car-panel').forEach(p => p.classList.remove('active'));
+        const carPanel = brandSection.querySelector('.car-panel[data-car="' + car + '"]');
+        if (carPanel) carPanel.classList.add('active');
+      }
+    }
+
+    closeMenu();
+
+    // Scroll to catalog
+    setTimeout(() => {
+      const catalogEl = document.getElementById('catalog');
+      if (catalogEl) {
+        const top = catalogEl.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    }, 350);
+  });
+});
+
+/* Mobile "О нас" link */
+document.querySelector('.mobile-link.plain')?.addEventListener('click', function(e) {
+  e.preventDefault();
+  closeMenu();
+  setTimeout(() => {
+    const aboutEl = document.getElementById('about');
+    if (aboutEl) {
+      const top = aboutEl.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  }, 350);
+});
 
 /* ===========================
    CATEGORY TABS
@@ -2325,7 +2479,7 @@ document.querySelectorAll('.brand-section').forEach(brandSection => {
 });
 
 /* ===========================
-   GALLERY — build image index after DOM ready
+   GALLERY — build image index
 =========================== */
 function buildCarImages() {
   document.querySelectorAll('.car-panel').forEach(function(panel) {
@@ -2363,11 +2517,36 @@ if (lbEl) {
 }
 
 /* ===========================
+   VIDEO AUTOPLAY FIX FOR MOBILE
+=========================== */
+document.addEventListener('DOMContentLoaded', function() {
+  const video = document.querySelector('.hero-video');
+  if (video) {
+    video.muted = true;
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // Autoplay blocked — try on first user interaction
+        const tryPlay = () => {
+          video.play().catch(() => {});
+          document.removeEventListener('touchstart', tryPlay);
+          document.removeEventListener('click', tryPlay);
+        };
+        document.addEventListener('touchstart', tryPlay, { once: true });
+        document.addEventListener('click', tryPlay, { once: true });
+      });
+    }
+  }
+});
+
+/* ===========================
    SMOOTH SCROLL
 =========================== */
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
-    const target = document.querySelector(this.getAttribute('href'));
+    const href = this.getAttribute('href');
+    if (href === '#') return;
+    const target = document.querySelector(href);
     if (target) {
       e.preventDefault();
       const top = target.getBoundingClientRect().top + window.scrollY - 80;
