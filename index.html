@@ -458,19 +458,25 @@ img{display:block;max-width:100%}
   border-top:1px solid var(--border);
 }
 .partner-logos-grid{
-  display:flex;flex-wrap:wrap;gap:16px;
-  justify-content:center;margin-top:32px;
+  overflow:hidden;margin-top:32px;position:relative;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
 }
+.partner-logos-track{
+  display:flex;gap:24px;width:max-content;
+  animation:marquee 30s linear infinite;
+}
+.partner-logos-track:hover{animation-play-state:paused}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 .partner-logo-item{
-  width:140px;height:80px;
+  flex:0 0 auto;width:160px;height:90px;
   background:rgba(255,255,255,0.07);border:none;
   border-radius:12px;display:flex;align-items:center;
-  justify-content:center;padding:12px;
+  justify-content:center;padding:14px;
   transition:all var(--transition);
 }
-.partner-logo-item:hover{background:rgba(201,168,76,.06)}
-.partner-logo-item img{max-width:100%;max-height:100%;object-fit:contain;transition:filter var(--transition)}
-.partner-logo-item:hover img{filter:grayscale(0)}
+.partner-logo-item:hover{background:rgba(201,168,76,.1)}
+.partner-logo-item img{max-width:100%;max-height:100%;object-fit:contain}
 
 /* ===========================
    FOOTER
@@ -663,8 +669,9 @@ img{display:block;max-width:100%}
   .partners-grid{display:none!important}
   .partner-logos-section{margin-top:0;padding-top:0;border-top:none}
   .partner-logos-section .section-header{display:none}
-  .partner-logos-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;justify-content:unset;flex-wrap:unset;margin-top:20px}
-  .partner-logo-item{width:100%;height:68px;padding:8px;background:rgba(255,255,255,0.07);border-radius:10px}
+  .partner-logos-grid{margin-top:16px}
+  .partner-logos-track{gap:16px;animation-duration:25s}
+  .partner-logo-item{width:120px;height:72px;padding:10px}
 
   .footer{padding:40px 0 24px}
   .footer-top{flex-direction:column;align-items:center;text-align:center;gap:24px;margin-bottom:28px}
@@ -1330,6 +1337,27 @@ img{display:block;max-width:100%}
         <h2 class="section-title" style="font-size:clamp(22px,3vw,36px)" data-i18n="logos_title">Наши партнёры</h2>
       </div>
       <div class="partner-logos-grid">
+      <div class="partner-logos-track">
+        <a href="https://bi.group" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/bi-group.png" alt="BI GROUP" /></a>
+        <a href="https://balqymyz.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/balqymyz.png" alt="BalQymyz" /></a>
+        <a href="https://qazexpocongress.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/qazexpocongress.png" alt="QazExpoCongress" /></a>
+        <a href="https://kazakhmys.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/sk-kazakhmys.png" alt="СК Казахмыс" /></a>
+        <a href="https://bazisaero.ru" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/bazis-aero.png" alt="Bazis Aero" /></a>
+        <a href="https://kazakhminerals.com" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/kazakh-minerals.png" alt="Казах Минералс" /></a>
+        <a href="https://kostanay-minerals.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/kostanay-minerals.png" alt="Костанайские Минералы" /></a>
+        <a href="https://kazrost.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/kazrost.png" alt="KAZROST" /></a>
+        <a href="https://qazaqgaz.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/kaztransgas.png" alt="КазТрансГаз" /></a>
+        <a href="https://www.erg.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/erg.png" alt="ERG" /></a>
+        <a href="https://tur-ai.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/tur-ai.png" alt="Tur-Ai" /></a>
+        <a href="https://inovatech.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/inova-tech.png" alt="Inova Tech" /></a>
+        <a href="https://grandoreon.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/grand-oreon.png" alt="Grand Oreon" /></a>
+        <a href="https://enegix.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/enegix-service.png" alt="Enegix Service" /></a>
+        <a href="https://gazenergy.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/gaz-energy-solution.png" alt="Gaz Energy Solution" /></a>
+        <a href="https://climateexpert.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/climate-expert.png" alt="Climate Expert" /></a>
+        <a href="https://partnerstravel.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/partners-travel-advisor.png" alt="Travel Advisor" /></a>
+        <a href="https://n-travel.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/n-travel.png" alt="N-travel" /></a>
+        <a href="https://magistral.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/magistral.png" alt="Магистраль" /></a>
+        <a href="https://kpe.com.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/kpe.png" alt="Kazakhstan Paramount Engineering" /></a>
         <a href="https://bi.group" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/bi-group.png" alt="BI GROUP" /></a>
         <a href="https://balqymyz.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/balqymyz.png" alt="BalQymyz" /></a>
         <a href="https://qazexpocongress.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/qazexpocongress.png" alt="QazExpoCongress" /></a>
@@ -1351,6 +1379,7 @@ img{display:block;max-width:100%}
         <a href="https://magistral.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/magistral.png" alt="Магистраль" /></a>
         <a href="https://kpe.com.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/kpe.png" alt="Kazakhstan Paramount Engineering" /></a>
       </div>
+    </div>
     </div>
 
   </div>
