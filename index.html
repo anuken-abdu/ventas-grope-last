@@ -36,6 +36,10 @@ img{display:block;max-width:100%}
 .container{max-width:1280px;margin:0 auto;padding:0 24px}
 #catalog,#about,#home{scroll-margin-top:90px}
 
+/* Page sections */
+.page-section{display:none}
+.page-section.active{display:block}
+
 /* ===========================
    HERO
 =========================== */
@@ -51,12 +55,6 @@ img{display:block;max-width:100%}
   width:100%;height:100%;
   object-fit:cover;
   filter:contrast(1.05) brightness(0.9);
-}
-.hero-overlay{
-  position:absolute;inset:0;
-  background:
-    radial-gradient(80% 60% at 50% 40%,rgba(0,0,0,.25) 0%,rgba(0,0,0,.75) 80%),
-    linear-gradient(to bottom,rgba(0,0,0,.45) 0%,rgba(0,0,0,.85) 100%);
 }
 
 /* ===========================
@@ -80,31 +78,45 @@ img{display:block;max-width:100%}
   max-width:1280px;margin:0 auto;padding:0 24px;
   display:flex;align-items:center;justify-content:space-between;gap:24px;
 }
-.nav-logo{display:flex;align-items:center}
+.nav-logo{display:flex;align-items:center;cursor:pointer}
 .logo-img{height:48px;width:auto;object-fit:contain}
 .nav-links{display:flex;list-style:none;gap:36px}
 .nav-links a{
   color:var(--gray2);font-size:14px;font-weight:500;
   letter-spacing:.05em;text-transform:uppercase;
-  transition:color var(--transition);
+  transition:color var(--transition);cursor:pointer;
 }
 .nav-links a:hover{color:var(--gold)}
 .nav-actions{display:flex;align-items:center;gap:10px}
 
-/* Lang switcher */
-.lang-switcher{
-  display:flex;align-items:center;gap:2px;
+/* Lang dropdown */
+.lang-dropdown{position:relative;display:inline-block}
+.lang-dropdown-btn{
+  display:flex;align-items:center;gap:5px;
   background:var(--bg3);border:1.5px solid var(--border);
-  border-radius:50px;padding:3px;
+  border-radius:50px;padding:6px 14px;cursor:pointer;
+  color:var(--gold);font-size:12px;font-weight:700;
+  letter-spacing:.05em;font-family:var(--font-sans);
+  transition:all var(--transition);
 }
-.lang-btn{
-  background:none;border:none;color:var(--gray);
-  font-size:11px;font-weight:700;letter-spacing:.05em;
-  padding:5px 9px;border-radius:50px;cursor:pointer;
-  transition:all var(--transition);font-family:var(--font-sans);
+.lang-dropdown-btn:hover{border-color:var(--gold)}
+.lang-dropdown-btn i{font-size:9px;transition:transform .3s ease}
+.lang-dropdown.open .lang-dropdown-btn i{transform:rotate(180deg)}
+.lang-dropdown-menu{
+  display:none;position:absolute;top:calc(100% + 6px);right:0;
+  background:var(--bg3);border:1.5px solid var(--border);
+  border-radius:10px;overflow:hidden;min-width:80px;
+  box-shadow:0 8px 32px rgba(0,0,0,.6);z-index:100;
 }
-.lang-btn:hover{color:var(--white)}
-.lang-btn.active{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000}
+.lang-dropdown.open .lang-dropdown-menu{display:block}
+.lang-dropdown-item{
+  display:block;padding:9px 16px;font-size:12px;font-weight:700;
+  color:var(--gray2);cursor:pointer;transition:all var(--transition);
+  letter-spacing:.05em;border:none;background:none;width:100%;
+  text-align:left;font-family:var(--font-sans);
+}
+.lang-dropdown-item:hover{background:rgba(201,168,76,.12);color:var(--gold)}
+.lang-dropdown-item.active{color:var(--gold);background:rgba(201,168,76,.08)}
 
 .btn-icon{
   width:40px;height:40px;border-radius:50%;
@@ -112,8 +124,6 @@ img{display:block;max-width:100%}
   font-size:16px;transition:all var(--transition);
   border:1.5px solid var(--border);background:transparent;cursor:pointer;
 }
-.btn-instagram{color:#E1306C;border-color:#E1306C33}
-.btn-instagram:hover{background:#E1306C;color:#fff;border-color:#E1306C}
 .btn-call{color:var(--gold);border-color:rgba(232,201,122,.2)}
 .btn-call:hover{background:var(--gold);color:#000;border-color:var(--gold)}
 
@@ -189,6 +199,9 @@ img{display:block;max-width:100%}
 .mobile-lang .lang-btn{
   flex:1;padding:8px;text-align:center;
   border:1.5px solid var(--border);border-radius:8px;font-size:12px;
+  background:none;color:var(--gray);font-weight:700;
+  cursor:pointer;transition:all var(--transition);
+  font-family:var(--font-sans);
 }
 .mobile-lang .lang-btn.active{
   background:linear-gradient(135deg,var(--gold),var(--gold2));
@@ -365,14 +378,14 @@ img{display:block;max-width:100%}
 .btn-book:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(201,168,76,.4)}
 
 /* ===========================
-   ABOUT
+   ABOUT PAGE
 =========================== */
-.about{padding:100px 0;background:var(--bg)}
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
-.about-text .section-title{text-align:left;margin-bottom:16px}
+.about-page{padding:120px 0 80px;background:var(--bg)}
+.about-page-grid{display:grid;grid-template-columns:1fr;gap:0;max-width:960px;margin:0 auto}
+.about-page .section-title{text-align:left;margin-bottom:16px}
 .about-block-title{
   font-size:12px;font-weight:900;letter-spacing:.22em;
-  text-transform:uppercase;color:var(--gold);margin:22px 0 12px;
+  text-transform:uppercase;color:var(--gold);margin:32px 0 14px;
 }
 .about-list{list-style:none;display:grid;gap:10px}
 .about-list li{
@@ -387,9 +400,75 @@ img{display:block;max-width:100%}
 .service-card h4{font-size:14px;font-weight:900;letter-spacing:.04em;margin-bottom:8px;color:var(--white)}
 .service-card p{color:var(--gray2);font-size:13px;line-height:1.7}
 .certs{margin-top:18px}
-.certs-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.certs-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;max-width:640px}
 .cert-card{border-radius:14px;overflow:hidden;background:var(--bg3);border:1px solid var(--border);aspect-ratio:4/3}
 .cert-card img{width:100%;height:100%;object-fit:cover}
+
+/* Cooperation block */
+.cooperation-block{
+  margin-top:48px;padding:40px;
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:16px;
+}
+.cooperation-block .about-block-title{margin-top:0}
+.cooperation-contacts{display:flex;flex-direction:column;gap:16px;margin-top:20px}
+.cooperation-item{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 20px;background:var(--bg);
+  border:1px solid var(--border);border-radius:12px;
+  transition:border-color var(--transition);
+}
+.cooperation-item:hover{border-color:var(--gold)}
+.cooperation-item i{color:var(--gold);font-size:18px;width:24px;text-align:center;flex-shrink:0}
+.cooperation-item a,.cooperation-item span{color:var(--gray2);font-size:15px;font-weight:500;transition:color var(--transition)}
+.cooperation-item a:hover{color:var(--gold)}
+
+/* ===========================
+   PARTNERS PAGE
+=========================== */
+.partners-page{padding:120px 0 80px;background:var(--bg)}
+.partners-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));
+  gap:20px;margin-top:40px;max-width:1200px;margin-left:auto;margin-right:auto;
+}
+.partner-card{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:14px;padding:24px;
+  transition:all var(--transition);
+}
+.partner-card:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 8px 32px rgba(201,168,76,.1)}
+.partner-card h3{
+  font-family:var(--font-serif);font-size:18px;font-weight:700;
+  margin-bottom:10px;color:var(--white);
+}
+.partner-card p{color:var(--gray2);font-size:13px;line-height:1.7;margin-bottom:14px}
+.partner-card a.partner-link{
+  display:inline-flex;align-items:center;gap:6px;
+  color:var(--gold);font-size:13px;font-weight:700;
+  letter-spacing:.03em;transition:all var(--transition);
+}
+.partner-card a.partner-link:hover{color:var(--gold2)}
+.partner-card a.partner-link i{font-size:11px}
+
+/* Partner logos */
+.partner-logos-section{
+  margin-top:64px;padding-top:48px;
+  border-top:1px solid var(--border);
+}
+.partner-logos-grid{
+  display:flex;flex-wrap:wrap;gap:16px;
+  justify-content:center;margin-top:32px;
+}
+.partner-logo-item{
+  width:140px;height:80px;
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:12px;display:flex;align-items:center;
+  justify-content:center;padding:12px;
+  transition:all var(--transition);
+}
+.partner-logo-item:hover{border-color:var(--gold);background:rgba(201,168,76,.06)}
+.partner-logo-item img{max-width:100%;max-height:100%;object-fit:contain;filter:grayscale(.3);transition:filter var(--transition)}
+.partner-logo-item:hover img{filter:grayscale(0)}
 
 /* ===========================
    FOOTER
@@ -403,7 +482,7 @@ img{display:block;max-width:100%}
 .footer-logo{height:44px;width:auto;object-fit:contain}
 .footer-brand p{display:none}
 .footer-links{display:flex;flex-direction:column;gap:12px}
-.footer-links a{color:var(--gray);font-size:14px;transition:color var(--transition)}
+.footer-links a{color:var(--gray);font-size:14px;transition:color var(--transition);cursor:pointer}
 .footer-links a:hover{color:var(--gold)}
 .footer-social{display:flex;gap:12px}
 .footer-social a{
@@ -489,9 +568,9 @@ img{display:block;max-width:100%}
 =========================== */
 @media(max-width:1024px){
   .car-panel.active{grid-template-columns:1fr}
-  .about-grid{grid-template-columns:1fr;gap:48px}
   .about-services{grid-template-columns:1fr}
   .certs-grid{grid-template-columns:1fr}
+  .partners-grid{grid-template-columns:1fr}
 }
 
 /* ===========================
@@ -501,7 +580,7 @@ img{display:block;max-width:100%}
   .hero{min-height:420px;height:70vh}
   .nav-links{display:none}
   .hamburger{display:flex}
-  .lang-switcher{display:none}
+  .lang-dropdown{display:none}
   .btn-icon{width:36px;height:36px;font-size:14px}
   .logo-img{height:38px}
   .catalog{padding:76px 0 48px}
@@ -510,65 +589,39 @@ img{display:block;max-width:100%}
   .section-title{font-size:22px;margin-bottom:8px}
   .section-desc{font-size:13px}
 
-  /* Category tabs — 2-column wrap on mobile */
   .category-tabs{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:8px;
-    justify-items:stretch;
-    margin:16px 0 24px;
-    flex-wrap:unset;
+    display:grid;grid-template-columns:1fr 1fr;
+    gap:8px;justify-items:stretch;margin:16px 0 24px;flex-wrap:unset;
   }
-  .category-tab{
-    flex-shrink:unset;padding:10px 12px;
-    font-size:12px;letter-spacing:.03em;
-    text-align:center;border-radius:10px;
-  }
+  .category-tab{flex-shrink:unset;padding:10px 12px;font-size:12px;letter-spacing:.03em;text-align:center;border-radius:10px}
 
-  /* Brand tabs scrollable */
   .brand-tabs{
-    gap:8px;margin-bottom:20px;
-    flex-wrap:nowrap;overflow-x:auto;
-    justify-content:flex-start;
-    padding:0 4px 8px;
+    gap:8px;margin-bottom:20px;flex-wrap:nowrap;overflow-x:auto;
+    justify-content:flex-start;padding:0 4px 8px;
     scrollbar-width:none;-ms-overflow-style:none;
   }
   .brand-tabs::-webkit-scrollbar{display:none}
   .brand-tab{padding:10px 18px;font-size:13px;flex-shrink:0;gap:8px}
 
-  /* Model tabs scrollable */
   .car-tabs{
-    flex-wrap:nowrap;overflow-x:auto;
-    justify-content:flex-start;gap:8px;
-    margin-bottom:20px;padding-bottom:4px;
-    scrollbar-width:none;-ms-overflow-style:none;
+    flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;gap:8px;
+    margin-bottom:20px;padding-bottom:4px;scrollbar-width:none;-ms-overflow-style:none;
   }
   .car-tabs::-webkit-scrollbar{display:none}
   .car-tab{flex-shrink:0;padding:8px 16px;font-size:12px}
 
   .car-panel.active{display:flex;flex-direction:column;gap:0}
   .car-gallery{width:100%}
-  .gallery-main{
-    border-radius:10px;aspect-ratio:16/10;
-    width:100%;max-height:56vw;cursor:pointer;
-    overflow:hidden;background:var(--bg3);position:relative;
-  }
+  .gallery-main{border-radius:10px;aspect-ratio:16/10;width:100%;max-height:56vw;cursor:pointer;overflow:hidden;background:var(--bg3);position:relative}
   .gallery-main img{width:100%;height:100%;object-fit:cover;display:block}
   .gallery-zoom-hint{opacity:1}
   .gallery-thumbs{
-    display:flex;flex-direction:row;flex-wrap:nowrap;
-    gap:6px;overflow-x:auto;overflow-y:hidden;
-    margin-top:8px;padding-bottom:6px;
-    scrollbar-width:none;-ms-overflow-style:none;
-    grid-template-columns:unset;
-    -webkit-overflow-scrolling:touch;
+    display:flex;flex-direction:row;flex-wrap:nowrap;gap:6px;overflow-x:auto;overflow-y:hidden;
+    margin-top:8px;padding-bottom:6px;scrollbar-width:none;-ms-overflow-style:none;
+    grid-template-columns:unset;-webkit-overflow-scrolling:touch;
   }
   .gallery-thumbs::-webkit-scrollbar{display:none}
-  .thumb{
-    flex:0 0 auto;width:68px;height:46px;
-    aspect-ratio:unset;border-radius:6px;
-    opacity:.65;object-fit:cover;display:block;
-  }
+  .thumb{flex:0 0 auto;width:68px;height:46px;aspect-ratio:unset;border-radius:6px;opacity:.65;object-fit:cover;display:block}
   .thumb.active{opacity:1;border-color:var(--gold)}
 
   .car-info{padding:16px 0 0}
@@ -581,41 +634,30 @@ img{display:block;max-width:100%}
 
   .specs-toggle-btn{
     display:flex;align-items:center;justify-content:space-between;
-    width:100%;padding:12px 16px;
-    background:var(--bg3);border:1.5px solid var(--border);
-    border-radius:10px;color:var(--gold);
-    font-size:13px;font-weight:800;cursor:pointer;
-    margin-top:10px;margin-bottom:0;
-    transition:all var(--transition);
-    letter-spacing:.05em;text-transform:uppercase;
-    font-family:var(--font-sans);
+    width:100%;padding:12px 16px;background:var(--bg3);border:1.5px solid var(--border);
+    border-radius:10px;color:var(--gold);font-size:13px;font-weight:800;cursor:pointer;
+    margin-top:10px;margin-bottom:0;transition:all var(--transition);
+    letter-spacing:.05em;text-transform:uppercase;font-family:var(--font-sans);
   }
   .specs-toggle-btn i{transition:transform .3s ease;font-size:12px}
   .specs-toggle-btn.open i{transform:rotate(180deg)}
-  .specs-toggle-btn.open{
-    border-color:var(--gold);
-    border-bottom-left-radius:0;border-bottom-right-radius:0;
-  }
+  .specs-toggle-btn.open{border-color:var(--gold);border-bottom-left-radius:0;border-bottom-right-radius:0}
   .car-specs{
     display:none;grid-template-columns:1fr;gap:0;margin-bottom:0;
-    border:1.5px solid var(--gold);border-top:none;
-    border-radius:0 0 10px 10px;overflow:hidden;
+    border:1.5px solid var(--gold);border-top:none;border-radius:0 0 10px 10px;overflow:hidden;
   }
   .car-specs.open{display:grid;margin-bottom:16px;animation:fadeUp .25s ease both}
-  .car-specs li{
-    font-size:13px;padding:10px 16px;border-radius:0;
-    border:none;border-bottom:1px solid var(--border);background:var(--bg3);
-  }
+  .car-specs li{font-size:13px;padding:10px 16px;border-radius:0;border:none;border-bottom:1px solid var(--border);background:var(--bg3)}
   .car-specs li:last-child{border-bottom:none}
-  .btn-book{
-    width:100%;justify-content:center;
-    padding:14px 20px;font-size:14px;
-    margin-top:10px;border-radius:10px;
-  }
+  .btn-book{width:100%;justify-content:center;padding:14px 20px;font-size:14px;margin-top:10px;border-radius:10px}
 
-  .about{padding:56px 0}
-  .about-grid{gap:32px}
-  .about-text .section-title{font-size:24px}
+  .about-page{padding:80px 0 48px}
+  .about-services{grid-template-columns:1fr}
+  .cooperation-block{padding:24px}
+
+  .partners-page{padding:80px 0 48px}
+  .partners-grid{grid-template-columns:1fr}
+  .partner-logo-item{width:110px;height:64px;padding:8px}
 
   .footer{padding:40px 0 24px}
   .footer-top{flex-direction:column;align-items:center;text-align:center;gap:24px;margin-bottom:28px}
@@ -644,20 +686,27 @@ img{display:block;max-width:100%}
 <!-- NAVBAR -->
 <nav class="navbar" id="navbar">
   <div class="nav-container">
-    <a href="#home" class="nav-logo" aria-label="Ventas Group">
+    <a class="nav-logo" aria-label="Ventas Group" onclick="navigateTo('home')">
       <img src="images/logo.jpg" alt="Ventas Group" class="logo-img" loading="eager" />
     </a>
     <ul class="nav-links">
-      <li><a href="#catalog" data-i18n="nav_cars">Автомобили</a></li>
-      <li><a href="#about" data-i18n="nav_about">О нас</a></li>
+      <li><a onclick="navigateTo('home')" data-i18n="nav_home">Главная</a></li>
+      <li><a onclick="navigateTo('about-page')" data-i18n="nav_about">О компании</a></li>
+      <li><a onclick="navigateTo('partners-page')" data-i18n="nav_partners">Партнёры</a></li>
     </ul>
     <div class="nav-actions">
-      <div class="lang-switcher">
-        <button class="lang-btn active" data-lang="ru">RU</button>
-        <button class="lang-btn" data-lang="kz">KZ</button>
-        <button class="lang-btn" data-lang="en">EN</button>
+      <!-- Language dropdown -->
+      <div class="lang-dropdown" id="langDropdown">
+        <button class="lang-dropdown-btn" id="langDropdownBtn">
+          <span id="langCurrentLabel">RU</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="lang-dropdown-menu">
+          <button class="lang-dropdown-item active" data-lang="ru">RU</button>
+          <button class="lang-dropdown-item" data-lang="kz">KZ</button>
+          <button class="lang-dropdown-item" data-lang="en">EN</button>
+        </div>
       </div>
-      <a href="https://www.instagram.com/" target="_blank" class="btn-icon btn-instagram" title="Instagram" rel="noopener"><i class="fab fa-instagram"></i></a>
       <a href="tel:+77066660010" class="btn-icon btn-call" title="Позвонить"><i class="fas fa-phone"></i></a>
       <button class="hamburger" id="hamburger" aria-label="Меню"><span></span><span></span><span></span></button>
     </div>
@@ -669,7 +718,9 @@ img{display:block;max-width:100%}
 <div class="mobile-menu" id="mobileMenu">
   <button class="mobile-close" id="mobileClose" aria-label="Закрыть"><i class="fas fa-times"></i></button>
   <ul class="mobile-nav-list">
-    <li><a href="#about" class="mobile-link plain" id="mobileAboutLink" data-i18n="nav_about">О нас</a></li>
+    <li><a class="mobile-link plain" onclick="navigateTo('home');closeMenu()" data-i18n="nav_home">Главная</a></li>
+    <li><a class="mobile-link plain" onclick="navigateTo('about-page');closeMenu()" data-i18n="nav_about">О компании</a></li>
+    <li><a class="mobile-link plain" onclick="navigateTo('partners-page');closeMenu()" data-i18n="nav_partners">Партнёры</a></li>
     <li>
       <div class="mobile-link" id="mobileCarToggle">
         <span data-i18n="nav_cars">Автомобили</span>
@@ -708,6 +759,11 @@ img{display:block;max-width:100%}
   </div>
 </div>
 
+<!-- ========================= -->
+<!-- PAGE: HOME                -->
+<!-- ========================= -->
+<div class="page-section active" id="page-home">
+
 <!-- HERO -->
 <header class="hero" id="home">
   <video class="hero-video" autoplay muted loop playsinline preload="none"
@@ -715,7 +771,6 @@ img{display:block;max-width:100%}
     webkit-playsinline x5-playsinline>
     <source src="images/hero.mp4" type="video/mp4" />
   </video>
-  <div class="hero-overlay"></div>
 </header>
 
 <!-- CATALOG -->
@@ -740,14 +795,11 @@ img{display:block;max-width:100%}
         <button class="brand-tab disabled" data-brand="lexus" aria-disabled="true" tabindex="-1">Lexus</button>
         <button class="brand-tab" data-brand="toyota">Toyota</button>
       </div>
-
-      <!-- SEDANS / MERCEDES -->
       <div class="brand-section active" data-brand="mercedes">
         <div class="car-tabs">
           <button class="car-tab active" data-car="0">S-Class W223</button>
           <button class="car-tab" data-car="1">S-Class W222</button>
         </div>
-        <!-- CAR 0 -->
         <div class="car-panel active" data-car="0">
           <div class="car-gallery">
             <div class="gallery-main" onclick="openLightbox(0,0)">
@@ -790,7 +842,6 @@ img{display:block;max-width:100%}
             <a href="https://wa.me/77066660010" target="_blank" class="btn-book" rel="noopener"><i class="fab fa-whatsapp"></i> <span data-i18n="book">Забронировать</span></a>
           </div>
         </div>
-        <!-- CAR 1 -->
         <div class="car-panel" data-car="1">
           <div class="car-gallery">
             <div class="gallery-main" onclick="openLightbox(1,0)">
@@ -834,14 +885,11 @@ img{display:block;max-width:100%}
           </div>
         </div>
       </div>
-
-      <!-- SEDANS / TOYOTA -->
       <div class="brand-section" data-brand="toyota">
         <div class="car-tabs">
           <button class="car-tab active" data-car="8">Camry 80</button>
           <button class="car-tab" data-car="9">Camry 70</button>
         </div>
-        <!-- CAR 8 -->
         <div class="car-panel active" data-car="8">
           <div class="car-gallery">
             <div class="gallery-main" onclick="openLightbox(8,0)">
@@ -884,7 +932,6 @@ img{display:block;max-width:100%}
             <a href="https://wa.me/77066660010" target="_blank" class="btn-book" rel="noopener"><i class="fab fa-whatsapp"></i> <span data-i18n="book">Забронировать</span></a>
           </div>
         </div>
-        <!-- CAR 9 -->
         <div class="car-panel" data-car="9">
           <div class="car-gallery">
             <div class="gallery-main" onclick="openLightbox(9,0)">
@@ -928,7 +975,7 @@ img{display:block;max-width:100%}
           </div>
         </div>
       </div>
-    </div><!-- end sedans -->
+    </div>
 
     <!-- SUV -->
     <div class="category-section" data-category="suv">
@@ -937,195 +984,83 @@ img{display:block;max-width:100%}
         <button class="brand-tab active" data-brand="lexus">Lexus</button>
         <button class="brand-tab" data-brand="toyota">Toyota</button>
       </div>
-
-      <!-- SUV / LEXUS -->
       <div class="brand-section active" data-brand="lexus">
         <div class="car-tabs">
           <button class="car-tab active" data-car="4">LX 600</button>
           <button class="car-tab" data-car="5">LX 570</button>
         </div>
-        <!-- CAR 4 -->
         <div class="car-panel active" data-car="4">
           <div class="car-gallery">
-            <div class="gallery-main" onclick="openLightbox(4,0)">
-              <img id="main-img-4" src="images/lexus-lx600-01.jpg" alt="Lexus LX 600" loading="lazy" />
-              <div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div>
-            </div>
+            <div class="gallery-main" onclick="openLightbox(4,0)"><img id="main-img-4" src="images/lexus-lx600-01.jpg" alt="Lexus LX 600" loading="lazy" /><div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div></div>
             <div class="gallery-thumbs">
-              <img src="images/lexus-lx600-01.jpg" class="thumb active" onclick="setMain(4,this,0)" alt="" loading="lazy" />
-              <img src="images/lexus-lx600-02.jpg" class="thumb" onclick="setMain(4,this,1)" alt="" loading="lazy" />
-              <img src="images/lexus-lx600-03.jpg" class="thumb" onclick="setMain(4,this,2)" alt="" loading="lazy" />
-              <img src="images/lexus-lx600-04.jpg" class="thumb" onclick="setMain(4,this,3)" alt="" loading="lazy" />
-              <img src="images/lexus-lx600-05.jpg" class="thumb" onclick="setMain(4,this,4)" alt="" loading="lazy" />
-              <img src="images/lexus-lx600-06.jpg" class="thumb" onclick="setMain(4,this,5)" alt="" loading="lazy" />
-              <img src="images/lexus-lx600-07.jpg" class="thumb" onclick="setMain(4,this,6)" alt="" loading="lazy" />
-              <img src="images/lexus-lx600-08.jpg" class="thumb" onclick="setMain(4,this,7)" alt="" loading="lazy" />
+              <img src="images/lexus-lx600-01.jpg" class="thumb active" onclick="setMain(4,this,0)" alt="" loading="lazy" /><img src="images/lexus-lx600-02.jpg" class="thumb" onclick="setMain(4,this,1)" alt="" loading="lazy" /><img src="images/lexus-lx600-03.jpg" class="thumb" onclick="setMain(4,this,2)" alt="" loading="lazy" /><img src="images/lexus-lx600-04.jpg" class="thumb" onclick="setMain(4,this,3)" alt="" loading="lazy" /><img src="images/lexus-lx600-05.jpg" class="thumb" onclick="setMain(4,this,4)" alt="" loading="lazy" /><img src="images/lexus-lx600-06.jpg" class="thumb" onclick="setMain(4,this,5)" alt="" loading="lazy" /><img src="images/lexus-lx600-07.jpg" class="thumb" onclick="setMain(4,this,6)" alt="" loading="lazy" /><img src="images/lexus-lx600-08.jpg" class="thumb" onclick="setMain(4,this,7)" alt="" loading="lazy" />
             </div>
           </div>
           <div class="car-info">
             <h3 class="car-name">Lexus LX 600</h3>
             <p class="car-class" data-i18n="class_suv_lux">Внедорожник · Люкс</p>
             <p class="car-desc" data-i18n="desc_lx600">Флагманский внедорожник Lexus нового поколения. Сочетает в себе японское качество, роскошный интерьер и выдающиеся внедорожные возможности.</p>
-            <div class="car-prices">
-              <div class="price-row"><span data-i18n="price_hour">Час</span><strong>32 000 ₸</strong></div>
-              <div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>85 000 ₸</strong></div>
-              <div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>220 000 ₸</strong></div>
-            </div>
+            <div class="car-prices"><div class="price-row"><span data-i18n="price_hour">Час</span><strong>32 000 ₸</strong></div><div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>85 000 ₸</strong></div><div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>220 000 ₸</strong></div></div>
             <button class="specs-toggle-btn" onclick="toggleSpecs(this)"><span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i></button>
-            <ul class="car-specs">
-              <li><i class="fas fa-users"></i><span data-i18n="spec_7pass">7 пассажиров</span></li>
-              <li><i class="fas fa-suitcase"></i><span data-i18n="spec_4bag">4 чемодана</span></li>
-              <li><i class="fas fa-snowflake"></i><span data-i18n="spec_climate">Климат-контроль</span></li>
-              <li><i class="fas fa-shield-alt"></i><span data-i18n="spec_4wd">Полный привод</span></li>
-              <li><i class="fas fa-couch"></i><span data-i18n="spec_leather">Кожаный салон</span></li>
-              <li><i class="fas fa-volume-up"></i><span data-i18n="spec_audio_mark">Mark Levinson аудио</span></li>
-              <li><i class="fas fa-tv"></i><span data-i18n="spec_screen">Задние экраны</span></li>
-              <li><i class="fas fa-tachometer-alt"></i><span data-i18n="spec_engine_v6t">Двигатель 3.5 V6 Twin Turbo</span></li>
-              <li><i class="fas fa-road"></i><span data-i18n="spec_auto">Автоматическая КПП</span></li>
-              <li><i class="fas fa-mountain"></i><span data-i18n="spec_offroad">Внедорожный режим</span></li>
-            </ul>
+            <ul class="car-specs"><li><i class="fas fa-users"></i><span data-i18n="spec_7pass">7 пассажиров</span></li><li><i class="fas fa-suitcase"></i><span data-i18n="spec_4bag">4 чемодана</span></li><li><i class="fas fa-snowflake"></i><span data-i18n="spec_climate">Климат-контроль</span></li><li><i class="fas fa-shield-alt"></i><span data-i18n="spec_4wd">Полный привод</span></li><li><i class="fas fa-couch"></i><span data-i18n="spec_leather">Кожаный салон</span></li><li><i class="fas fa-volume-up"></i><span data-i18n="spec_audio_mark">Mark Levinson аудио</span></li><li><i class="fas fa-tv"></i><span data-i18n="spec_screen">Задние экраны</span></li><li><i class="fas fa-tachometer-alt"></i><span data-i18n="spec_engine_v6t">Двигатель 3.5 V6 Twin Turbo</span></li><li><i class="fas fa-road"></i><span data-i18n="spec_auto">Автоматическая КПП</span></li><li><i class="fas fa-mountain"></i><span data-i18n="spec_offroad">Внедорожный режим</span></li></ul>
             <a href="https://wa.me/77066660010" target="_blank" class="btn-book" rel="noopener"><i class="fab fa-whatsapp"></i> <span data-i18n="book">Забронировать</span></a>
           </div>
         </div>
-        <!-- CAR 5 -->
         <div class="car-panel" data-car="5">
           <div class="car-gallery">
-            <div class="gallery-main" onclick="openLightbox(5,0)">
-              <img id="main-img-5" src="images/lexus-lx570-01.jpg" alt="Lexus LX 570" loading="lazy" />
-              <div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div>
-            </div>
+            <div class="gallery-main" onclick="openLightbox(5,0)"><img id="main-img-5" src="images/lexus-lx570-01.jpg" alt="Lexus LX 570" loading="lazy" /><div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div></div>
             <div class="gallery-thumbs">
-              <img src="images/lexus-lx570-01.jpg" class="thumb active" onclick="setMain(5,this,0)" alt="" loading="lazy" />
-              <img src="images/lexus-lx570-02.jpg" class="thumb" onclick="setMain(5,this,1)" alt="" loading="lazy" />
-              <img src="images/lexus-lx570-03.jpg" class="thumb" onclick="setMain(5,this,2)" alt="" loading="lazy" />
-              <img src="images/lexus-lx570-04.jpg" class="thumb" onclick="setMain(5,this,3)" alt="" loading="lazy" />
-              <img src="images/lexus-lx570-05.jpg" class="thumb" onclick="setMain(5,this,4)" alt="" loading="lazy" />
-              <img src="images/lexus-lx570-06.jpg" class="thumb" onclick="setMain(5,this,5)" alt="" loading="lazy" />
-              <img src="images/lexus-lx570-07.jpg" class="thumb" onclick="setMain(5,this,6)" alt="" loading="lazy" />
-              <img src="images/lexus-lx570-08.jpg" class="thumb" onclick="setMain(5,this,7)" alt="" loading="lazy" />
+              <img src="images/lexus-lx570-01.jpg" class="thumb active" onclick="setMain(5,this,0)" alt="" loading="lazy" /><img src="images/lexus-lx570-02.jpg" class="thumb" onclick="setMain(5,this,1)" alt="" loading="lazy" /><img src="images/lexus-lx570-03.jpg" class="thumb" onclick="setMain(5,this,2)" alt="" loading="lazy" /><img src="images/lexus-lx570-04.jpg" class="thumb" onclick="setMain(5,this,3)" alt="" loading="lazy" /><img src="images/lexus-lx570-05.jpg" class="thumb" onclick="setMain(5,this,4)" alt="" loading="lazy" /><img src="images/lexus-lx570-06.jpg" class="thumb" onclick="setMain(5,this,5)" alt="" loading="lazy" /><img src="images/lexus-lx570-07.jpg" class="thumb" onclick="setMain(5,this,6)" alt="" loading="lazy" /><img src="images/lexus-lx570-08.jpg" class="thumb" onclick="setMain(5,this,7)" alt="" loading="lazy" />
             </div>
           </div>
           <div class="car-info">
             <h3 class="car-name">Lexus LX 570</h3>
             <p class="car-class" data-i18n="class_suv_lux">Внедорожник · Люкс</p>
             <p class="car-desc" data-i18n="desc_lx570">Классический премиум-внедорожник Lexus. Мощный V8, роскошный салон и непревзойдённая надёжность — выбор тех, кто ценит качество.</p>
-            <div class="car-prices">
-              <div class="price-row"><span data-i18n="price_hour">Час</span><strong>30 000 ₸</strong></div>
-              <div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>80 000 ₸</strong></div>
-              <div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>210 000 ₸</strong></div>
-            </div>
+            <div class="car-prices"><div class="price-row"><span data-i18n="price_hour">Час</span><strong>30 000 ₸</strong></div><div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>80 000 ₸</strong></div><div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>210 000 ₸</strong></div></div>
             <button class="specs-toggle-btn" onclick="toggleSpecs(this)"><span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i></button>
-            <ul class="car-specs">
-              <li><i class="fas fa-users"></i><span data-i18n="spec_7pass">7 пассажиров</span></li>
-              <li><i class="fas fa-suitcase"></i><span data-i18n="spec_4bag">4 чемодана</span></li>
-              <li><i class="fas fa-snowflake"></i><span data-i18n="spec_climate">Климат-контроль</span></li>
-              <li><i class="fas fa-shield-alt"></i><span data-i18n="spec_4wd">Полный привод</span></li>
-              <li><i class="fas fa-couch"></i><span data-i18n="spec_leather">Кожаный салон</span></li>
-              <li><i class="fas fa-volume-up"></i><span data-i18n="spec_audio_mark">Mark Levinson аудио</span></li>
-              <li><i class="fas fa-tv"></i><span data-i18n="spec_screen">Задние экраны</span></li>
-              <li><i class="fas fa-tachometer-alt"></i><span data-i18n="spec_engine_v8_5">Двигатель 5.7 V8</span></li>
-              <li><i class="fas fa-road"></i><span data-i18n="spec_auto">Автоматическая КПП</span></li>
-              <li><i class="fas fa-mountain"></i><span data-i18n="spec_offroad">Внедорожный режим</span></li>
-            </ul>
+            <ul class="car-specs"><li><i class="fas fa-users"></i><span data-i18n="spec_7pass">7 пассажиров</span></li><li><i class="fas fa-suitcase"></i><span data-i18n="spec_4bag">4 чемодана</span></li><li><i class="fas fa-snowflake"></i><span data-i18n="spec_climate">Климат-контроль</span></li><li><i class="fas fa-shield-alt"></i><span data-i18n="spec_4wd">Полный привод</span></li><li><i class="fas fa-couch"></i><span data-i18n="spec_leather">Кожаный салон</span></li><li><i class="fas fa-volume-up"></i><span data-i18n="spec_audio_mark">Mark Levinson аудио</span></li><li><i class="fas fa-tv"></i><span data-i18n="spec_screen">Задние экраны</span></li><li><i class="fas fa-tachometer-alt"></i><span data-i18n="spec_engine_v8_5">Двигатель 5.7 V8</span></li><li><i class="fas fa-road"></i><span data-i18n="spec_auto">Автоматическая КПП</span></li><li><i class="fas fa-mountain"></i><span data-i18n="spec_offroad">Внедорожный режим</span></li></ul>
             <a href="https://wa.me/77066660010" target="_blank" class="btn-book" rel="noopener"><i class="fab fa-whatsapp"></i> <span data-i18n="book">Забронировать</span></a>
           </div>
         </div>
       </div>
-
-      <!-- SUV / TOYOTA -->
       <div class="brand-section" data-brand="toyota">
         <div class="car-tabs">
           <button class="car-tab active" data-car="6">Land Cruiser 300</button>
           <button class="car-tab" data-car="7">Land Cruiser 200</button>
         </div>
-        <!-- CAR 6 -->
         <div class="car-panel active" data-car="6">
           <div class="car-gallery">
-            <div class="gallery-main" onclick="openLightbox(6,0)">
-              <img id="main-img-6" src="images/toyota-lc300-01.jpg" alt="Toyota Land Cruiser 300" loading="lazy" />
-              <div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div>
-            </div>
-            <div class="gallery-thumbs">
-              <img src="images/toyota-lc300-01.jpg" class="thumb active" onclick="setMain(6,this,0)" alt="" loading="lazy" />
-              <img src="images/toyota-lc300-02.jpg" class="thumb" onclick="setMain(6,this,1)" alt="" loading="lazy" />
-              <img src="images/toyota-lc300-03.jpg" class="thumb" onclick="setMain(6,this,2)" alt="" loading="lazy" />
-              <img src="images/toyota-lc300-04.jpg" class="thumb" onclick="setMain(6,this,3)" alt="" loading="lazy" />
-              <img src="images/toyota-lc300-05.jpg" class="thumb" onclick="setMain(6,this,4)" alt="" loading="lazy" />
-              <img src="images/toyota-lc300-06.jpg" class="thumb" onclick="setMain(6,this,5)" alt="" loading="lazy" />
-              <img src="images/toyota-lc300-07.jpg" class="thumb" onclick="setMain(6,this,6)" alt="" loading="lazy" />
-              <img src="images/toyota-lc300-08.jpg" class="thumb" onclick="setMain(6,this,7)" alt="" loading="lazy" />
-            </div>
+            <div class="gallery-main" onclick="openLightbox(6,0)"><img id="main-img-6" src="images/toyota-lc300-01.jpg" alt="Toyota Land Cruiser 300" loading="lazy" /><div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div></div>
+            <div class="gallery-thumbs"><img src="images/toyota-lc300-01.jpg" class="thumb active" onclick="setMain(6,this,0)" alt="" loading="lazy" /><img src="images/toyota-lc300-02.jpg" class="thumb" onclick="setMain(6,this,1)" alt="" loading="lazy" /><img src="images/toyota-lc300-03.jpg" class="thumb" onclick="setMain(6,this,2)" alt="" loading="lazy" /><img src="images/toyota-lc300-04.jpg" class="thumb" onclick="setMain(6,this,3)" alt="" loading="lazy" /><img src="images/toyota-lc300-05.jpg" class="thumb" onclick="setMain(6,this,4)" alt="" loading="lazy" /><img src="images/toyota-lc300-06.jpg" class="thumb" onclick="setMain(6,this,5)" alt="" loading="lazy" /><img src="images/toyota-lc300-07.jpg" class="thumb" onclick="setMain(6,this,6)" alt="" loading="lazy" /><img src="images/toyota-lc300-08.jpg" class="thumb" onclick="setMain(6,this,7)" alt="" loading="lazy" /></div>
           </div>
           <div class="car-info">
             <h3 class="car-name">Toyota Land Cruiser 300</h3>
             <p class="car-class" data-i18n="class_suv_prem">Внедорожник · Премиум</p>
             <p class="car-desc" data-i18n="desc_lc300">Новейший Land Cruiser серии 300. Революционный дизайн, передовые технологии и легендарная надёжность Toyota в самом престижном исполнении.</p>
-            <div class="car-prices">
-              <div class="price-row"><span data-i18n="price_hour">Час</span><strong>28 000 ₸</strong></div>
-              <div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>75 000 ₸</strong></div>
-              <div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>200 000 ₸</strong></div>
-            </div>
+            <div class="car-prices"><div class="price-row"><span data-i18n="price_hour">Час</span><strong>28 000 ₸</strong></div><div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>75 000 ₸</strong></div><div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>200 000 ₸</strong></div></div>
             <button class="specs-toggle-btn" onclick="toggleSpecs(this)"><span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i></button>
-            <ul class="car-specs">
-              <li><i class="fas fa-users"></i><span data-i18n="spec_7pass">7 пассажиров</span></li>
-              <li><i class="fas fa-suitcase"></i><span data-i18n="spec_4bag">4 чемодана</span></li>
-              <li><i class="fas fa-snowflake"></i><span data-i18n="spec_climate">Климат-контроль</span></li>
-              <li><i class="fas fa-shield-alt"></i><span data-i18n="spec_4wd">Полный привод</span></li>
-              <li><i class="fas fa-couch"></i><span data-i18n="spec_leather">Кожаный салон</span></li>
-              <li><i class="fas fa-volume-up"></i><span data-i18n="spec_audio_jbl">JBL аудиосистема</span></li>
-              <li><i class="fas fa-tv"></i><span data-i18n="spec_screen">Задние экраны</span></li>
-              <li><i class="fas fa-tachometer-alt"></i><span data-i18n="spec_engine_v6t">Двигатель 3.5 V6 Twin Turbo</span></li>
-              <li><i class="fas fa-road"></i><span data-i18n="spec_auto">Автоматическая КПП</span></li>
-              <li><i class="fas fa-mountain"></i><span data-i18n="spec_offroad">Внедорожный режим</span></li>
-            </ul>
+            <ul class="car-specs"><li><i class="fas fa-users"></i><span data-i18n="spec_7pass">7 пассажиров</span></li><li><i class="fas fa-suitcase"></i><span data-i18n="spec_4bag">4 чемодана</span></li><li><i class="fas fa-snowflake"></i><span data-i18n="spec_climate">Климат-контроль</span></li><li><i class="fas fa-shield-alt"></i><span data-i18n="spec_4wd">Полный привод</span></li><li><i class="fas fa-couch"></i><span data-i18n="spec_leather">Кожаный салон</span></li><li><i class="fas fa-volume-up"></i><span data-i18n="spec_audio_jbl">JBL аудиосистема</span></li><li><i class="fas fa-tv"></i><span data-i18n="spec_screen">Задние экраны</span></li><li><i class="fas fa-tachometer-alt"></i><span data-i18n="spec_engine_v6t">Двигатель 3.5 V6 Twin Turbo</span></li><li><i class="fas fa-road"></i><span data-i18n="spec_auto">Автоматическая КПП</span></li><li><i class="fas fa-mountain"></i><span data-i18n="spec_offroad">Внедорожный режим</span></li></ul>
             <a href="https://wa.me/77066660010" target="_blank" class="btn-book" rel="noopener"><i class="fab fa-whatsapp"></i> <span data-i18n="book">Забронировать</span></a>
           </div>
         </div>
-        <!-- CAR 7 -->
         <div class="car-panel" data-car="7">
           <div class="car-gallery">
-            <div class="gallery-main" onclick="openLightbox(7,0)">
-              <img id="main-img-7" src="images/toyota-lc200-01.jpg" alt="Toyota Land Cruiser 200" loading="lazy" />
-              <div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div>
-            </div>
-            <div class="gallery-thumbs">
-              <img src="images/toyota-lc200-01.jpg" class="thumb active" onclick="setMain(7,this,0)" alt="" loading="lazy" />
-              <img src="images/toyota-lc200-02.jpg" class="thumb" onclick="setMain(7,this,1)" alt="" loading="lazy" />
-              <img src="images/toyota-lc200-03.jpg" class="thumb" onclick="setMain(7,this,2)" alt="" loading="lazy" />
-              <img src="images/toyota-lc200-04.jpg" class="thumb" onclick="setMain(7,this,3)" alt="" loading="lazy" />
-              <img src="images/toyota-lc200-05.jpg" class="thumb" onclick="setMain(7,this,4)" alt="" loading="lazy" />
-              <img src="images/toyota-lc200-06.jpg" class="thumb" onclick="setMain(7,this,5)" alt="" loading="lazy" />
-              <img src="images/toyota-lc200-07.jpg" class="thumb" onclick="setMain(7,this,6)" alt="" loading="lazy" />
-              <img src="images/toyota-lc200-08.jpg" class="thumb" onclick="setMain(7,this,7)" alt="" loading="lazy" />
-            </div>
+            <div class="gallery-main" onclick="openLightbox(7,0)"><img id="main-img-7" src="images/toyota-lc200-01.jpg" alt="Toyota Land Cruiser 200" loading="lazy" /><div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div></div>
+            <div class="gallery-thumbs"><img src="images/toyota-lc200-01.jpg" class="thumb active" onclick="setMain(7,this,0)" alt="" loading="lazy" /><img src="images/toyota-lc200-02.jpg" class="thumb" onclick="setMain(7,this,1)" alt="" loading="lazy" /><img src="images/toyota-lc200-03.jpg" class="thumb" onclick="setMain(7,this,2)" alt="" loading="lazy" /><img src="images/toyota-lc200-04.jpg" class="thumb" onclick="setMain(7,this,3)" alt="" loading="lazy" /><img src="images/toyota-lc200-05.jpg" class="thumb" onclick="setMain(7,this,4)" alt="" loading="lazy" /><img src="images/toyota-lc200-06.jpg" class="thumb" onclick="setMain(7,this,5)" alt="" loading="lazy" /><img src="images/toyota-lc200-07.jpg" class="thumb" onclick="setMain(7,this,6)" alt="" loading="lazy" /><img src="images/toyota-lc200-08.jpg" class="thumb" onclick="setMain(7,this,7)" alt="" loading="lazy" /></div>
           </div>
           <div class="car-info">
             <h3 class="car-name">Toyota Land Cruiser 200</h3>
             <p class="car-class" data-i18n="class_suv_prem">Внедорожник · Премиум</p>
             <p class="car-desc" data-i18n="desc_lc200">Легендарный Land Cruiser 200 — символ надёжности и комфорта. Проверенный временем флагман Toyota с роскошным салоном и непревзойдёнными возможностями.</p>
-            <div class="car-prices">
-              <div class="price-row"><span data-i18n="price_hour">Час</span><strong>26 000 ₸</strong></div>
-              <div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>70 000 ₸</strong></div>
-              <div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>180 000 ₸</strong></div>
-            </div>
+            <div class="car-prices"><div class="price-row"><span data-i18n="price_hour">Час</span><strong>26 000 ₸</strong></div><div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>70 000 ₸</strong></div><div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>180 000 ₸</strong></div></div>
             <button class="specs-toggle-btn" onclick="toggleSpecs(this)"><span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i></button>
-            <ul class="car-specs">
-              <li><i class="fas fa-users"></i><span data-i18n="spec_7pass">7 пассажиров</span></li>
-              <li><i class="fas fa-suitcase"></i><span data-i18n="spec_4bag">4 чемодана</span></li>
-              <li><i class="fas fa-snowflake"></i><span data-i18n="spec_climate">Климат-контроль</span></li>
-              <li><i class="fas fa-shield-alt"></i><span data-i18n="spec_4wd">Полный привод</span></li>
-              <li><i class="fas fa-couch"></i><span data-i18n="spec_leather">Кожаный салон</span></li>
-              <li><i class="fas fa-volume-up"></i><span data-i18n="spec_audio_jbl">JBL аудиосистема</span></li>
-              <li><i class="fas fa-tv"></i><span data-i18n="spec_screen">Задние экраны</span></li>
-              <li><i class="fas fa-tachometer-alt"></i><span data-i18n="spec_engine_v8_4">Двигатель 4.6 V8</span></li>
-              <li><i class="fas fa-road"></i><span data-i18n="spec_auto">Автоматическая КПП</span></li>
-              <li><i class="fas fa-mountain"></i><span data-i18n="spec_offroad">Внедорожный режим</span></li>
-            </ul>
+            <ul class="car-specs"><li><i class="fas fa-users"></i><span data-i18n="spec_7pass">7 пассажиров</span></li><li><i class="fas fa-suitcase"></i><span data-i18n="spec_4bag">4 чемодана</span></li><li><i class="fas fa-snowflake"></i><span data-i18n="spec_climate">Климат-контроль</span></li><li><i class="fas fa-shield-alt"></i><span data-i18n="spec_4wd">Полный привод</span></li><li><i class="fas fa-couch"></i><span data-i18n="spec_leather">Кожаный салон</span></li><li><i class="fas fa-volume-up"></i><span data-i18n="spec_audio_jbl">JBL аудиосистема</span></li><li><i class="fas fa-tv"></i><span data-i18n="spec_screen">Задние экраны</span></li><li><i class="fas fa-tachometer-alt"></i><span data-i18n="spec_engine_v8_4">Двигатель 4.6 V8</span></li><li><i class="fas fa-road"></i><span data-i18n="spec_auto">Автоматическая КПП</span></li><li><i class="fas fa-mountain"></i><span data-i18n="spec_offroad">Внедорожный режим</span></li></ul>
             <a href="https://wa.me/77066660010" target="_blank" class="btn-book" rel="noopener"><i class="fab fa-whatsapp"></i> <span data-i18n="book">Забронировать</span></a>
           </div>
         </div>
       </div>
-    </div><!-- end suv -->
+    </div>
 
     <!-- VANS -->
     <div class="category-section" data-category="vans">
@@ -1134,112 +1069,60 @@ img{display:block;max-width:100%}
         <button class="brand-tab disabled" data-brand="lexus" aria-disabled="true" tabindex="-1">Lexus</button>
         <button class="brand-tab disabled" data-brand="toyota" aria-disabled="true" tabindex="-1">Toyota</button>
       </div>
-
-      <!-- VANS / MERCEDES -->
       <div class="brand-section active" data-brand="mercedes">
         <div class="car-tabs">
           <button class="car-tab active" data-car="2">V-Class</button>
           <button class="car-tab" data-car="3">Sprinter</button>
         </div>
-        <!-- CAR 2 -->
         <div class="car-panel active" data-car="2">
           <div class="car-gallery">
-            <div class="gallery-main" onclick="openLightbox(2,0)">
-              <img id="main-img-2" src="images/mercedes-vclass-01.jpg" alt="Mercedes V-Class" loading="lazy" />
-              <div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div>
-            </div>
-            <div class="gallery-thumbs">
-              <img src="images/mercedes-vclass-01.jpg" class="thumb active" onclick="setMain(2,this,0)" alt="" loading="lazy" />
-              <img src="images/mercedes-vclass-02.jpg" class="thumb" onclick="setMain(2,this,1)" alt="" loading="lazy" />
-              <img src="images/mercedes-vclass-03.jpg" class="thumb" onclick="setMain(2,this,2)" alt="" loading="lazy" />
-              <img src="images/mercedes-vclass-04.jpg" class="thumb" onclick="setMain(2,this,3)" alt="" loading="lazy" />
-              <img src="images/mercedes-vclass-05.jpg" class="thumb" onclick="setMain(2,this,4)" alt="" loading="lazy" />
-              <img src="images/mercedes-vclass-06.jpg" class="thumb" onclick="setMain(2,this,5)" alt="" loading="lazy" />
-              <img src="images/mercedes-vclass-07.jpg" class="thumb" onclick="setMain(2,this,6)" alt="" loading="lazy" />
-              <img src="images/mercedes-vclass-08.jpg" class="thumb" onclick="setMain(2,this,7)" alt="" loading="lazy" />
-            </div>
+            <div class="gallery-main" onclick="openLightbox(2,0)"><img id="main-img-2" src="images/mercedes-vclass-01.jpg" alt="Mercedes V-Class" loading="lazy" /><div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div></div>
+            <div class="gallery-thumbs"><img src="images/mercedes-vclass-01.jpg" class="thumb active" onclick="setMain(2,this,0)" alt="" loading="lazy" /><img src="images/mercedes-vclass-02.jpg" class="thumb" onclick="setMain(2,this,1)" alt="" loading="lazy" /><img src="images/mercedes-vclass-03.jpg" class="thumb" onclick="setMain(2,this,2)" alt="" loading="lazy" /><img src="images/mercedes-vclass-04.jpg" class="thumb" onclick="setMain(2,this,3)" alt="" loading="lazy" /><img src="images/mercedes-vclass-05.jpg" class="thumb" onclick="setMain(2,this,4)" alt="" loading="lazy" /><img src="images/mercedes-vclass-06.jpg" class="thumb" onclick="setMain(2,this,5)" alt="" loading="lazy" /><img src="images/mercedes-vclass-07.jpg" class="thumb" onclick="setMain(2,this,6)" alt="" loading="lazy" /><img src="images/mercedes-vclass-08.jpg" class="thumb" onclick="setMain(2,this,7)" alt="" loading="lazy" /></div>
           </div>
           <div class="car-info">
             <h3 class="car-name">Mercedes-Benz V-Class</h3>
             <p class="car-class" data-i18n="class_minivan">Минивэн · Бизнес</p>
             <p class="car-desc" data-i18n="desc_vclass">Просторный премиум-минивэн для групповых поездок. Роскошный салон с капитанскими креслами, идеален для трансферов и деловых поездок компанией.</p>
-            <div class="car-prices">
-              <div class="price-row"><span data-i18n="price_hour">Час</span><strong>28 000 ₸</strong></div>
-              <div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>75 000 ₸</strong></div>
-              <div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>200 000 ₸</strong></div>
-            </div>
+            <div class="car-prices"><div class="price-row"><span data-i18n="price_hour">Час</span><strong>28 000 ₸</strong></div><div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>75 000 ₸</strong></div><div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>200 000 ₸</strong></div></div>
             <button class="specs-toggle-btn" onclick="toggleSpecs(this)"><span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i></button>
-            <ul class="car-specs">
-              <li><i class="fas fa-users"></i><span data-i18n="spec_6pass">6 пассажиров</span></li>
-              <li><i class="fas fa-suitcase"></i><span data-i18n="spec_6bag">6 чемоданов</span></li>
-              <li><i class="fas fa-snowflake"></i><span data-i18n="spec_climate">Климат-контроль</span></li>
-              <li><i class="fas fa-tv"></i><span data-i18n="spec_media">Мультимедиа</span></li>
-              <li><i class="fas fa-couch"></i><span data-i18n="spec_captain">Капитанские кресла</span></li>
-              <li><i class="fas fa-volume-up"></i><span data-i18n="spec_audio">Премиум аудиосистема</span></li>
-              <li><i class="fas fa-door-open"></i><span data-i18n="spec_slide">Раздвижные двери</span></li>
-              <li><i class="fas fa-tachometer-alt"></i><span data-i18n="spec_engine_v4">Двигатель 2.0 V4</span></li>
-              <li><i class="fas fa-road"></i><span data-i18n="spec_auto">Автоматическая КПП</span></li>
-              <li><i class="fas fa-wifi"></i><span data-i18n="spec_wifi">Wi-Fi на борту</span></li>
-            </ul>
+            <ul class="car-specs"><li><i class="fas fa-users"></i><span data-i18n="spec_6pass">6 пассажиров</span></li><li><i class="fas fa-suitcase"></i><span data-i18n="spec_6bag">6 чемоданов</span></li><li><i class="fas fa-snowflake"></i><span data-i18n="spec_climate">Климат-контроль</span></li><li><i class="fas fa-tv"></i><span data-i18n="spec_media">Мультимедиа</span></li><li><i class="fas fa-couch"></i><span data-i18n="spec_captain">Капитанские кресла</span></li><li><i class="fas fa-volume-up"></i><span data-i18n="spec_audio">Премиум аудиосистема</span></li><li><i class="fas fa-door-open"></i><span data-i18n="spec_slide">Раздвижные двери</span></li><li><i class="fas fa-tachometer-alt"></i><span data-i18n="spec_engine_v4">Двигатель 2.0 V4</span></li><li><i class="fas fa-road"></i><span data-i18n="spec_auto">Автоматическая КПП</span></li><li><i class="fas fa-wifi"></i><span data-i18n="spec_wifi">Wi-Fi на борту</span></li></ul>
             <a href="https://wa.me/77066660010" target="_blank" class="btn-book" rel="noopener"><i class="fab fa-whatsapp"></i> <span data-i18n="book">Забронировать</span></a>
           </div>
         </div>
-        <!-- CAR 3 -->
         <div class="car-panel" data-car="3">
           <div class="car-gallery">
-            <div class="gallery-main" onclick="openLightbox(3,0)">
-              <img id="main-img-3" src="images/mercedes-sprinter-01.jpg" alt="Mercedes Sprinter" loading="lazy" />
-              <div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div>
-            </div>
-            <div class="gallery-thumbs">
-              <img src="images/mercedes-sprinter-01.jpg" class="thumb active" onclick="setMain(3,this,0)" alt="" loading="lazy" />
-              <img src="images/mercedes-sprinter-02.jpg" class="thumb" onclick="setMain(3,this,1)" alt="" loading="lazy" />
-              <img src="images/mercedes-sprinter-03.jpg" class="thumb" onclick="setMain(3,this,2)" alt="" loading="lazy" />
-              <img src="images/mercedes-sprinter-04.jpg" class="thumb" onclick="setMain(3,this,3)" alt="" loading="lazy" />
-              <img src="images/mercedes-sprinter-05.jpg" class="thumb" onclick="setMain(3,this,4)" alt="" loading="lazy" />
-              <img src="images/mercedes-sprinter-06.jpg" class="thumb" onclick="setMain(3,this,5)" alt="" loading="lazy" />
-              <img src="images/mercedes-sprinter-07.jpg" class="thumb" onclick="setMain(3,this,6)" alt="" loading="lazy" />
-              <img src="images/mercedes-sprinter-08.jpg" class="thumb" onclick="setMain(3,this,7)" alt="" loading="lazy" />
-            </div>
+            <div class="gallery-main" onclick="openLightbox(3,0)"><img id="main-img-3" src="images/mercedes-sprinter-01.jpg" alt="Mercedes Sprinter" loading="lazy" /><div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div></div>
+            <div class="gallery-thumbs"><img src="images/mercedes-sprinter-01.jpg" class="thumb active" onclick="setMain(3,this,0)" alt="" loading="lazy" /><img src="images/mercedes-sprinter-02.jpg" class="thumb" onclick="setMain(3,this,1)" alt="" loading="lazy" /><img src="images/mercedes-sprinter-03.jpg" class="thumb" onclick="setMain(3,this,2)" alt="" loading="lazy" /><img src="images/mercedes-sprinter-04.jpg" class="thumb" onclick="setMain(3,this,3)" alt="" loading="lazy" /><img src="images/mercedes-sprinter-05.jpg" class="thumb" onclick="setMain(3,this,4)" alt="" loading="lazy" /><img src="images/mercedes-sprinter-06.jpg" class="thumb" onclick="setMain(3,this,5)" alt="" loading="lazy" /><img src="images/mercedes-sprinter-07.jpg" class="thumb" onclick="setMain(3,this,6)" alt="" loading="lazy" /><img src="images/mercedes-sprinter-08.jpg" class="thumb" onclick="setMain(3,this,7)" alt="" loading="lazy" /></div>
           </div>
           <div class="car-info">
             <h3 class="car-name">Mercedes-Benz Sprinter</h3>
             <p class="car-class" data-i18n="class_bus">Микроавтобус · 16 мест</p>
             <p class="car-desc" data-i18n="desc_sprinter">Вместительный премиум-микроавтобус для групповых трансферов. Комфортные кресла бизнес-класса, кондиционер и современное оборудование.</p>
-            <div class="car-prices">
-              <div class="price-row"><span data-i18n="price_hour">Час</span><strong>40 000 ₸</strong></div>
-              <div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>120 000 ₸</strong></div>
-              <div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>300 000 ₸</strong></div>
-            </div>
+            <div class="car-prices"><div class="price-row"><span data-i18n="price_hour">Час</span><strong>40 000 ₸</strong></div><div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>120 000 ₸</strong></div><div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>300 000 ₸</strong></div></div>
             <button class="specs-toggle-btn" onclick="toggleSpecs(this)"><span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i></button>
-            <ul class="car-specs">
-              <li><i class="fas fa-users"></i><span data-i18n="spec_16pass">16 пассажиров</span></li>
-              <li><i class="fas fa-suitcase"></i><span data-i18n="spec_16bag">16 чемоданов</span></li>
-              <li><i class="fas fa-snowflake"></i><span data-i18n="spec_climate">Климат-контроль</span></li>
-              <li><i class="fas fa-music"></i><span data-i18n="spec_audio2">Аудиосистема</span></li>
-              <li><i class="fas fa-chair"></i><span data-i18n="spec_recline">Откидные кресла</span></li>
-              <li><i class="fas fa-lightbulb"></i><span data-i18n="spec_led">LED-освещение</span></li>
-              <li><i class="fas fa-plug"></i><span data-i18n="spec_usb">USB-зарядки</span></li>
-              <li><i class="fas fa-tachometer-alt"></i><span data-i18n="spec_engine_d">Дизель 2.2</span></li>
-              <li><i class="fas fa-road"></i><span data-i18n="spec_auto">Автоматическая КПП</span></li>
-              <li><i class="fas fa-shield-alt"></i><span data-i18n="spec_safe">Система безопасности</span></li>
-            </ul>
+            <ul class="car-specs"><li><i class="fas fa-users"></i><span data-i18n="spec_16pass">16 пассажиров</span></li><li><i class="fas fa-suitcase"></i><span data-i18n="spec_16bag">16 чемоданов</span></li><li><i class="fas fa-snowflake"></i><span data-i18n="spec_climate">Климат-контроль</span></li><li><i class="fas fa-music"></i><span data-i18n="spec_audio2">Аудиосистема</span></li><li><i class="fas fa-chair"></i><span data-i18n="spec_recline">Откидные кресла</span></li><li><i class="fas fa-lightbulb"></i><span data-i18n="spec_led">LED-освещение</span></li><li><i class="fas fa-plug"></i><span data-i18n="spec_usb">USB-зарядки</span></li><li><i class="fas fa-tachometer-alt"></i><span data-i18n="spec_engine_d">Дизель 2.2</span></li><li><i class="fas fa-road"></i><span data-i18n="spec_auto">Автоматическая КПП</span></li><li><i class="fas fa-shield-alt"></i><span data-i18n="spec_safe">Система безопасности</span></li></ul>
             <a href="https://wa.me/77066660010" target="_blank" class="btn-book" rel="noopener"><i class="fab fa-whatsapp"></i> <span data-i18n="book">Забронировать</span></a>
           </div>
         </div>
       </div>
-    </div><!-- end vans -->
+    </div>
 
   </div>
 </section>
 
-<!-- ABOUT -->
-<section class="about" id="about">
+</div><!-- end page-home -->
+
+<!-- ========================= -->
+<!-- PAGE: ABOUT               -->
+<!-- ========================= -->
+<div class="page-section" id="page-about-page">
+<section class="about-page">
   <div class="container">
-    <div class="about-grid">
-      <div class="about-text">
+    <div class="about-page-grid">
+      <div>
         <p class="section-label" data-i18n="about_label">О КОМПАНИИ</p>
         <h2 class="section-title">Ventas Group</h2>
+
         <div class="about-block-title">Ключевые факты</div>
         <ul class="about-list">
           <li><i class="fas fa-check"></i> На рынке 10 лет</li>
@@ -1248,6 +1131,7 @@ img{display:block;max-width:100%}
           <li><i class="fas fa-check"></i> Профессиональные водители</li>
           <li><i class="fas fa-check"></i> Работаем по договору и безналичному расчету</li>
         </ul>
+
         <div class="about-block-title">Опыт и мероприятия</div>
         <ul class="about-list">
           <li><i class="fas fa-star"></i> Astana International Forum — 2025 (AIF)</li>
@@ -1257,24 +1141,219 @@ img{display:block;max-width:100%}
           <li><i class="fas fa-star"></i> Работали с делегациями: Россия, Китай, Иран, Вьетнам, Турция, Южная Корея, страны Ближнего Востока и др.</li>
           <li><i class="fas fa-star"></i> Получили благодарственное письмо от Зам. Премьер-Министра РК</li>
         </ul>
+
         <div class="about-block-title">Услуги</div>
         <div class="about-services">
           <div class="service-card"><h4>Индивидуальные и групповые трансферы</h4><p>(аэропорт, вокзал, деловые встречи)</p></div>
           <div class="service-card"><h4>Обслуживание делегации и VIP-гостей</h4><p>(экскурсии, бизнес встречи, сопровождение)</p></div>
           <div class="service-card"><h4>Транспортное обеспечение деловых и светских мероприятий</h4><p>(Форумы, конференции, саммиты, корпоративы и пр.)</p></div>
         </div>
+
         <div class="about-block-title">Сертификаты</div>
         <div class="certs">
           <div class="certs-grid">
             <div class="cert-card"><img src="images/serf1.jpg" alt="Certificate 1" loading="lazy" /></div>
-            <div class="cert-card"><img src="images/serf2.jpg" alt="Certificate 2" loading="lazy" /></div>
             <div class="cert-card"><img src="images/serf3.jpg" alt="Certificate 3" loading="lazy" /></div>
+          </div>
+        </div>
+
+        <!-- Cooperation block -->
+        <div class="cooperation-block">
+          <div class="about-block-title">Сотрудничество</div>
+          <p style="color:var(--gray2);font-size:14px;line-height:1.7;margin-bottom:8px">Мы всегда открыты для новых партнёрств и совместных проектов. Свяжитесь с нами для обсуждения сотрудничества:</p>
+          <div class="cooperation-contacts">
+            <div class="cooperation-item">
+              <i class="fas fa-phone"></i>
+              <a href="tel:+77077773885">+7 707 777 3885</a>
+            </div>
+            <div class="cooperation-item">
+              <i class="fas fa-envelope"></i>
+              <a href="mailto:ventasgroupkz@gmail.com">ventasgroupkz@gmail.com</a>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
+</div><!-- end page-about -->
+
+<!-- ========================= -->
+<!-- PAGE: PARTNERS            -->
+<!-- ========================= -->
+<div class="page-section" id="page-partners-page">
+<section class="partners-page">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label" data-i18n="partners_label">НАШИ ПАРТНЁРЫ</p>
+      <h2 class="section-title" data-i18n="partners_title">Партнёры Ventas Group</h2>
+      <p class="section-desc" data-i18n="partners_desc">Компании, которым мы обеспечиваем транспортное обслуживание премиум-класса</p>
+    </div>
+
+    <div class="partners-grid">
+
+      <div class="partner-card">
+        <h3>BI GROUP</h3>
+        <p>Крупнейшая девелоперская и строительная компания Центральной Азии. Работает с 1995 года, реализует проекты жилой и коммерческой недвижимости, дорожного строительства и промышленной инфраструктуры.</p>
+        <a href="https://bi.group" target="_blank" class="partner-link" rel="noopener">bi.group <i class="fas fa-external-link-alt"></i></a>
+      </div>
+
+      <div class="partner-card">
+        <h3>BalQymyz</h3>
+        <p>Организатор крупного гастрономического фестиваля в Казахстане, посвящённого национальной кухне и культуре. Мероприятие объединяет лучших поваров, рестораторов и ценителей казахской гастрономии.</p>
+        <a href="https://balqymyz.kz" target="_blank" class="partner-link" rel="noopener">balqymyz.kz <i class="fas fa-external-link-alt"></i></a>
+      </div>
+
+      <div class="partner-card">
+        <h3>QazExpoCongress</h3>
+        <p>Конгресс-центр в Астане, принимающий международные форумы, выставки и деловые мероприятия высшего уровня. Площадка для проведения Astana International Forum и других ключевых событий.</p>
+        <a href="https://qazexpocongress.kz" target="_blank" class="partner-link" rel="noopener">qazexpocongress.kz <i class="fas fa-external-link-alt"></i></a>
+      </div>
+
+      <div class="partner-card">
+        <h3>СК Казахмыс</h3>
+        <p>Крупная горно-металлургическая компания Казахстана, один из мировых лидеров по производству меди. Управляет предприятиями по добыче и переработке руды в нескольких регионах страны.</p>
+        <a href="https://kazakhmys.kz" target="_blank" class="partner-link" rel="noopener">kazakhmys.kz <i class="fas fa-external-link-alt"></i></a>
+      </div>
+
+      <div class="partner-card">
+        <h3>Bazis Aero</h3>
+        <p>Компания группы «Базис» — одного из крупнейших строительных холдингов Казахстана. С 1991 года реализует масштабные проекты в сфере жилого, коммерческого и инфраструктурного строительства.</p>
+        <a href="https://bazis.kz" target="_blank" class="partner-link" rel="noopener">bazis.kz <i class="fas fa-external-link-alt"></i></a>
+      </div>
+
+      <div class="partner-card">
+        <h3>Казах Минералс</h3>
+        <p>Горнодобывающая компания, специализирующаяся на разведке и добыче полезных ископаемых в Казахстане. Работает с месторождениями меди, золота и других минеральных ресурсов.</p>
+        <a href="https://kazakhminerals.com" target="_blank" class="partner-link" rel="noopener">kazakhminerals.com <i class="fas fa-external-link-alt"></i></a>
+      </div>
+
+      <div class="partner-card">
+        <h3>Технотенгиз</h3>
+        <p>Казахстанская сервисная компания нефтегазовой отрасли. Оказывает широкий спектр услуг по инжинирингу, обслуживанию и технической поддержке нефтегазовых объектов.</p>
+        <a href="https://technotengiz.kz" target="_blank" class="partner-link" rel="noopener">technotengiz.kz <i class="fas fa-external-link-alt"></i></a>
+      </div>
+
+      <div class="partner-card">
+        <h3>Костанайские Минералы</h3>
+        <p>Горнодобывающее предприятие в Костанайской области, специализирующееся на добыче и переработке хризотил-асбеста. Одно из крупнейших производств данного вида в регионе.</p>
+        <a href="https://kostanay-minerals.kz" target="_blank" class="partner-link" rel="noopener">kostanay-minerals.kz <i class="fas fa-external-link-alt"></i></a>
+      </div>
+
+      <div class="partner-card">
+        <h3>KAZROST</h3>
+        <p>Казахстанская инжиниринговая и сервисная компания, предоставляющая услуги в области промышленного строительства, проектирования и технического обслуживания объектов.</p>
+        <a href="https://kazrost.kz" target="_blank" class="partner-link" rel="noopener">kazrost.kz <i class="fas fa-external-link-alt"></i></a>
+      </div>
+
+      <div class="partner-card">
+        <h3>КазТрансГаз (QazaqGaz)</h3>
+        <p>Национальная газовая компания Казахстана, обеспечивающая транспортировку и распределение газа. Эксплуатирует крупнейшую сеть магистральных газопроводов протяжённостью свыше 20 000 км.</p>
+        <a href="https://qazaqgaz.kz" target="_blank" class="partner-link" rel="noopener">qazaqgaz.kz <i class="fas fa-external-link-alt"></i></a>
+      </div>
+
+      <div class="partner-card">
+        <h3>ERG (Eurasian Resources Group)</h3>
+        <p>Ведущая диверсифицированная горно-металлургическая группа с операциями на четырёх континентах. Крупнейший в мире производитель феррохрома и один из ключевых поставщиков меди и железной руды.</p>
+        <a href="https://www.erg.kz" target="_blank" class="partner-link" rel="noopener">erg.kz <i class="fas fa-external-link-alt"></i></a>
+      </div>
+
+      <div class="partner-card">
+        <h3>Тур-агентство Tur-Ai</h3>
+        <p>Туристическое агентство, предлагающее организацию деловых и частных поездок по Казахстану и зарубежным направлениям. Специализируется на корпоративном и VIP-туризме.</p>
+        <a href="https://tur-ai.kz" target="_blank" class="partner-link" rel="noopener">tur-ai.kz <i class="fas fa-external-link-alt"></i></a>
+      </div>
+
+      <div class="partner-card">
+        <h3>Inova Tech</h3>
+        <p>Технологическая компания, специализирующаяся на внедрении инновационных IT-решений и цифровой трансформации бизнеса в Казахстане. Работает с корпоративными и государственными заказчиками.</p>
+        <a href="https://inovatech.kz" target="_blank" class="partner-link" rel="noopener">inovatech.kz <i class="fas fa-external-link-alt"></i></a>
+      </div>
+
+      <div class="partner-card">
+        <h3>Grand Oreon</h3>
+        <p>Охранное агентство, предоставляющее услуги физической и технической охраны, сопровождения VIP-персон и обеспечения безопасности объектов и мероприятий в Казахстане.</p>
+        <a href="https://grandoreon.kz" target="_blank" class="partner-link" rel="noopener">grandoreon.kz <i class="fas fa-external-link-alt"></i></a>
+      </div>
+
+      <div class="partner-card">
+        <h3>Enegix Service</h3>
+        <p>Сервисная компания в сфере энергетики, осуществляющая обслуживание, монтаж и ремонт энергетического оборудования. Обеспечивает техническую поддержку промышленных объектов.</p>
+        <a href="https://enegix.kz" target="_blank" class="partner-link" rel="noopener">enegix.kz <i class="fas fa-external-link-alt"></i></a>
+      </div>
+
+      <div class="partner-card">
+        <h3>Gaz Energy Solution</h3>
+        <p>Компания, специализирующаяся на поставке газового оборудования и реализации энергетических решений для промышленного и коммерческого сектора Казахстана.</p>
+        <a href="https://gazenergy.kz" target="_blank" class="partner-link" rel="noopener">gazenergy.kz <i class="fas fa-external-link-alt"></i></a>
+      </div>
+
+      <div class="partner-card">
+        <h3>Climate Expert</h3>
+        <p>Компания по проектированию и монтажу систем кондиционирования, вентиляции и климатического оборудования. Обслуживает коммерческие и жилые объекты по всему Казахстану.</p>
+        <a href="https://climateexpert.kz" target="_blank" class="partner-link" rel="noopener">climateexpert.kz <i class="fas fa-external-link-alt"></i></a>
+      </div>
+
+      <div class="partner-card">
+        <h3>Partners Travel Advisor Kazakhstan</h3>
+        <p>Профессиональное туристическое агентство, организующее корпоративные поездки, деловые туры и мероприятия. Предоставляет полный спектр тревел-услуг для бизнеса.</p>
+        <a href="https://partnerstravel.kz" target="_blank" class="partner-link" rel="noopener">partnerstravel.kz <i class="fas fa-external-link-alt"></i></a>
+      </div>
+
+      <div class="partner-card">
+        <h3>N-travel</h3>
+        <p>Туристическая компания, специализирующаяся на организации корпоративных и индивидуальных туров. Предлагает услуги по бронированию, трансферам и сопровождению поездок.</p>
+        <a href="https://n-travel.kz" target="_blank" class="partner-link" rel="noopener">n-travel.kz <i class="fas fa-external-link-alt"></i></a>
+      </div>
+
+      <div class="partner-card">
+        <h3>Сервисная компания Магистраль</h3>
+        <p>Казахстанская сервисная компания, предоставляющая услуги в сфере транспортной логистики, технического обслуживания и обеспечения магистральной инфраструктуры.</p>
+        <a href="https://magistral.kz" target="_blank" class="partner-link" rel="noopener">magistral.kz <i class="fas fa-external-link-alt"></i></a>
+      </div>
+
+      <div class="partner-card">
+        <h3>Kazakhstan Paramount Engineering</h3>
+        <p>Крупнейшее предприятие Центральной Азии по производству современных бронированных колёсных машин. Совместное предприятие с южноафриканской Paramount Group, основанное в 2014 году.</p>
+        <a href="https://kpe.com.kz" target="_blank" class="partner-link" rel="noopener">kpe.com.kz <i class="fas fa-external-link-alt"></i></a>
+      </div>
+
+    </div>
+
+    <!-- Partner logos -->
+    <div class="partner-logos-section">
+      <div class="section-header">
+        <p class="section-label">ЛОГОТИПЫ</p>
+        <h2 class="section-title" style="font-size:clamp(22px,3vw,36px)">Наши партнёры</h2>
+      </div>
+      <div class="partner-logos-grid">
+        <a href="https://bi.group" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/bi-group.png" alt="BI GROUP" /></a>
+        <a href="https://balqymyz.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/balqymyz.png" alt="BalQymyz" /></a>
+        <a href="https://qazexpocongress.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/qazexpocongress.png" alt="QazExpoCongress" /></a>
+        <a href="https://kazakhmys.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/sk-kazakhmys.png" alt="СК Казахмыс" /></a>
+        <a href="https://bazis.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/bazis-aero.png" alt="Bazis Aero" /></a>
+        <a href="https://kazakhminerals.com" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/kazakh-minerals.png" alt="Казах Минералс" /></a>
+        <a href="https://technotengiz.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/technotengiz.png" alt="Технотенгиз" /></a>
+        <a href="https://kostanay-minerals.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/kostanay-minerals.png" alt="Костанайские Минералы" /></a>
+        <a href="https://kazrost.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/kazrost.png" alt="KAZROST" /></a>
+        <a href="https://qazaqgaz.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/kaztransgas.png" alt="КазТрансГаз" /></a>
+        <a href="https://www.erg.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/erg.png" alt="ERG" /></a>
+        <a href="https://tur-ai.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/tur-ai.png" alt="Tur-Ai" /></a>
+        <a href="https://inovatech.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/inova-tech.png" alt="Inova Tech" /></a>
+        <a href="https://grandoreon.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/grand-oreon.png" alt="Grand Oreon" /></a>
+        <a href="https://enegix.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/enegix-service.png" alt="Enegix Service" /></a>
+        <a href="https://gazenergy.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/gaz-energy-solution.png" alt="Gaz Energy Solution" /></a>
+        <a href="https://climateexpert.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/climate-expert.png" alt="Climate Expert" /></a>
+        <a href="https://partnerstravel.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/partners-travel-advisor.png" alt="Partners Travel Advisor" /></a>
+        <a href="https://n-travel.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/n-travel.png" alt="N-travel" /></a>
+        <a href="https://magistral.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/magistral.png" alt="Магистраль" /></a>
+        <a href="https://kpe.com.kz" target="_blank" class="partner-logo-item" rel="noopener"><img src="partners/kpe.png" alt="Kazakhstan Paramount Engineering" /></a>
+      </div>
+    </div>
+
+  </div>
+</section>
+</div><!-- end page-partners -->
 
 <!-- FOOTER -->
 <footer class="footer">
@@ -1285,8 +1364,9 @@ img{display:block;max-width:100%}
         <p data-i18n="footer_tagline">Премиум аренда автомобилей</p>
       </div>
       <div class="footer-links">
-        <a href="#catalog" data-i18n="nav_cars">Автомобили</a>
-        <a href="#about" data-i18n="nav_about">О нас</a>
+        <a onclick="navigateTo('home')" data-i18n="nav_home">Главная</a>
+        <a onclick="navigateTo('about-page')" data-i18n="nav_about">О компании</a>
+        <a onclick="navigateTo('partners-page')" data-i18n="nav_partners">Партнёры</a>
       </div>
       <div class="footer-social">
         <a href="https://www.instagram.com/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
@@ -1324,6 +1404,23 @@ img{display:block;max-width:100%}
 </div>
 
 <script>
+/* ===========================
+   PAGE NAVIGATION
+=========================== */
+function navigateTo(page){
+  document.querySelectorAll('.page-section').forEach(function(s){s.classList.remove('active')});
+  var target=document.getElementById('page-'+page);
+  if(target)target.classList.add('active');
+  window.scrollTo({top:0,behavior:'instant'});
+  /* Force navbar scrolled on inner pages */
+  if(page!=='home'){
+    document.getElementById('navbar').classList.add('scrolled');
+  }
+}
+
+/* ===========================
+   GALLERY & LIGHTBOX
+=========================== */
 var carImages={},currentThumbIndex={},lightboxCar=0,lightboxIdx=0;
 
 window.setMain=function(c,el,i){
@@ -1348,20 +1445,38 @@ function _lb(){
   var c=document.getElementById('lightbox-counter');if(c)c.textContent=(lightboxIdx+1)+' / '+imgs.length;
 }
 
-/* Translations */
+/* ===========================
+   TRANSLATIONS
+=========================== */
 const i18n={
-  ru:{nav_cars:'Автомобили',nav_about:'О нас',call:'Позвонить',catalog_label:'НАШ АВТОПАРК',catalog_title:'Премиум автомобили на любой вкус',catalog_desc:'10 моделей премиум-класса для любых задач',cat_sedans:'Бизнес седаны',cat_suv:'Внедорожники',cat_vans:'Минивэны и микроавтобусы',about_label:'О КОМПАНИИ',footer_tagline:'Премиум аренда автомобилей',footer_copy:'© 2026 Ventas Group. Все права защищены.',book:'Забронировать',specs_show:'Характеристики',specs_hide:'Скрыть',price_hour:'Час',price_transfer:'Трансфер',price_day12:'День (12 часов)',class_business_lux:'Бизнес-класс · Люкс',class_minivan:'Минивэн · Бизнес',class_bus:'Микроавтобус · 16 мест',class_suv_lux:'Внедорожник · Люкс',class_suv_prem:'Внедорожник · Премиум',class_sedan:'Бизнес-седан · Комфорт',desc_w223:'Флагманский седан Mercedes-Benz нового поколения. Воплощение роскоши, технологий и комфорта. Идеален для деловых поездок и особых случаев.',desc_w222:'Легендарный S-Class предыдущего поколения. Безупречный комфорт, представительный стиль и надёжность для самых требовательных клиентов.',desc_vclass:'Просторный премиум-минивэн для групповых поездок. Роскошный салон с капитанскими креслами, идеален для трансферов и деловых поездок компанией.',desc_sprinter:'Вместительный премиум-микроавтобус для групповых трансферов. Комфортные кресла бизнес-класса, кондиционер и современное оборудование.',desc_lx600:'Флагманский внедорожник Lexus нового поколения. Сочетает в себе японское качество, роскошный интерьер и выдающиеся внедорожные возможности.',desc_lx570:'Классический премиум-внедорожник Lexus. Мощный V8, роскошный салон и непревзойдённая надёжность — выбор тех, кто ценит качество.',desc_lc300:'Новейший Land Cruiser серии 300. Революционный дизайн, передовые технологии и легендарная надёжность Toyota в самом престижном исполнении.',desc_lc200:'Легендарный Land Cruiser 200 — символ надёжности и комфорта. Проверенный временем флагман Toyota с роскошным салоном и непревзойдёнными возможностями.',desc_camry80:'Новейшее поколение легендарного Camry. Динамичный дизайн, просторный салон и высокий уровень оснащения для комфортных деловых поездок.',desc_camry70:'Проверенный временем Camry 7-го поколения. Надёжность, комфорт и элегантность — идеальный выбор для деловых поездок и трансферов.',spec_4pass:'4 пассажира',spec_7pass:'7 пассажиров',spec_6pass:'6 пассажиров',spec_16pass:'16 пассажиров',spec_3bag:'3 чемодана',spec_4bag:'4 чемодана',spec_6bag:'6 чемоданов',spec_16bag:'16 чемоданов',spec_climate:'Климат-контроль',spec_wifi:'Wi-Fi на борту',spec_leather:'Кожаный салон',spec_audio:'Премиум аудиосистема',spec_audio2:'Аудиосистема',spec_audio_mark:'Mark Levinson аудио',spec_audio_jbl:'JBL аудиосистема',spec_park:'Система парковки',spec_safe:'Система безопасности',spec_auto:'Автоматическая КПП',spec_4wd:'Полный привод',spec_offroad:'Внедорожный режим',spec_media:'Мультимедиа',spec_captain:'Капитанские кресла',spec_slide:'Раздвижные двери',spec_screen:'Задние экраны',spec_recline:'Откидные кресла',spec_led:'LED-освещение',spec_usb:'USB-зарядки',spec_hybrid:'Гибрид доступен',spec_popular:'Популярный выбор',spec_engine_v6:'Двигатель 3.0 V6',spec_engine_v8:'Двигатель 4.7 V8',spec_engine_v4:'Двигатель 2.0 V4',spec_engine_d:'Дизель 2.2',spec_engine_v6t:'Двигатель 3.5 V6 Twin Turbo',spec_engine_v8_5:'Двигатель 5.7 V8',spec_engine_v8_4:'Двигатель 4.6 V8',spec_engine_v6_25:'Двигатель 2.5 V6'},
-  kz:{nav_cars:'Автомобильдер',nav_about:'Біз туралы',call:'Қоңырау шалу',catalog_label:'БІЗДІҢ АВТОПАРК',catalog_title:'Кез келген талғамға арналған премиум автомобильдер',catalog_desc:'Кез келген міндет үшін 10 премиум-класс модель',cat_sedans:'Бизнес седандар',cat_suv:'Жол талғамайтындар',cat_vans:'Минивэндер және микроавтобустар',about_label:'КОМПАНИЯ ТУРАЛЫ',footer_tagline:'Премиум автомобиль жалдау',footer_copy:'© 2026 Ventas Group. Барлық құқықтар қорғалған.',book:'Брондау',specs_show:'Сипаттамалар',specs_hide:'Жасыру',price_hour:'Сағат',price_transfer:'Трансфер',price_day12:'Күн (12 сағат)',class_business_lux:'Бизнес-класс · Люкс',class_minivan:'Минивэн · Бизнес',class_bus:'Микроавтобус · 16 орын',class_suv_lux:'Жол талғамайтын · Люкс',class_suv_prem:'Жол талғамайтын · Премиум',class_sedan:'Бизнес-седан · Комфорт',desc_w223:'Mercedes-Benz жаңа буынының флагмандық седаны.',desc_w222:'Алдыңғы буынның аңызға айналған S-Class.',desc_vclass:'Топтық сапарлар үшін кең премиум-минивэн.',desc_sprinter:'Топтық трансферлер үшін сыйымды премиум-микроавтобус.',desc_lx600:'Lexus жаңа буынының флагмандық жол талғамайтыны.',desc_lx570:'Lexus-тың классикалық премиум-жол талғамайтыны.',desc_lc300:'Ең жаңа Land Cruiser 300 сериясы.',desc_lc200:'Аңызға айналған Land Cruiser 200.',desc_camry80:'Camry-дің ең жаңа буыны.',desc_camry70:'Уақыт сынынан өткен Camry 7-буыны.',spec_4pass:'4 жолаушы',spec_7pass:'7 жолаушы',spec_6pass:'6 жолаушы',spec_16pass:'16 жолаушы',spec_3bag:'3 чемодан',spec_4bag:'4 чемодан',spec_6bag:'6 чемодан',spec_16bag:'16 чемодан',spec_climate:'Климат-бақылау',spec_wifi:'Бортта Wi-Fi',spec_leather:'Былғары салон',spec_audio:'Премиум аудиожүйе',spec_audio2:'Аудиожүйе',spec_audio_mark:'Mark Levinson аудио',spec_audio_jbl:'JBL аудиожүйе',spec_park:'Тұрақ жүйесі',spec_safe:'Қауіпсіздік жүйесі',spec_auto:'Автоматты КПП',spec_4wd:'Толық жетек',spec_offroad:'Жол талғамайтын режим',spec_media:'Мультимедиа',spec_captain:'Капитандық орындықтар',spec_slide:'Сырғымалы есіктер',spec_screen:'Артқы экрандар',spec_recline:'Еңкейетін орындықтар',spec_led:'LED-жарықтандыру',spec_usb:'USB-зарядтағыштар',spec_hybrid:'Гибрид қолжетімді',spec_popular:'Танымал таңдау',spec_engine_v6:'3.0 V6 қозғалтқыш',spec_engine_v8:'4.7 V8 қозғалтқыш',spec_engine_v4:'2.0 V4 қозғалтқыш',spec_engine_d:'Дизель 2.2',spec_engine_v6t:'3.5 V6 Twin Turbo қозғалтқыш',spec_engine_v8_5:'5.7 V8 қозғалтқыш',spec_engine_v8_4:'4.6 V8 қозғалтқыш',spec_engine_v6_25:'2.5 V6 қозғалтқыш'},
-  en:{nav_cars:'Cars',nav_about:'About',call:'Call Us',catalog_label:'OUR FLEET',catalog_title:'Premium Cars for Every Taste',catalog_desc:'10 premium-class models for any occasion',cat_sedans:'Business Sedans',cat_suv:'SUVs',cat_vans:'Minivans & Minibuses',about_label:'ABOUT US',footer_tagline:'Premium Car Rental',footer_copy:'© 2026 Ventas Group. All rights reserved.',book:'Book Now',specs_show:'Specifications',specs_hide:'Hide',price_hour:'Hour',price_transfer:'Transfer',price_day12:'Day (12 hours)',class_business_lux:'Business Class · Luxury',class_minivan:'Minivan · Business',class_bus:'Minibus · 16 Seats',class_suv_lux:'SUV · Luxury',class_suv_prem:'SUV · Premium',class_sedan:'Business Sedan · Comfort',desc_w223:'The flagship sedan of the new Mercedes-Benz generation.',desc_w222:'The legendary S-Class of the previous generation.',desc_vclass:'A spacious premium minivan for group travel.',desc_sprinter:'A capacious premium minibus for group transfers.',desc_lx600:'The flagship SUV of the new Lexus generation.',desc_lx570:'The classic premium Lexus SUV.',desc_lc300:"The latest Land Cruiser 300 series.",desc_lc200:"The legendary Land Cruiser 200.",desc_camry80:'The latest generation of the legendary Camry.',desc_camry70:'The time-tested Camry 7th generation.',spec_4pass:'4 Passengers',spec_7pass:'7 Passengers',spec_6pass:'6 Passengers',spec_16pass:'16 Passengers',spec_3bag:'3 Luggage',spec_4bag:'4 Luggage',spec_6bag:'6 Luggage',spec_16bag:'16 Luggage',spec_climate:'Climate Control',spec_wifi:'Wi-Fi on Board',spec_leather:'Leather Interior',spec_audio:'Premium Audio System',spec_audio2:'Audio System',spec_audio_mark:'Mark Levinson Audio',spec_audio_jbl:'JBL Audio System',spec_park:'Parking System',spec_safe:'Safety System',spec_auto:'Automatic Transmission',spec_4wd:'All-Wheel Drive',spec_offroad:'Off-Road Mode',spec_media:'Multimedia',spec_captain:'Captain Seats',spec_slide:'Sliding Doors',spec_screen:'Rear Screens',spec_recline:'Reclining Seats',spec_led:'LED Lighting',spec_usb:'USB Chargers',spec_hybrid:'Hybrid Available',spec_popular:'Popular Choice',spec_engine_v6:'3.0 V6 Engine',spec_engine_v8:'4.7 V8 Engine',spec_engine_v4:'2.0 V4 Engine',spec_engine_d:'Diesel 2.2',spec_engine_v6t:'3.5 V6 Twin Turbo Engine',spec_engine_v8_5:'5.7 V8 Engine',spec_engine_v8_4:'4.6 V8 Engine',spec_engine_v6_25:'2.5 V6 Engine'}
+  ru:{nav_home:'Главная',nav_cars:'Автомобили',nav_about:'О компании',nav_partners:'Партнёры',call:'Позвонить',catalog_label:'НАШ АВТОПАРК',catalog_title:'Премиум автомобили на любой вкус',catalog_desc:'10 моделей премиум-класса для любых задач',cat_sedans:'Бизнес седаны',cat_suv:'Внедорожники',cat_vans:'Минивэны и микроавтобусы',about_label:'О КОМПАНИИ',partners_label:'НАШИ ПАРТНЁРЫ',partners_title:'Партнёры Ventas Group',partners_desc:'Компании, которым мы обеспечиваем транспортное обслуживание премиум-класса',footer_tagline:'Премиум аренда автомобилей',footer_copy:'© 2026 Ventas Group. Все права защищены.',book:'Забронировать',specs_show:'Характеристики',specs_hide:'Скрыть',price_hour:'Час',price_transfer:'Трансфер',price_day12:'День (12 часов)',class_business_lux:'Бизнес-класс · Люкс',class_minivan:'Минивэн · Бизнес',class_bus:'Микроавтобус · 16 мест',class_suv_lux:'Внедорожник · Люкс',class_suv_prem:'Внедорожник · Премиум',class_sedan:'Бизнес-седан · Комфорт',desc_w223:'Флагманский седан Mercedes-Benz нового поколения. Воплощение роскоши, технологий и комфорта. Идеален для деловых поездок и особых случаев.',desc_w222:'Легендарный S-Class предыдущего поколения. Безупречный комфорт, представительный стиль и надёжность для самых требовательных клиентов.',desc_vclass:'Просторный премиум-минивэн для групповых поездок. Роскошный салон с капитанскими креслами, идеален для трансферов и деловых поездок компанией.',desc_sprinter:'Вместительный премиум-микроавтобус для групповых трансферов. Комфортные кресла бизнес-класса, кондиционер и современное оборудование.',desc_lx600:'Флагманский внедорожник Lexus нового поколения. Сочетает в себе японское качество, роскошный интерьер и выдающиеся внедорожные возможности.',desc_lx570:'Классический премиум-внедорожник Lexus. Мощный V8, роскошный салон и непревзойдённая надёжность — выбор тех, кто ценит качество.',desc_lc300:'Новейший Land Cruiser серии 300. Революционный дизайн, передовые технологии и легендарная надёжность Toyota в самом престижном исполнении.',desc_lc200:'Легендарный Land Cruiser 200 — символ надёжности и комфорта. Проверенный временем флагман Toyota с роскошным салоном и непревзойдёнными возможностями.',desc_camry80:'Новейшее поколение легендарного Camry. Динамичный дизайн, просторный салон и высокий уровень оснащения для комфортных деловых поездок.',desc_camry70:'Проверенный временем Camry 7-го поколения. Надёжность, комфорт и элегантность — идеальный выбор для деловых поездок и трансферов.',spec_4pass:'4 пассажира',spec_7pass:'7 пассажиров',spec_6pass:'6 пассажиров',spec_16pass:'16 пассажиров',spec_3bag:'3 чемодана',spec_4bag:'4 чемодана',spec_6bag:'6 чемоданов',spec_16bag:'16 чемоданов',spec_climate:'Климат-контроль',spec_wifi:'Wi-Fi на борту',spec_leather:'Кожаный салон',spec_audio:'Премиум аудиосистема',spec_audio2:'Аудиосистема',spec_audio_mark:'Mark Levinson аудио',spec_audio_jbl:'JBL аудиосистема',spec_park:'Система парковки',spec_safe:'Система безопасности',spec_auto:'Автоматическая КПП',spec_4wd:'Полный привод',spec_offroad:'Внедорожный режим',spec_media:'Мультимедиа',spec_captain:'Капитанские кресла',spec_slide:'Раздвижные двери',spec_screen:'Задние экраны',spec_recline:'Откидные кресла',spec_led:'LED-освещение',spec_usb:'USB-зарядки',spec_hybrid:'Гибрид доступен',spec_popular:'Популярный выбор',spec_engine_v6:'Двигатель 3.0 V6',spec_engine_v8:'Двигатель 4.7 V8',spec_engine_v4:'Двигатель 2.0 V4',spec_engine_d:'Дизель 2.2',spec_engine_v6t:'Двигатель 3.5 V6 Twin Turbo',spec_engine_v8_5:'Двигатель 5.7 V8',spec_engine_v8_4:'Двигатель 4.6 V8',spec_engine_v6_25:'Двигатель 2.5 V6'},
+  kz:{nav_home:'Басты бет',nav_cars:'Автомобильдер',nav_about:'Компания туралы',nav_partners:'Серіктестер',call:'Қоңырау шалу',catalog_label:'БІЗДІҢ АВТОПАРК',catalog_title:'Кез келген талғамға арналған премиум автомобильдер',catalog_desc:'Кез келген міндет үшін 10 премиум-класс модель',cat_sedans:'Бизнес седандар',cat_suv:'Жол талғамайтындар',cat_vans:'Минивэндер және микроавтобустар',about_label:'КОМПАНИЯ ТУРАЛЫ',partners_label:'БІЗДІҢ СЕРІКТЕСТЕР',partners_title:'Ventas Group серіктестері',partners_desc:'Біз премиум-класс көлік қызметін көрсететін компаниялар',footer_tagline:'Премиум автомобиль жалдау',footer_copy:'© 2026 Ventas Group. Барлық құқықтар қорғалған.',book:'Брондау',specs_show:'Сипаттамалар',specs_hide:'Жасыру',price_hour:'Сағат',price_transfer:'Трансфер',price_day12:'Күн (12 сағат)',class_business_lux:'Бизнес-класс · Люкс',class_minivan:'Минивэн · Бизнес',class_bus:'Микроавтобус · 16 орын',class_suv_lux:'Жол талғамайтын · Люкс',class_suv_prem:'Жол талғамайтын · Премиум',class_sedan:'Бизнес-седан · Комфорт',desc_w223:'Mercedes-Benz жаңа буынының флагмандық седаны.',desc_w222:'Алдыңғы буынның аңызға айналған S-Class.',desc_vclass:'Топтық сапарлар үшін кең премиум-минивэн.',desc_sprinter:'Топтық трансферлер үшін сыйымды премиум-микроавтобус.',desc_lx600:'Lexus жаңа буынының флагмандық жол талғамайтыны.',desc_lx570:'Lexus-тың классикалық премиум-жол талғамайтыны.',desc_lc300:'Ең жаңа Land Cruiser 300 сериясы.',desc_lc200:'Аңызға айналған Land Cruiser 200.',desc_camry80:'Camry-дің ең жаңа буыны.',desc_camry70:'Уақыт сынынан өткен Camry 7-буыны.',spec_4pass:'4 жолаушы',spec_7pass:'7 жолаушы',spec_6pass:'6 жолаушы',spec_16pass:'16 жолаушы',spec_3bag:'3 чемодан',spec_4bag:'4 чемодан',spec_6bag:'6 чемодан',spec_16bag:'16 чемодан',spec_climate:'Климат-бақылау',spec_wifi:'Бортта Wi-Fi',spec_leather:'Былғары салон',spec_audio:'Премиум аудиожүйе',spec_audio2:'Аудиожүйе',spec_audio_mark:'Mark Levinson аудио',spec_audio_jbl:'JBL аудиожүйе',spec_park:'Тұрақ жүйесі',spec_safe:'Қауіпсіздік жүйесі',spec_auto:'Автоматты КПП',spec_4wd:'Толық жетек',spec_offroad:'Жол талғамайтын режим',spec_media:'Мультимедиа',spec_captain:'Капитандық орындықтар',spec_slide:'Сырғымалы есіктер',spec_screen:'Артқы экрандар',spec_recline:'Еңкейетін орындықтар',spec_led:'LED-жарықтандыру',spec_usb:'USB-зарядтағыштар',spec_hybrid:'Гибрид қолжетімді',spec_popular:'Танымал таңдау',spec_engine_v6:'3.0 V6 қозғалтқыш',spec_engine_v8:'4.7 V8 қозғалтқыш',spec_engine_v4:'2.0 V4 қозғалтқыш',spec_engine_d:'Дизель 2.2',spec_engine_v6t:'3.5 V6 Twin Turbo қозғалтқыш',spec_engine_v8_5:'5.7 V8 қозғалтқыш',spec_engine_v8_4:'4.6 V8 қозғалтқыш',spec_engine_v6_25:'2.5 V6 қозғалтқыш'},
+  en:{nav_home:'Home',nav_cars:'Cars',nav_about:'About',nav_partners:'Partners',call:'Call Us',catalog_label:'OUR FLEET',catalog_title:'Premium Cars for Every Taste',catalog_desc:'10 premium-class models for any occasion',cat_sedans:'Business Sedans',cat_suv:'SUVs',cat_vans:'Minivans & Minibuses',about_label:'ABOUT US',partners_label:'OUR PARTNERS',partners_title:'Ventas Group Partners',partners_desc:'Companies we provide premium transportation services for',footer_tagline:'Premium Car Rental',footer_copy:'© 2026 Ventas Group. All rights reserved.',book:'Book Now',specs_show:'Specifications',specs_hide:'Hide',price_hour:'Hour',price_transfer:'Transfer',price_day12:'Day (12 hours)',class_business_lux:'Business Class · Luxury',class_minivan:'Minivan · Business',class_bus:'Minibus · 16 Seats',class_suv_lux:'SUV · Luxury',class_suv_prem:'SUV · Premium',class_sedan:'Business Sedan · Comfort',desc_w223:'The flagship sedan of the new Mercedes-Benz generation.',desc_w222:'The legendary S-Class of the previous generation.',desc_vclass:'A spacious premium minivan for group travel.',desc_sprinter:'A capacious premium minibus for group transfers.',desc_lx600:'The flagship SUV of the new Lexus generation.',desc_lx570:'The classic premium Lexus SUV.',desc_lc300:"The latest Land Cruiser 300 series.",desc_lc200:"The legendary Land Cruiser 200.",desc_camry80:'The latest generation of the legendary Camry.',desc_camry70:'The time-tested Camry 7th generation.',spec_4pass:'4 Passengers',spec_7pass:'7 Passengers',spec_6pass:'6 Passengers',spec_16pass:'16 Passengers',spec_3bag:'3 Luggage',spec_4bag:'4 Luggage',spec_6bag:'6 Luggage',spec_16bag:'16 Luggage',spec_climate:'Climate Control',spec_wifi:'Wi-Fi on Board',spec_leather:'Leather Interior',spec_audio:'Premium Audio System',spec_audio2:'Audio System',spec_audio_mark:'Mark Levinson Audio',spec_audio_jbl:'JBL Audio System',spec_park:'Parking System',spec_safe:'Safety System',spec_auto:'Automatic Transmission',spec_4wd:'All-Wheel Drive',spec_offroad:'Off-Road Mode',spec_media:'Multimedia',spec_captain:'Captain Seats',spec_slide:'Sliding Doors',spec_screen:'Rear Screens',spec_recline:'Reclining Seats',spec_led:'LED Lighting',spec_usb:'USB Chargers',spec_hybrid:'Hybrid Available',spec_popular:'Popular Choice',spec_engine_v6:'3.0 V6 Engine',spec_engine_v8:'4.7 V8 Engine',spec_engine_v4:'2.0 V4 Engine',spec_engine_d:'Diesel 2.2',spec_engine_v6t:'3.5 V6 Twin Turbo Engine',spec_engine_v8_5:'5.7 V8 Engine',spec_engine_v8_4:'4.6 V8 Engine',spec_engine_v6_25:'2.5 V6 Engine'}
 };
 let currentLang='ru';
 function applyLang(lang){
   currentLang=lang;var t=i18n[lang];
   document.querySelectorAll('[data-i18n]').forEach(function(el){var k=el.getAttribute('data-i18n');if(t[k]!==undefined)el.textContent=t[k];});
+  /* Update all lang buttons */
   document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
+  document.querySelectorAll('.lang-dropdown-item').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
+  var lbl=document.getElementById('langCurrentLabel');
+  if(lbl)lbl.textContent=lang.toUpperCase();
   document.documentElement.lang=lang;
 }
-document.querySelectorAll('.lang-btn').forEach(function(b){b.addEventListener('click',function(){applyLang(b.dataset.lang);});});
+
+/* Lang dropdown toggle */
+var langDD=document.getElementById('langDropdown');
+var langDDBtn=document.getElementById('langDropdownBtn');
+langDDBtn.addEventListener('click',function(e){e.stopPropagation();langDD.classList.toggle('open');});
+document.addEventListener('click',function(){langDD.classList.remove('open');});
+document.querySelectorAll('.lang-dropdown-item').forEach(function(b){
+  b.addEventListener('click',function(e){e.stopPropagation();applyLang(b.dataset.lang);langDD.classList.remove('open');});
+});
+/* Mobile lang buttons */
+document.querySelectorAll('.mobile-lang .lang-btn').forEach(function(b){
+  b.addEventListener('click',function(){applyLang(b.dataset.lang);});
+});
 
 window.toggleSpecs=function(btn){
   var s=btn.nextElementSibling,o=btn.classList.contains('open');
@@ -1373,7 +1488,11 @@ window.toggleSpecs=function(btn){
 
 /* Navbar scroll */
 var navbar=document.getElementById('navbar');
-window.addEventListener('scroll',function(){navbar.classList.toggle('scrolled',window.scrollY>40);},{ passive:true });
+window.addEventListener('scroll',function(){
+  var isHome=document.getElementById('page-home').classList.contains('active');
+  if(isHome){navbar.classList.toggle('scrolled',window.scrollY>40);}
+  else{navbar.classList.add('scrolled');}
+},{ passive:true });
 
 /* Scroll-to-top */
 var stb=document.getElementById('scrollTopBtn');
@@ -1382,7 +1501,7 @@ window.addEventListener('scroll',function(){stb.classList.toggle('visible',windo
 /* Hamburger */
 var hb=document.getElementById('hamburger'),mm=document.getElementById('mobileMenu'),mo=document.getElementById('mobileOverlay'),mc=document.getElementById('mobileClose');
 function openMenu(){hb.classList.add('open');mm.classList.add('open');mo.classList.add('active');document.body.style.overflow='hidden';}
-function closeMenu(){hb.classList.remove('open');mm.classList.remove('open');mo.classList.remove('active');document.body.style.overflow='';}
+window.closeMenu=function(){hb.classList.remove('open');mm.classList.remove('open');mo.classList.remove('active');document.body.style.overflow='';};
 hb.addEventListener('click',function(){mm.classList.contains('open')?closeMenu():openMenu();});
 mc.addEventListener('click',closeMenu);
 mo.addEventListener('click',closeMenu);
@@ -1403,6 +1522,7 @@ document.querySelectorAll('.mobile-cat-header').forEach(function(h){
 document.querySelectorAll('.mobile-model-link').forEach(function(link){
   link.addEventListener('click',function(){
     var cat=this.dataset.cat,brand=this.dataset.brand,car=this.dataset.car;
+    navigateTo('home');
     document.querySelectorAll('.category-tab').forEach(function(t){t.classList.remove('active');});
     var ct=document.querySelector('.category-tab[data-category="'+cat+'"]');if(ct)ct.classList.add('active');
     document.querySelectorAll('.category-section').forEach(function(s){s.classList.remove('active');});
@@ -1422,15 +1542,8 @@ document.querySelectorAll('.mobile-model-link').forEach(function(link){
       }
     }
     closeMenu();
-    setTimeout(function(){var el=document.getElementById('catalog');if(el){var top=el.getBoundingClientRect().top+window.scrollY-80;window.scrollTo({top:top,behavior:'smooth'});}},350);
+    setTimeout(function(){var el=document.getElementById('catalog');if(el){var top=el.getBoundingClientRect().top+window.scrollY-80;window.scrollTo({top:top,behavior:'smooth'});}},100);
   });
-});
-
-/* Mobile about link */
-var mal=document.getElementById('mobileAboutLink');
-if(mal)mal.addEventListener('click',function(e){
-  e.preventDefault();closeMenu();
-  setTimeout(function(){var el=document.getElementById('about');if(el){var top=el.getBoundingClientRect().top+window.scrollY-80;window.scrollTo({top:top,behavior:'smooth'});}},350);
 });
 
 /* Category tabs */
@@ -1502,15 +1615,6 @@ document.addEventListener('DOMContentLoaded',function(){
     function tryPlay(){v.play().catch(function(){});}
     document.addEventListener('touchstart',tryPlay,{once:true});
     document.addEventListener('click',tryPlay,{once:true});
-  });
-});
-
-/* Smooth scroll */
-document.querySelectorAll('a[href^="#"]').forEach(function(a){
-  a.addEventListener('click',function(e){
-    var h=this.getAttribute('href');if(h==='#')return;
-    var tgt=document.querySelector(h);
-    if(tgt){e.preventDefault();window.scrollTo({top:tgt.getBoundingClientRect().top+window.scrollY-80,behavior:'smooth'});}
   });
 });
 
