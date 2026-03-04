@@ -387,13 +387,15 @@ img{display:block;max-width:100%}
   font-size:12px;font-weight:900;letter-spacing:.22em;
   text-transform:uppercase;color:var(--gold);margin:32px 0 14px;
 }
-.about-list{list-style:none;display:grid;gap:10px}
+.about-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0}
 .about-list li{
-  display:flex;gap:10px;align-items:flex-start;
-  color:var(--gray2);font-size:14px;line-height:1.7;
-  padding:10px 12px;background:var(--bg3);
-  border:1px solid var(--border);border-radius:10px;
+  display:flex;gap:10px;align-items:center;
+  color:var(--gray2);font-size:14px;line-height:1.5;
+  padding:12px 4px;
+  border-bottom:1px solid rgba(255,255,255,.06);
 }
+.about-list li:nth-last-child(-n+2){border-bottom:none}
+.about-list.single-col{grid-template-columns:1fr}
 .about-list li i{color:var(--gold);margin-top:3px;width:16px;text-align:center;flex-shrink:0}
 .about-services{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px}
 .service-card{background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:16px}
@@ -580,7 +582,8 @@ img{display:block;max-width:100%}
   .hero{min-height:420px;height:70vh}
   .nav-links{display:none}
   .hamburger{display:flex}
-  .lang-dropdown{display:none}
+  .lang-dropdown{display:inline-block}
+  .lang-dropdown-btn{padding:4px 10px;font-size:11px}
   .btn-icon{width:36px;height:36px;font-size:14px}
   .logo-img{height:38px}
   .catalog{padding:76px 0 48px}
@@ -653,6 +656,7 @@ img{display:block;max-width:100%}
 
   .about-page{padding:80px 0 48px}
   .about-services{grid-template-columns:1fr}
+  .about-list{grid-template-columns:1fr}
   .cooperation-block{padding:24px}
 
   .partners-page{padding:80px 0 48px}
@@ -732,7 +736,7 @@ img{display:block;max-width:100%}
           <a class="mobile-model-link" data-cat="sedans" data-brand="mercedes" data-car="0">Mercedes S-Class W223</a>
           <a class="mobile-model-link" data-cat="sedans" data-brand="mercedes" data-car="1">Mercedes S-Class W222</a>
           <a class="mobile-model-link" data-cat="sedans" data-brand="toyota" data-car="8">Toyota Camry 80</a>
-          <a class="mobile-model-link" data-cat="sedans" data-brand="toyota" data-car="9">Toyota Camry 70</a>
+          <a class="mobile-model-link" data-cat="sedans" data-brand="toyota" data-car="9">Toyota Camry 75</a>
         </div>
         <div class="mobile-cat-header" data-cat-toggle="suv"><span data-i18n="cat_suv">Внедорожники</span><i class="fas fa-chevron-down arrow"></i></div>
         <div class="mobile-models-list" id="mobile-cat-suv">
@@ -822,9 +826,9 @@ img{display:block;max-width:100%}
             <p class="car-class" data-i18n="class_business_lux">Бизнес-класс · Люкс</p>
             <p class="car-desc" data-i18n="desc_w223">Флагманский седан Mercedes-Benz нового поколения. Воплощение роскоши, технологий и комфорта. Идеален для деловых поездок и особых случаев.</p>
             <div class="car-prices">
-              <div class="price-row"><span data-i18n="price_hour">Час</span><strong>35 000 ₸</strong></div>
-              <div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>90 000 ₸</strong></div>
-              <div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>240 000 ₸</strong></div>
+              <div class="price-row"><span data-i18n="price_hour">Час</span><strong>55 000 ₸</strong></div>
+              <div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>60 000 ₸</strong></div>
+              <div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>550 000 ₸</strong></div>
             </div>
             <button class="specs-toggle-btn" onclick="toggleSpecs(this)"><span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i></button>
             <ul class="car-specs">
@@ -864,9 +868,9 @@ img{display:block;max-width:100%}
             <p class="car-class" data-i18n="class_business_lux">Бизнес-класс · Люкс</p>
             <p class="car-desc" data-i18n="desc_w222">Легендарный S-Class предыдущего поколения. Безупречный комфорт, представительный стиль и надёжность для самых требовательных клиентов.</p>
             <div class="car-prices">
-              <div class="price-row"><span data-i18n="price_hour">Час</span><strong>30 000 ₸</strong></div>
-              <div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>80 000 ₸</strong></div>
-              <div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>210 000 ₸</strong></div>
+              <div class="price-row"><span data-i18n="price_hour">Час</span><strong>20 000 ₸</strong></div>
+              <div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>25 000 ₸</strong></div>
+              <div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>200 000 ₸</strong></div>
             </div>
             <button class="specs-toggle-btn" onclick="toggleSpecs(this)"><span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i></button>
             <ul class="car-specs">
@@ -888,7 +892,7 @@ img{display:block;max-width:100%}
       <div class="brand-section" data-brand="toyota">
         <div class="car-tabs">
           <button class="car-tab active" data-car="8">Camry 80</button>
-          <button class="car-tab" data-car="9">Camry 70</button>
+          <button class="car-tab" data-car="9">Camry 75</button>
         </div>
         <div class="car-panel active" data-car="8">
           <div class="car-gallery">
@@ -912,9 +916,9 @@ img{display:block;max-width:100%}
             <p class="car-class" data-i18n="class_sedan">Бизнес-седан · Комфорт</p>
             <p class="car-desc" data-i18n="desc_camry80">Новейшее поколение легендарного Camry. Динамичный дизайн, просторный салон и высокий уровень оснащения для комфортных деловых поездок.</p>
             <div class="car-prices">
-              <div class="price-row"><span data-i18n="price_hour">Час</span><strong>22 000 ₸</strong></div>
-              <div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>60 000 ₸</strong></div>
-              <div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>150 000 ₸</strong></div>
+              <div class="price-row"><span data-i18n="price_hour">Час</span><strong>10 000 ₸</strong></div>
+              <div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>12 000 ₸</strong></div>
+              <div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>100 000 ₸</strong></div>
             </div>
             <button class="specs-toggle-btn" onclick="toggleSpecs(this)"><span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i></button>
             <ul class="car-specs">
@@ -935,7 +939,7 @@ img{display:block;max-width:100%}
         <div class="car-panel" data-car="9">
           <div class="car-gallery">
             <div class="gallery-main" onclick="openLightbox(9,0)">
-              <img id="main-img-9" src="images/toyota-camry70-01.jpg" alt="Toyota Camry 70" loading="lazy" />
+              <img id="main-img-9" src="images/toyota-camry70-01.jpg" alt="Toyota Camry 75" loading="lazy" />
               <div class="gallery-zoom-hint"><i class="fas fa-search-plus"></i></div>
             </div>
             <div class="gallery-thumbs">
@@ -950,13 +954,13 @@ img{display:block;max-width:100%}
             </div>
           </div>
           <div class="car-info">
-            <h3 class="car-name">Toyota Camry 70</h3>
+            <h3 class="car-name">Toyota Camry 75</h3>
             <p class="car-class" data-i18n="class_sedan">Бизнес-седан · Комфорт</p>
             <p class="car-desc" data-i18n="desc_camry70">Проверенный временем Camry 7-го поколения. Надёжность, комфорт и элегантность — идеальный выбор для деловых поездок и трансферов.</p>
             <div class="car-prices">
-              <div class="price-row"><span data-i18n="price_hour">Час</span><strong>20 000 ₸</strong></div>
-              <div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>55 000 ₸</strong></div>
-              <div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>140 000 ₸</strong></div>
+              <div class="price-row"><span data-i18n="price_hour">Час</span><strong>8 000 ₸</strong></div>
+              <div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>10 000 ₸</strong></div>
+              <div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>80 000 ₸</strong></div>
             </div>
             <button class="specs-toggle-btn" onclick="toggleSpecs(this)"><span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i></button>
             <ul class="car-specs">
@@ -1000,7 +1004,7 @@ img{display:block;max-width:100%}
             <h3 class="car-name">Lexus LX 600</h3>
             <p class="car-class" data-i18n="class_suv_lux">Внедорожник · Люкс</p>
             <p class="car-desc" data-i18n="desc_lx600">Флагманский внедорожник Lexus нового поколения. Сочетает в себе японское качество, роскошный интерьер и выдающиеся внедорожные возможности.</p>
-            <div class="car-prices"><div class="price-row"><span data-i18n="price_hour">Час</span><strong>32 000 ₸</strong></div><div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>85 000 ₸</strong></div><div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>220 000 ₸</strong></div></div>
+            <div class="car-prices"><div class="price-row"><span data-i18n="price_hour">Час</span><strong>35 000 ₸</strong></div><div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>40 000 ₸</strong></div><div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>350 000 ₸</strong></div></div>
             <button class="specs-toggle-btn" onclick="toggleSpecs(this)"><span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i></button>
             <ul class="car-specs"><li><i class="fas fa-users"></i><span data-i18n="spec_7pass">7 пассажиров</span></li><li><i class="fas fa-suitcase"></i><span data-i18n="spec_4bag">4 чемодана</span></li><li><i class="fas fa-snowflake"></i><span data-i18n="spec_climate">Климат-контроль</span></li><li><i class="fas fa-shield-alt"></i><span data-i18n="spec_4wd">Полный привод</span></li><li><i class="fas fa-couch"></i><span data-i18n="spec_leather">Кожаный салон</span></li><li><i class="fas fa-volume-up"></i><span data-i18n="spec_audio_mark">Mark Levinson аудио</span></li><li><i class="fas fa-tv"></i><span data-i18n="spec_screen">Задние экраны</span></li><li><i class="fas fa-tachometer-alt"></i><span data-i18n="spec_engine_v6t">Двигатель 3.5 V6 Twin Turbo</span></li><li><i class="fas fa-road"></i><span data-i18n="spec_auto">Автоматическая КПП</span></li><li><i class="fas fa-mountain"></i><span data-i18n="spec_offroad">Внедорожный режим</span></li></ul>
             <a href="https://wa.me/77066660010" target="_blank" class="btn-book" rel="noopener"><i class="fab fa-whatsapp"></i> <span data-i18n="book">Забронировать</span></a>
@@ -1017,7 +1021,7 @@ img{display:block;max-width:100%}
             <h3 class="car-name">Lexus LX 570</h3>
             <p class="car-class" data-i18n="class_suv_lux">Внедорожник · Люкс</p>
             <p class="car-desc" data-i18n="desc_lx570">Классический премиум-внедорожник Lexus. Мощный V8, роскошный салон и непревзойдённая надёжность — выбор тех, кто ценит качество.</p>
-            <div class="car-prices"><div class="price-row"><span data-i18n="price_hour">Час</span><strong>30 000 ₸</strong></div><div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>80 000 ₸</strong></div><div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>210 000 ₸</strong></div></div>
+            <div class="car-prices"><div class="price-row"><span data-i18n="price_hour">Час</span><strong>25 000 ₸</strong></div><div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>30 000 ₸</strong></div><div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>250 000 ₸</strong></div></div>
             <button class="specs-toggle-btn" onclick="toggleSpecs(this)"><span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i></button>
             <ul class="car-specs"><li><i class="fas fa-users"></i><span data-i18n="spec_7pass">7 пассажиров</span></li><li><i class="fas fa-suitcase"></i><span data-i18n="spec_4bag">4 чемодана</span></li><li><i class="fas fa-snowflake"></i><span data-i18n="spec_climate">Климат-контроль</span></li><li><i class="fas fa-shield-alt"></i><span data-i18n="spec_4wd">Полный привод</span></li><li><i class="fas fa-couch"></i><span data-i18n="spec_leather">Кожаный салон</span></li><li><i class="fas fa-volume-up"></i><span data-i18n="spec_audio_mark">Mark Levinson аудио</span></li><li><i class="fas fa-tv"></i><span data-i18n="spec_screen">Задние экраны</span></li><li><i class="fas fa-tachometer-alt"></i><span data-i18n="spec_engine_v8_5">Двигатель 5.7 V8</span></li><li><i class="fas fa-road"></i><span data-i18n="spec_auto">Автоматическая КПП</span></li><li><i class="fas fa-mountain"></i><span data-i18n="spec_offroad">Внедорожный режим</span></li></ul>
             <a href="https://wa.me/77066660010" target="_blank" class="btn-book" rel="noopener"><i class="fab fa-whatsapp"></i> <span data-i18n="book">Забронировать</span></a>
@@ -1038,7 +1042,7 @@ img{display:block;max-width:100%}
             <h3 class="car-name">Toyota Land Cruiser 300</h3>
             <p class="car-class" data-i18n="class_suv_prem">Внедорожник · Премиум</p>
             <p class="car-desc" data-i18n="desc_lc300">Новейший Land Cruiser серии 300. Революционный дизайн, передовые технологии и легендарная надёжность Toyota в самом престижном исполнении.</p>
-            <div class="car-prices"><div class="price-row"><span data-i18n="price_hour">Час</span><strong>28 000 ₸</strong></div><div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>75 000 ₸</strong></div><div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>200 000 ₸</strong></div></div>
+            <div class="car-prices"><div class="price-row"><span data-i18n="price_hour">Час</span><strong>30 000 ₸</strong></div><div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>35 000 ₸</strong></div><div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>300 000 ₸</strong></div></div>
             <button class="specs-toggle-btn" onclick="toggleSpecs(this)"><span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i></button>
             <ul class="car-specs"><li><i class="fas fa-users"></i><span data-i18n="spec_7pass">7 пассажиров</span></li><li><i class="fas fa-suitcase"></i><span data-i18n="spec_4bag">4 чемодана</span></li><li><i class="fas fa-snowflake"></i><span data-i18n="spec_climate">Климат-контроль</span></li><li><i class="fas fa-shield-alt"></i><span data-i18n="spec_4wd">Полный привод</span></li><li><i class="fas fa-couch"></i><span data-i18n="spec_leather">Кожаный салон</span></li><li><i class="fas fa-volume-up"></i><span data-i18n="spec_audio_jbl">JBL аудиосистема</span></li><li><i class="fas fa-tv"></i><span data-i18n="spec_screen">Задние экраны</span></li><li><i class="fas fa-tachometer-alt"></i><span data-i18n="spec_engine_v6t">Двигатель 3.5 V6 Twin Turbo</span></li><li><i class="fas fa-road"></i><span data-i18n="spec_auto">Автоматическая КПП</span></li><li><i class="fas fa-mountain"></i><span data-i18n="spec_offroad">Внедорожный режим</span></li></ul>
             <a href="https://wa.me/77066660010" target="_blank" class="btn-book" rel="noopener"><i class="fab fa-whatsapp"></i> <span data-i18n="book">Забронировать</span></a>
@@ -1053,7 +1057,7 @@ img{display:block;max-width:100%}
             <h3 class="car-name">Toyota Land Cruiser 200</h3>
             <p class="car-class" data-i18n="class_suv_prem">Внедорожник · Премиум</p>
             <p class="car-desc" data-i18n="desc_lc200">Легендарный Land Cruiser 200 — символ надёжности и комфорта. Проверенный временем флагман Toyota с роскошным салоном и непревзойдёнными возможностями.</p>
-            <div class="car-prices"><div class="price-row"><span data-i18n="price_hour">Час</span><strong>26 000 ₸</strong></div><div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>70 000 ₸</strong></div><div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>180 000 ₸</strong></div></div>
+            <div class="car-prices"><div class="price-row"><span data-i18n="price_hour">Час</span><strong>20 000 ₸</strong></div><div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>25 000 ₸</strong></div><div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>200 000 ₸</strong></div></div>
             <button class="specs-toggle-btn" onclick="toggleSpecs(this)"><span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i></button>
             <ul class="car-specs"><li><i class="fas fa-users"></i><span data-i18n="spec_7pass">7 пассажиров</span></li><li><i class="fas fa-suitcase"></i><span data-i18n="spec_4bag">4 чемодана</span></li><li><i class="fas fa-snowflake"></i><span data-i18n="spec_climate">Климат-контроль</span></li><li><i class="fas fa-shield-alt"></i><span data-i18n="spec_4wd">Полный привод</span></li><li><i class="fas fa-couch"></i><span data-i18n="spec_leather">Кожаный салон</span></li><li><i class="fas fa-volume-up"></i><span data-i18n="spec_audio_jbl">JBL аудиосистема</span></li><li><i class="fas fa-tv"></i><span data-i18n="spec_screen">Задние экраны</span></li><li><i class="fas fa-tachometer-alt"></i><span data-i18n="spec_engine_v8_4">Двигатель 4.6 V8</span></li><li><i class="fas fa-road"></i><span data-i18n="spec_auto">Автоматическая КПП</span></li><li><i class="fas fa-mountain"></i><span data-i18n="spec_offroad">Внедорожный режим</span></li></ul>
             <a href="https://wa.me/77066660010" target="_blank" class="btn-book" rel="noopener"><i class="fab fa-whatsapp"></i> <span data-i18n="book">Забронировать</span></a>
@@ -1083,7 +1087,7 @@ img{display:block;max-width:100%}
             <h3 class="car-name">Mercedes-Benz V-Class</h3>
             <p class="car-class" data-i18n="class_minivan">Минивэн · Бизнес</p>
             <p class="car-desc" data-i18n="desc_vclass">Просторный премиум-минивэн для групповых поездок. Роскошный салон с капитанскими креслами, идеален для трансферов и деловых поездок компанией.</p>
-            <div class="car-prices"><div class="price-row"><span data-i18n="price_hour">Час</span><strong>28 000 ₸</strong></div><div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>75 000 ₸</strong></div><div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>200 000 ₸</strong></div></div>
+            <div class="car-prices"><div class="price-row"><span data-i18n="price_hour">Час</span><strong>20 000 ₸</strong></div><div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>25 000 ₸</strong></div><div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>200 000 ₸</strong></div></div>
             <button class="specs-toggle-btn" onclick="toggleSpecs(this)"><span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i></button>
             <ul class="car-specs"><li><i class="fas fa-users"></i><span data-i18n="spec_6pass">6 пассажиров</span></li><li><i class="fas fa-suitcase"></i><span data-i18n="spec_6bag">6 чемоданов</span></li><li><i class="fas fa-snowflake"></i><span data-i18n="spec_climate">Климат-контроль</span></li><li><i class="fas fa-tv"></i><span data-i18n="spec_media">Мультимедиа</span></li><li><i class="fas fa-couch"></i><span data-i18n="spec_captain">Капитанские кресла</span></li><li><i class="fas fa-volume-up"></i><span data-i18n="spec_audio">Премиум аудиосистема</span></li><li><i class="fas fa-door-open"></i><span data-i18n="spec_slide">Раздвижные двери</span></li><li><i class="fas fa-tachometer-alt"></i><span data-i18n="spec_engine_v4">Двигатель 2.0 V4</span></li><li><i class="fas fa-road"></i><span data-i18n="spec_auto">Автоматическая КПП</span></li><li><i class="fas fa-wifi"></i><span data-i18n="spec_wifi">Wi-Fi на борту</span></li></ul>
             <a href="https://wa.me/77066660010" target="_blank" class="btn-book" rel="noopener"><i class="fab fa-whatsapp"></i> <span data-i18n="book">Забронировать</span></a>
@@ -1098,7 +1102,7 @@ img{display:block;max-width:100%}
             <h3 class="car-name">Mercedes-Benz Sprinter</h3>
             <p class="car-class" data-i18n="class_bus">Микроавтобус · 16 мест</p>
             <p class="car-desc" data-i18n="desc_sprinter">Вместительный премиум-микроавтобус для групповых трансферов. Комфортные кресла бизнес-класса, кондиционер и современное оборудование.</p>
-            <div class="car-prices"><div class="price-row"><span data-i18n="price_hour">Час</span><strong>40 000 ₸</strong></div><div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>120 000 ₸</strong></div><div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>300 000 ₸</strong></div></div>
+            <div class="car-prices"><div class="price-row"><span data-i18n="price_hour">Час</span><strong>20 000 ₸</strong></div><div class="price-row"><span data-i18n="price_transfer">Трансфер</span><strong>30 000 ₸</strong></div><div class="price-row"><span data-i18n="price_day12">День (12 часов)</span><strong>200 000 ₸</strong></div></div>
             <button class="specs-toggle-btn" onclick="toggleSpecs(this)"><span data-i18n="specs_show">Характеристики</span> <i class="fas fa-chevron-down"></i></button>
             <ul class="car-specs"><li><i class="fas fa-users"></i><span data-i18n="spec_16pass">16 пассажиров</span></li><li><i class="fas fa-suitcase"></i><span data-i18n="spec_16bag">16 чемоданов</span></li><li><i class="fas fa-snowflake"></i><span data-i18n="spec_climate">Климат-контроль</span></li><li><i class="fas fa-music"></i><span data-i18n="spec_audio2">Аудиосистема</span></li><li><i class="fas fa-chair"></i><span data-i18n="spec_recline">Откидные кресла</span></li><li><i class="fas fa-lightbulb"></i><span data-i18n="spec_led">LED-освещение</span></li><li><i class="fas fa-plug"></i><span data-i18n="spec_usb">USB-зарядки</span></li><li><i class="fas fa-tachometer-alt"></i><span data-i18n="spec_engine_d">Дизель 2.2</span></li><li><i class="fas fa-road"></i><span data-i18n="spec_auto">Автоматическая КПП</span></li><li><i class="fas fa-shield-alt"></i><span data-i18n="spec_safe">Система безопасности</span></li></ul>
             <a href="https://wa.me/77066660010" target="_blank" class="btn-book" rel="noopener"><i class="fab fa-whatsapp"></i> <span data-i18n="book">Забронировать</span></a>
@@ -1133,7 +1137,7 @@ img{display:block;max-width:100%}
         </ul>
 
         <div class="about-block-title">Опыт и мероприятия</div>
-        <ul class="about-list">
+        <ul class="about-list single-col">
           <li><i class="fas fa-star"></i> Astana International Forum — 2025 (AIF)</li>
           <li><i class="fas fa-star"></i> BI GROUP — 30 лет</li>
           <li><i class="fas fa-star"></i> Гастрофестиваль "BaiQymyz"</li>
@@ -1369,7 +1373,7 @@ img{display:block;max-width:100%}
         <a onclick="navigateTo('partners-page')" data-i18n="nav_partners">Партнёры</a>
       </div>
       <div class="footer-social">
-        <a href="https://www.instagram.com/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.instagram.com/ventas.group" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
         <a href="https://wa.me/77066660010" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
         <a href="https://t.me/ventas_group" target="_blank" rel="noopener"><i class="fab fa-telegram"></i></a>
         <a href="tel:+77066660010"><i class="fas fa-phone"></i></a>
