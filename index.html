@@ -6,6 +6,15 @@
   <title>Ventas Group — Аренда Премиум Автомобилей</title>
   <link rel="icon" href="images/logo.jpg" type="image/jpeg" />
 
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-16876875188"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-16876875188');
+</script>
+  
   <!-- Premium system fonts — zero network cost -->
   <style>
     :root {
@@ -1475,7 +1484,26 @@ img{display:block;max-width:100%}
 </div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-/* ===========================
+
+  /* ===========================
+   GOOGLE ADS CONVERSION TRACKING
+=========================== */
+function trackWhatsAppConversion() {
+  gtag('event', 'conversion', {
+    'send_to': 'AW-16876875188/PPubCNWt1YYcELTbwu8-',
+    'transport_type': 'beacon'
+  });
+}
+
+/* Отслеживаем все клики по WhatsApp */
+document.addEventListener('click', function(e) {
+  var waLink = e.target.closest('a[href*="wa.me/"]');
+  if (!waLink) return;
+
+  trackWhatsAppConversion();
+}, true);
+  
+  /* ===========================
    PAGE NAVIGATION
 =========================== */
 function navigateTo(page){
